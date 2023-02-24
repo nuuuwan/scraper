@@ -1,3 +1,4 @@
+import os
 from functools import cached_property
 
 from bs4 import BeautifulSoup
@@ -17,17 +18,20 @@ class BaseScraper:
         return hashx.md5(self.url)
 
     @cached_property
-    def local_html_path(self):
-        return f'/tmp/scraper.{self.hash}.htm'
+    def local_path(self):
+        ext = self.url.split('.')[-1]
+        if len(ext) > 4:
+            ext = 'htm'
+        return f'/tmp/scraper.{self.hash}.{ext}'
 
     @cached_property
-    def local_html_file(self):
-        return File(self.local_html_path)
+    def local_file(self):
+        return File(self.local_path)
 
     @cached_property
     def html(self):
-        if self.local_html_file.exists:
-            return self.local_html_file.read()
+        if self.local_file.exists:
+            return self.local_file.read()
 
         log.debug(f'Scraping {self.url}...')
         # scrapes html using selenium
@@ -39,12 +43,18 @@ class BaseScraper:
         driver.close()
         driver.quit()
         html_size = len(html)
-        log.debug(
-            f'Scraped {self.url} to {self.local_html_path} ({html_size:,}B)'
-        )
-        self.local_html_file.write(html)
+        log.debug(f'Scraped {self.url} to {self.local_path} ({html_size:,}B)')
+        self.local_file.write(html)
         return html
 
     @property
     def soup(self):
         return BeautifulSoup(self.html, 'html.parser')
+
+    def download_binary(self):
+        if not self.local_file.exists:
+            os.system(f'wget -O {self.local_path} {self.url}')
+            file_size = os.path.getsize(self.local_path)
+            log.debug(
+                f'Downloaded {self.url} to {self.local_path} ({file_size:,}B)'
+            )
