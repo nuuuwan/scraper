@@ -9,10 +9,14 @@ class PDFScraper(LinkScraper):
     def pdf_urls(self):
         return [url for url in self.urls if url.endswith('.pdf')]
 
-    def download_all(self):
+    @staticmethod
+    def download_all_helper(pdf_urls):
         pdf_file_paths = []
-        for url in self.pdf_urls:
+        for url in pdf_urls:
             scraper = BaseScraper(url)
             pdf_file_paths.append(scraper.download_binary())
         log.info(f'Downloaded {len(pdf_file_paths)} PDF files')
         return pdf_file_paths
+
+    def download_all(self):
+        return PDFScraper.download_all_helper(self.pdf_urls)

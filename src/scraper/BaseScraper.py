@@ -19,10 +19,7 @@ class BaseScraper:
 
     @cached_property
     def local_path(self):
-        ext = self.url.split('.')[-1]
-        if len(ext) > 4:
-            ext = 'htm'
-        return f'/tmp/scraper.{self.hash}.{ext}'
+        return f'/tmp/scraper.{self.hash}'
 
     @cached_property
     def local_file(self):

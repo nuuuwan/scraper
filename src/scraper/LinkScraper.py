@@ -9,6 +9,8 @@ class LinkScraper(BaseScraper):
         links = self.soup.find_all('a')
         urls = []
         for link in links:
-            urls.append(link.get('href'))
+            url = link.get('href')
+            if url and 'http' in url:
+                urls.append(url)
         log.debug(f'Extracted {len(urls)} links from {self.url}.')
         return urls
