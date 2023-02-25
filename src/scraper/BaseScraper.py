@@ -11,22 +11,27 @@ log = Log('Scraper')
 
 
 class BaseScraper:
-    HASH_LENGTH = 4
+    HASH_ID_LENGTH = 8
+    DOMAIN_ID_MAX_LENGTH = 32
 
     def __init__(self, url):
         self.url = url
 
     @cached_property
-    def domain(self):
-        return urlparse(self.url).netloc
+    def domain_id(self):
+        return urlparse(self.url).netloc[: self.DOMAIN_ID_MAX_LENGTH]
 
     @cached_property
-    def hash(self):
-        return hashx.md5(self.url)[: self.HASH_LENGTH]
+    def hash_id(self):
+        return hashx.md5(self.url)[: self.HASH_ID_LENGTH]
 
     @cached_property
     def local_path(self):
-        return f'/tmp/scraper.{self.domain}.{self.hash}'
+        base_name = f'/tmp/scraper-{self.domain_id}-{self.hash_id}'
+        base_name = base_name.replace('.github', '.gh')
+        if self.url.endswith('.pdf'):
+            return f'{base_name}.pdf'
+        return f'{base_name}.htm'
 
     @cached_property
     def local_file(self):

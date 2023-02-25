@@ -6,6 +6,9 @@ from scraper.BaseScraper import BaseScraper, log
 class LinkScraper(BaseScraper):
     @cached_property
     def urls(self):
+        if self.url.endswith('.pdf'):
+            return []
+
         links = self.soup.find_all('a')
         urls = []
         for link in links:
