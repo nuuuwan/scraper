@@ -30,10 +30,10 @@ class PDFFile(File):
         os.mkdir(self.dir_tables.path)
         try:
             tables = camelot.read_pdf(self.path)
-        except:
+        except BaseException:
             log.error(f'Failed to read {self.path}')
             return []
-        
+
         path_list = []
         for i, table in enumerate(tables):
             tsv_file_path = os.path.join(

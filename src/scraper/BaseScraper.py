@@ -17,33 +17,42 @@ class BaseScraper:
     def __init__(self, url):
         self.url = url
 
-    @cached_property
+    @property
     def domain_id(self):
-        return urlparse(self.url).netloc[: self.DOMAIN_ID_MAX_LENGTH]
+        domain_id = urlparse(self.url).netloc[: self.DOMAIN_ID_MAX_LENGTH]
+        domain_id = domain_id.replace('.github', '.gh')
+        return domain_id
 
-    @cached_property
+    @property
+    def dir_domain(self):
+        return f'/tmp/scraper-{self.domain_id}'
+
+    def make_dir_domain(self):
+        if not os.path.exists(self.dir_domain):
+            log.debug(f'Made directory {self.dir_domain}')
+            os.makedirs(self.dir_domain)
+
+    @property
     def hash_id(self):
         return hashx.md5(self.url)[: self.HASH_ID_LENGTH]
 
-    @cached_property
+    @property
     def local_path(self):
-        base_name = f'/tmp/scraper-{self.domain_id}-{self.hash_id}'
-        base_name = base_name.replace('.github', '.gh')
+        base_name = f'{self.dir_domain}/{self.hash_id}'
         if self.url.endswith('.pdf'):
             return f'{base_name}.pdf'
         return f'{base_name}.htm'
 
-    @cached_property
+    @property
     def local_file(self):
         return File(self.local_path)
 
-    @cached_property
-    def html(self):
-        if self.local_file.exists:
-            return self.local_file.read()
+    def load_html(self):
+        return self.local_file.read()
 
+    def store_html(self):
         log.debug(f'Scraping {self.url}...')
-        # scrapes html using selenium
+
         options = Options()
         options.add_argument("--headless")
         driver = webdriver.Firefox(options=options)
@@ -52,9 +61,19 @@ class BaseScraper:
         driver.close()
         driver.quit()
         html_size = len(html)
-        log.debug(f'Scraped {self.url} to {self.local_path} ({html_size:,}B)')
+
+        self.make_dir_domain()
         self.local_file.write(html)
+        log.debug(f'Scraped {self.url} to {self.local_path} ({html_size:,}B)')
+
         return html
+
+    @cached_property
+    def html(self):
+        if self.local_file.exists:
+            log.debug(f'{self.local_path} already exists.')
+            return self.load_html()
+        return self.store_html()
 
     @property
     def soup(self):
@@ -65,15 +84,17 @@ class BaseScraper:
             log.debug(f'{self.local_path} already exists.')
             return self.local_file.path
 
+        self.make_dir_domain()
+
         try:
             os.system(f'wget -O {self.local_path} {self.url}')
             file_size = os.path.getsize(self.local_path)
             log.debug(
                 f'Downloaded {self.url} to {self.local_path} ({file_size:,}B)'
             )
-        except:
+        except BaseException as e:
+            log.error(e)
             log.error(f'Could not download {self.url}')
             return None
-        
-    
+
         return self.local_file.path

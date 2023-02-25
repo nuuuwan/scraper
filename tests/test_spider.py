@@ -24,7 +24,7 @@ class TestSpider(TestCase):
     #     pdf_file_paths = spider.spider_pdfs(limit=2)
     #     self.assertEqual(
     #         pdf_file_paths,
-    #         ['/tmp/scraper-nuuuwan.gh.io-93683d24.pdf'],
+    #         ['/tmp/scraper-nuuuwan.gh.io/93683d24.pdf'],
     #     )
 
     def test_spider_tables(self):
@@ -32,5 +32,5 @@ class TestSpider(TestCase):
         table_paths = spider.spider_tables(limit=2)
         self.assertEqual(
             table_paths,
-            ['/tmp/scraper-nuuuwan.gh.io-93683d24.pdf.tables/table-00.tsv'],
+            ['/tmp/scraper-nuuuwan.gh.io/93683d24.pdf.tables/table-00.tsv'],
         )
