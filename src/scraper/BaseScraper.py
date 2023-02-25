@@ -87,7 +87,7 @@ class BaseScraper:
         self.make_dir_domain()
 
         try:
-            os.system(f'wget -O {self.local_path} {self.url}')
+            os.system(f'wget -O "{self.local_path}" "{self.url}"')
             file_size = os.path.getsize(self.local_path)
             log.debug(
                 f'Downloaded {self.url} to {self.local_path} ({file_size:,}B)'
