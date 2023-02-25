@@ -2,8 +2,8 @@ from queue import Queue
 
 from utils import Log
 
-from scraper.LinkScraper import LinkScraper
 from scraper.BaseScraper import BaseScraper
+from scraper.LinkScraper import LinkScraper
 from scraper.PDFFile import PDFFile
 
 log = Log('Spider')
@@ -37,8 +37,7 @@ class Spider:
                 if new_url in visited_url_set:
                     continue
                 url_queue.put(new_url)
-                if len(url_set) < limit:
-                    url_set.add(new_url)
+                url_set.add(new_url)
 
         log.info(f'Spidered {len(url_set)} URLs in {self.url} {limit=}.')
         return list(sorted(url_set))
