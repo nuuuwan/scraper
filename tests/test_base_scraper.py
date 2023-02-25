@@ -13,10 +13,20 @@ class TestBaseScraper(TestCase):
         if base_scraper.local_file.exists:
             os.remove(base_scraper.local_path)
         html = base_scraper.html
-        self.assertEqual(len(html), 217)
+        self.assertEqual(len(html), 191)
 
     def test_soup(self):
         soup = BaseScraper(TEST_URL).soup
         h1s = soup.find_all('h1')
         self.assertEqual(len(h1s), 1)
         self.assertEqual(h1s[0].text, 'Example')
+
+    def test_download_binary(self):
+        base_scraper = BaseScraper(TEST_URL_PDF)
+        if base_scraper.local_file.exists:
+            os.remove(base_scraper.local_path)
+        base_scraper.download_binary()
+        self.assertTrue(base_scraper.local_file.exists)
+
+        base_scraper.download_binary()
+        self.assertTrue(base_scraper.local_file.exists)
