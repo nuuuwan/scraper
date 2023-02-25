@@ -26,23 +26,26 @@ class PDFFile(File):
         )
         return path_list
 
-    def store_tables_to_local(self):
-        os.mkdir(self.dir_tables.path)
+    def get_camelot_tables(self):
         try:
-            tables = camelot.read_pdf(self.path)
+            return camelot.read_pdf(self.path)
         except BaseException:
             log.error(f'Failed to read {self.path}')
             return []
 
-        path_list = []
-        for i, table in enumerate(tables):
-            tsv_file_path = os.path.join(
-                self.dir_tables.path, f'table-{i:02d}.tsv'
-            )
-            table.to_csv(tsv_file_path, sep='\t')
-            path_list.append(tsv_file_path)
-            log.debug(f'Saved {tsv_file_path}')
+    def save_camelot_table(self, i, table):
+        tsv_file_path = os.path.join(
+            self.dir_tables.path, f'table-{i:02d}.tsv'
+        )
+        table.to_csv(tsv_file_path, sep='\t')
+        log.debug(f'Saved {tsv_file_path}')
+        return tsv_file_path
 
+    def store_tables_to_local(self):
+        os.mkdir(self.dir_tables.path)
+        path_list = []
+        for i, table in enumerate(self.get_camelot_tables()):
+            path_list.append(self.save_camelot_table(i, table))
         log.debug(f'Stored {len(path_list)} table to {self.dir_tables.path}')
         return path_list
 
