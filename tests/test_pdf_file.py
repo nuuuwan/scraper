@@ -1,3 +1,4 @@
+import shutil
 from unittest import TestCase
 
 from scraper import PDFFile
@@ -12,9 +13,13 @@ class TestPDFFile(TestCase):
         )
 
     def test_tables(self):
-        self.assertEqual(
-            TEST_PDF_FILE.tables,
-            [
-                'tests/example.pdf.tables/table-00.tsv',
-            ],
-        )
+        if TEST_PDF_FILE.dir_tables.exists:
+            shutil.rmtree(TEST_PDF_FILE.dir_tables.path)
+
+        for _ in range(2):
+            self.assertEqual(
+                TEST_PDF_FILE.tables,
+                [
+                    'tests/example.pdf.tables/table-00.tsv',
+                ],
+            )

@@ -13,9 +13,11 @@ class Spider(LinkScraper):
                 if 'http' not in url:
                     log.error(f'Not spidering {url}.')
                     continue
+                
                 if url.endswith('.pdf'):
                     log.debug(f'Not spidering PDF {url}.')
                     continue
+                
                 scraper = Spider(url)
                 urls += scraper.get_expanded_urls(max_depth - 1)
 
