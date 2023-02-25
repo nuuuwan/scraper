@@ -25,7 +25,7 @@ class BaseScraper:
 
     @property
     def dir_domain(self):
-        return f'/tmp/scraper-{self.domain_id}'
+        return f'data/scraper-{self.domain_id}'
 
     def make_dir_domain(self):
         if not os.path.exists(self.dir_domain):
