@@ -28,7 +28,12 @@ class PDFFile(File):
 
     def store_tables_to_local(self):
         os.mkdir(self.dir_tables.path)
-        tables = camelot.read_pdf(self.path)
+        try:
+            tables = camelot.read_pdf(self.path)
+        except:
+            log.error(f'Failed to read {self.path}')
+            return []
+        
         path_list = []
         for i, table in enumerate(tables):
             tsv_file_path = os.path.join(

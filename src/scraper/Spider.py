@@ -49,7 +49,8 @@ class Spider:
         for url in urls:
             if PDFFile.is_remote_url_pdf(url):
                 pdf_file_path = BaseScraper(url).download_binary()
-                pdf_file_paths.append(pdf_file_path)
+                if pdf_file_path is not None:
+                    pdf_file_paths.append(pdf_file_path)
         return pdf_file_paths
 
     def spider_tables(self, limit=1):

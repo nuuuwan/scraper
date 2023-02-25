@@ -65,9 +65,15 @@ class BaseScraper:
             log.debug(f'{self.local_path} already exists.')
             return self.local_file.path
 
-        os.system(f'wget -O {self.local_path} {self.url}')
-        file_size = os.path.getsize(self.local_path)
-        log.debug(
-            f'Downloaded {self.url} to {self.local_path} ({file_size:,}B)'
-        )
+        try:
+            os.system(f'wget -O {self.local_path} {self.url}')
+            file_size = os.path.getsize(self.local_path)
+            log.debug(
+                f'Downloaded {self.url} to {self.local_path} ({file_size:,}B)'
+            )
+        except:
+            log.error(f'Could not download {self.url}')
+            return None
+        
+    
         return self.local_file.path
