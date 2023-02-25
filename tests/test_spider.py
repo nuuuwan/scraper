@@ -7,7 +7,13 @@ from tests.test_base_scraper import TEST_URL, TEST_URL_PDF
 class TestSpider(TestCase):
     def test_expanded_pdf_urls(self):
         spider = Spider(TEST_URL)
-        expanded_urls = spider.get_expanded_urls(max_depth=0)
+        expanded_urls = spider.get_expanded_urls(approx_limit=0)
+        self.assertEqual(
+            expanded_urls,
+            [TEST_URL_PDF],
+        )
+
+        expanded_urls = spider.get_expanded_urls(approx_limit=20)
         self.assertEqual(
             expanded_urls,
             [TEST_URL_PDF],

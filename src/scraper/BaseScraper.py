@@ -1,5 +1,6 @@
 import os
 from functools import cached_property
+from urllib.parse import urlparse
 
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -10,16 +11,22 @@ log = Log('Scraper')
 
 
 class BaseScraper:
+    HASH_LENGTH = 4
+
     def __init__(self, url):
         self.url = url
 
     @cached_property
+    def domain(self):
+        return urlparse(self.url).netloc
+
+    @cached_property
     def hash(self):
-        return hashx.md5(self.url)
+        return hashx.md5(self.url)[: self.HASH_LENGTH]
 
     @cached_property
     def local_path(self):
-        return f'/tmp/scraper.{self.hash}'
+        return f'/tmp/scraper.{self.domain}.{self.hash}'
 
     @cached_property
     def local_file(self):
