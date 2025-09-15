@@ -1,6 +1,7 @@
 import json
 import os
 from dataclasses import asdict
+from functools import cached_property
 
 from utils import File, Log
 
@@ -19,6 +20,7 @@ class ReadMe:
         self.doc_class = doc_class
         self.doc_list = self.doc_class.list_all()
 
+    @cached_property
     def readme_path(self) -> str:
         return os.path.join(self.doc_class.get_dir_root(), "README.md")
 
