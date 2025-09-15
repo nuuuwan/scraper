@@ -70,6 +70,8 @@ class ReadMe:
         n_docs = len(self.doc_list)
         log.debug(f"{n_docs=}")
 
+        n_docs_with_pdfs = len([doc for doc in self.doc_list if doc.has_pdf])
+
         date_strs = [doc.date_str for doc in self.doc_list]
         date_str_min = min(date_strs)
         date_str_max = max(date_strs)
@@ -89,6 +91,7 @@ class ReadMe:
                         "Data Source": url,
                         "Date Range": f"{date_str_min} to {date_str_max}",
                         "Number of Docs": f"{n_docs:,}",
+                        "Number of Docs with PDFs": f"{n_docs_with_pdfs:,}",
                         "Dataset Size": f"{file_size_g:.1f}GB",
                     },
                 ]
