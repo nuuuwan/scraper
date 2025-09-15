@@ -69,11 +69,11 @@ class AbstractDocExtendedDataMixin:
         pdf_file = PDFFile(self.pdf_path)
         blocks = pdf_file.get_block_info_list()
         JSONFile(self.blocks_path).write(blocks)
-        log.info(f"Wrote {len(blocks):,} blocks to {self.blocks_path}")
+        log.info(f"Wrote {self.blocks_path} ({len(blocks):,} blocks)")
 
         text_lines = [block["text"] for block in blocks if block["text"]]
         File(self.readme_path).write("\n\n".join(text_lines))
-        log.info(f"Wrote README.md to {self.readme_path}")
+        log.info(f"Wrote {self.readme_path}")
 
     def scrape_extended_data(self):
         if not os.path.exists(self.dir_doc_extended):
