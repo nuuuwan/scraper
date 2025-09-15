@@ -46,6 +46,7 @@ class WWW:
             response.raise_for_status()
             with open(local_path, "wb") as f:
                 f.write(response.content)
+            log.info(f"Downloaded {self.url} to {local_path}")
         except Exception as e:
             log.error(f"Failed to download {self.url}: {e}")
             return
