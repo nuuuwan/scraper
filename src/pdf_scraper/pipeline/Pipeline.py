@@ -5,9 +5,8 @@ from utils import Log
 from pdf_scraper.abstract_doc import AbstractDoc
 from pdf_scraper.hf import HuggingFaceDataset
 from pdf_scraper.pages import AbstractHomePage
-from pdf_scraper.pipeline.PipelineExtendedDataMixin import (
-    PipelineExtendedDataMixin,
-)
+from pdf_scraper.pipeline.PipelineExtendedDataMixin import \
+    PipelineExtendedDataMixin
 from pdf_scraper.pipeline.PipelineMetadataMixin import PipelineMetadataMixin
 from pdf_scraper.readme import ReadMe
 

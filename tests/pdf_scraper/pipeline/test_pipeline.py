@@ -4,12 +4,8 @@ import unittest
 from functools import cached_property
 from unittest.mock import patch
 
-from pdf_scraper import (
-    AbstractDataPage,
-    AbstractDoc,
-    AbstractHomePage,
-    Pipeline,
-)
+from pdf_scraper import (AbstractDataPage, AbstractDoc, AbstractHomePage,
+                         Pipeline)
 from utils_future import WWW
 
 
