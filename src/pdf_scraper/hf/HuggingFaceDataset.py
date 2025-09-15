@@ -6,7 +6,7 @@ import pandas as pd
 from datasets import Dataset
 from utils import Hash, JSONFile, Log
 
-from pdf_scraper.AbstractDoc import AbstractDoc
+from pdf_scraper.abstract_doc import AbstractDoc
 from utils_future import Chunker
 
 log = Log("HuggingFaceDataset")

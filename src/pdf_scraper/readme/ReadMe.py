@@ -3,8 +3,8 @@ from dataclasses import asdict
 
 from utils import File, Log
 
-from pdf_scraper.ChartDocsByYear import ChartDocsByYear
-from pdf_scraper.HuggingFaceDataset import HuggingFaceDataset
+from pdf_scraper.hf import HuggingFaceDataset
+from pdf_scraper.readme.ChartDocsByYear import ChartDocsByYear
 from utils_future import Markdown
 
 log = Log("ReadMe")

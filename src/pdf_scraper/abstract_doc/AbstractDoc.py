@@ -6,9 +6,10 @@ from functools import cache, cached_property
 
 from utils import Hash, Log
 
-from pdf_scraper.AbstractDocExtendedDataMixin import \
+from pdf_scraper.abstract_doc.AbstractDocExtendedDataMixin import \
     AbstractDocExtendedDataMixin
-from pdf_scraper.AbstractDocMetadataMixin import AbstractDocMetadataMixin
+from pdf_scraper.abstract_doc.AbstractDocMetadataMixin import \
+    AbstractDocMetadataMixin
 
 log = Log("AbstractDoc")
 
