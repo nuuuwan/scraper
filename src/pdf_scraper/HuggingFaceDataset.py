@@ -5,9 +5,9 @@ from functools import cached_property
 import pandas as pd
 from datasets import Dataset
 from utils import Hash, JSONFile, Log
-from utils_future import Chunker
 
 from pdf_scraper.AbstractDoc import AbstractDoc
+from utils_future import Chunker
 
 log = Log("HuggingFaceDataset")
 
