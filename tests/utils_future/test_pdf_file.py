@@ -2,7 +2,6 @@ import os
 import unittest
 
 from utils_future import PDFFile
-from utils_future.pdf_file.PDFFile import PDFFile
 
 
 class TestCase(unittest.TestCase):
