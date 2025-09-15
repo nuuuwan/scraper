@@ -2,12 +2,13 @@ import sys
 
 from utils import Log
 
-from pdf_scraper.AbstractDoc import AbstractDoc
-from pdf_scraper.AbstractHomePage import AbstractHomePage
-from pdf_scraper.HuggingFaceDataset import HuggingFaceDataset
-from pdf_scraper.PipelineExtendedDataMixin import PipelineExtendedDataMixin
-from pdf_scraper.PipelineMetadataMixin import PipelineMetadataMixin
-from pdf_scraper.ReadMe import ReadMe
+from pdf_scraper.abstract_doc import AbstractDoc
+from pdf_scraper.hf import HuggingFaceDataset
+from pdf_scraper.pages import AbstractHomePage
+from pdf_scraper.pipeline.PipelineExtendedDataMixin import \
+    PipelineExtendedDataMixin
+from pdf_scraper.pipeline.PipelineMetadataMixin import PipelineMetadataMixin
+from pdf_scraper.readme import ReadMe
 
 log = Log("Pipeline")
 

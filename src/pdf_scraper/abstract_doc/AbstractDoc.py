@@ -54,7 +54,7 @@ class AbstractDoc(
         if len(self.num) < 32:
             return self.num
         h = Hash.md5(self.num)
-        return f"{self.num[:23]}-{h}[:8]"
+        return f"{self.num[:23]}-{h[:8]}"
 
     @cached_property
     def doc_id(self):
