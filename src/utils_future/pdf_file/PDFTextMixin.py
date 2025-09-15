@@ -9,11 +9,6 @@ log = Log("PDFTextMixin")
 class PDFTextMixin:
     MIN_TEXT_SIZE = 1_000
 
-    def __log_text_info_and_return__(self, text, label):
-        size = len(text)
-        log.debug(f"[{label}] Extracted {size:,} chars from {str(self)}")
-        return text
-
     @staticmethod
     def __clean_text__(text: str) -> str:
         text = text or ""
