@@ -1,5 +1,6 @@
 .DS_Store
 .vscode*
+tests/output
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

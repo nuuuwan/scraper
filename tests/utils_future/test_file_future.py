@@ -1,0 +1,24 @@
+import os
+import unittest
+
+from utils_future import FileFuture
+
+
+class TestCase(unittest.TestCase):
+    def test_method(self):
+        file_path = os.path.join("tests", "output", "test.txt")
+        f = FileFuture(file_path)
+        content = "12345678" * 1_000
+        f.write(content)
+        self.assertTrue(f.exists)
+        self.assertEqual(hash(f), hash(file_path))
+        self.assertEqual(f.size, len(content))
+        self.assertEqual(f.size_humanized, "8.0 kB")
+        self.assertEqual(str(f), f"{file_path} (8.0 kB)")
+
+    def test_small_file(self):
+        file_path = os.path.join("tests", "output", "test_small.txt")
+        f = FileFuture(file_path)
+        content = "12345678"
+        f.write(content)
+        self.assertEqual(str(f), f"{file_path} (8 B)")
