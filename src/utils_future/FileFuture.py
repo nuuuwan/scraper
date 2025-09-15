@@ -31,4 +31,4 @@ class FileFuture(File):
             if size > unit:
                 return f"{size / unit:.1f} {label}"
 
-        return size + " B"
+        return f"{size} B"
