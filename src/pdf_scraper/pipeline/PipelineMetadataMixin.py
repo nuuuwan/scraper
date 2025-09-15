@@ -12,7 +12,7 @@ class PipelineMetadataMixin:
         n_docs = len(docs)
         log.info(f"🛑 Processed {n_docs:,} docs in {dt:,.1f}s")
 
-    def __scrape_metadata__(self, max_dt):
+    def scrape_metadata(self, max_dt):
         t_start = time.time()
         home_page = self.home_page_class()
         docs = []

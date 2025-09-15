@@ -70,7 +70,6 @@ class AbstractDocMetadataMixin:
         return cls.from_dict(d)
 
     @classmethod
-    @cache
     def list_all(cls):
         doc_list = [
             cls.from_file(json_path) for json_path in cls.get_all_json_paths()
