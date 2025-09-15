@@ -1,4 +1,5 @@
 import json
+import os
 from dataclasses import asdict
 
 from utils import File, Log
@@ -11,13 +12,15 @@ log = Log("ReadMe")
 
 
 class ReadMe:
-    PATH = "README.md"
     N_LATEST = 20
 
     def __init__(self, home_page_class, doc_class):
         self.home_page_class = home_page_class
         self.doc_class = doc_class
         self.doc_list = self.doc_class.list_all()
+
+    def readme_path(self) -> str:
+        return os.path.join(self.doc_class.get_dir_root(), "README.md")
 
     @property
     def lines_for_latest_docs(self):
@@ -121,5 +124,5 @@ class ReadMe:
         if not self.doc_list:
             log.error("No documents found. Not building README.")
             return
-        File(self.PATH).write("\n".join(self.lines))
-        log.info(f"Wrote {self.PATH}")
+        File(self.readme_path).write("\n".join(self.lines))
+        log.info(f"Wrote {self.readme_path}")
