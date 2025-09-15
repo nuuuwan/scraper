@@ -118,5 +118,8 @@ class ReadMe:
         )
 
     def build(self):
+        if not self.doc_list:
+            log.error("No documents found. Not building README.")
+            return
         File(self.PATH).write("\n".join(self.lines))
         log.info(f"Wrote {self.PATH}")

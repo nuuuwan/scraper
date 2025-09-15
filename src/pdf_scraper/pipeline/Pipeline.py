@@ -5,8 +5,9 @@ from utils import Log
 from pdf_scraper.abstract_doc import AbstractDoc
 from pdf_scraper.hf import HuggingFaceDataset
 from pdf_scraper.pages import AbstractHomePage
-from pdf_scraper.pipeline.PipelineExtendedDataMixin import \
-    PipelineExtendedDataMixin
+from pdf_scraper.pipeline.PipelineExtendedDataMixin import (
+    PipelineExtendedDataMixin,
+)
 from pdf_scraper.pipeline.PipelineMetadataMixin import PipelineMetadataMixin
 from pdf_scraper.readme import ReadMe
 
@@ -25,9 +26,12 @@ class Pipeline(PipelineMetadataMixin, PipelineExtendedDataMixin):
         self.home_page_class = home_page_class
         self.doc_class = doc_class
 
-    def run(self):
-        max_dt = int(sys.argv[1]) if len(sys.argv) > 1 else None
-        max_dt = max_dt or Pipeline.DEFAULT.MAX_DT
+    def run(self, max_dt=None):
+        max_dt = (
+            max_dt
+            or (int(sys.argv[1]) if len(sys.argv) > 1 else None)
+            or Pipeline.DEFAULT.MAX_DT
+        )
         log.debug(f"{max_dt=}s")
         self.__scrape_metadata__(max_dt)
         self.__scrape_extended_data__(max_dt)
