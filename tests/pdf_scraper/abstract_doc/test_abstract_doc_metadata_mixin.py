@@ -1,6 +1,7 @@
 import os
 import shutil
 import unittest
+from unittest.mock import patch
 
 from pdf_scraper import AbstractDoc
 
@@ -38,25 +39,27 @@ class TestCase(unittest.TestCase):
         )
 
     def test_post_write(self):
-        DummyDoc.get_dir_root = lambda: os.path.join(
-            "tests", "output", "data_parent"
-        )
-        shutil.rmtree(DummyDoc.get_dir_docs_root(), ignore_errors=True)
-        doc = DummyDoc()
-        doc.write()
-        self.assertTrue(os.path.exists(doc.json_path))
+        mock_dir_root = os.path.join("tests", "output", "data_parent")
+        shutil.rmtree(mock_dir_root, ignore_errors=True)
 
-        self.assertEqual(len(DummyDoc.get_all_json_paths()), 1)
+        with patch.object(
+            DummyDoc, "get_dir_root", return_value=mock_dir_root
+        ):
 
-        doc2 = DummyDoc.from_file(doc.json_path)
-        self.assertEqual(doc2, doc)
+            doc = DummyDoc()
+            doc.write()
+            self.assertTrue(os.path.exists(doc.json_path))
 
-        doc_list = DummyDoc.list_all()
-        self.assertEqual(len(doc_list), 1)
-        self.assertEqual(doc_list[0], doc)
+            self.assertEqual(len(DummyDoc.get_all_json_paths()), 1)
+            doc2 = DummyDoc.from_file(doc.json_path)
+            self.assertEqual(doc2, doc)
 
-        self.assertEqual(
-            DummyDoc.get_url_metadata_set(), {"http://example.com/test.json"}
-        )
+            doc_list = DummyDoc.list_all()
+            self.assertEqual(len(doc_list), 1)
+            self.assertEqual(doc_list[0], doc)
 
-        self.assertEqual(DummyDoc.year_to_n(), {"2023": 1})
+            self.assertEqual(
+                DummyDoc.get_url_metadata_set(),
+                {"http://example.com/test.json"},
+            )
+            self.assertEqual(DummyDoc.year_to_n(), {"2023": 1})
