@@ -16,7 +16,6 @@ class AbstractDocMetadataMixin:
         return "."
 
     @classmethod
-    @cache
     def get_dir_docs_root(cls) -> str:
         return os.path.join(
             cls.get_dir_root(),

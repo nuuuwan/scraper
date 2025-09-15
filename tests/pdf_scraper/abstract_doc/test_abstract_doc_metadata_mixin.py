@@ -37,6 +37,7 @@ class TestCase(unittest.TestCase):
                 "doc.json",
             ),
         )
+        self.assertTrue(not os.path.exists("data"))
 
     def test_post_write(self):
         mock_dir_root = os.path.join("tests", "output", "data_parent")
@@ -47,6 +48,22 @@ class TestCase(unittest.TestCase):
         ):
 
             doc = DummyDoc()
+            self.assertEqual(
+                doc.get_dir_root(),
+                mock_dir_root,
+            )
+            self.assertEqual(
+                doc.json_path,
+                os.path.join(
+                    mock_dir_root,
+                    "data",
+                    "dummy",
+                    "2020s",
+                    "2023",
+                    "2023-10-01-1234567890",
+                    "doc.json",
+                ),
+            )
             doc.write()
             self.assertTrue(os.path.exists(doc.json_path))
 
@@ -63,3 +80,5 @@ class TestCase(unittest.TestCase):
                 {"http://example.com/test.json"},
             )
             self.assertEqual(DummyDoc.year_to_n(), {"2023": 1})
+
+        self.assertTrue(not os.path.exists("data"))
