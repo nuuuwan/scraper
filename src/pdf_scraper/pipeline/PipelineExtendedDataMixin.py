@@ -10,7 +10,11 @@ class PipelineExtendedDataMixin:
         t_start = time.time()
         doc_list = self.doc_class.list_all()
         for doc in doc_list:
-            doc.scrape_extended_data()
+            try:
+                doc.scrape_extended_data()
+            except Exception as e:
+                log.error(f"Error scraping extended data for {doc}: {e}")
+
             dt = time.time() - t_start
             if dt > max_dt:
                 log.info(f"🛑 Stopping. {dt:,.1f}s > {max_dt:,}s")
