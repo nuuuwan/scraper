@@ -16,7 +16,9 @@ log = Log("AbstractDoc")
 
 
 @dataclass
-class AbstractDoc(ABC, AbstractDocMetadataMixin, AbstractDocExtendedDataMixin):
+class AbstractDoc(
+    ABC, AbstractDocMetadataMixin, AbstractDocExtendedDataMixin
+):
     num: str
     date_str: str
     description: str
