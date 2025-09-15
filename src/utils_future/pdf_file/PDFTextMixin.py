@@ -49,8 +49,6 @@ class PDFTextMixin:
         block_info_list = []
         for page in doc:
             for b in page.get_text("dict").get("blocks", []):
-                if b.get("type", 0) != 0:
-                    continue
                 fonts, sizes, text = self.__parse_lines__(b)
                 if not text:
                     continue
