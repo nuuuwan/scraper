@@ -13,7 +13,10 @@ class AbstractDocMetadataMixin:
     @cached_property
     def dir_doc(self) -> str:
         return os.path.join(
-            self.get_dir_docs_root(), self.decade, self.year, self.doc_id
+            self.__class__.get_dir_docs_root(),
+            self.decade,
+            self.year,
+            self.doc_id,
         )
 
     @cached_property
@@ -45,9 +48,6 @@ class AbstractDocMetadataMixin:
         sig = inspect.signature(cls.__init__)
         valid_keys = set(sig.parameters) - {"self"}
         filtered_data = {k: v for k, v in d.items() if k in valid_keys}
-        # HACK!
-        if "url_metadata" not in filtered_data:
-            filtered_data["url_metadata"] = None
         return cls(**filtered_data)
 
     @classmethod

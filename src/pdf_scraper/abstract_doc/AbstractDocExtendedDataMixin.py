@@ -15,7 +15,7 @@ class AbstractDocExtendedDataMixin:
     @cached_property
     def dir_doc_extended_without_base(self) -> str:
         return os.path.join(
-            self.get_dir_docs_root(),
+            self.__class__.get_dir_docs_root(),
             self.decade,
             self.year,
             self.doc_id,
