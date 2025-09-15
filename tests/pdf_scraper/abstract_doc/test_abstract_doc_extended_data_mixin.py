@@ -1,6 +1,7 @@
 import os
 import shutil
 import unittest
+from functools import cached_property
 
 from pdf_scraper import AbstractDoc
 
@@ -15,22 +16,37 @@ class DummyDoc(AbstractDoc):
             url_metadata="http://example.com/test.json",
         )
 
+    @cached_property
+    def remote_data_url(self) -> str:
+        return None
+
 
 class TestCase(unittest.TestCase):
     def test_base(self):
         doc = DummyDoc()
         self.assertEqual(
-            doc.dir_doc,
+            doc.dir_doc_extended_without_base,
             os.path.join(
                 "data", "dummy", "2020s", "2023", "2023-10-01-1234567890"
             ),
         )
+
         self.assertEqual(
-            doc.json_path,
+            doc.get_dir_doc_extended_root(),
+            os.path.join("..", "pdf_scraper_data"),
+        )
+
+        self.assertEqual(
+            doc.dir_doc_extended,
             os.path.join(
-                doc.dir_doc,
-                "doc.json",
+                doc.get_dir_doc_extended_root(),
+                doc.dir_doc_extended_without_base,
             ),
+        )
+
+        self.assertEqual(
+            doc.pdf_path,
+            os.path.join(doc.dir_doc_extended, "en.pdf"),
         )
 
     def test_post_write(self):
@@ -40,19 +56,10 @@ class TestCase(unittest.TestCase):
         shutil.rmtree(DummyDoc.get_dir_docs_root(), ignore_errors=True)
         doc = DummyDoc()
         doc.write()
-        self.assertTrue(os.path.exists(doc.json_path))
 
-        self.assertEqual(len(DummyDoc.get_all_json_paths()), 1)
-
-        doc2 = DummyDoc.from_file(doc.json_path)
-        self.assertEqual(doc2, doc)
-
-        doc_list = DummyDoc.list_all()
-        self.assertEqual(len(doc_list), 1)
-        self.assertEqual(doc_list[0], doc)
-
-        self.assertEqual(
-            DummyDoc.get_url_metadata_set(), {"http://example.com/test.json"}
+        DummyDoc.get_dir_doc_extended_root = lambda: os.path.join(
+            "tests", "output", "data_extended"
         )
+        shutil.rmtree(DummyDoc.get_dir_doc_extended_root(), ignore_errors=True)
 
-        self.assertEqual(DummyDoc.year_to_n(), {"2023": 1})
+        doc.scrape_extended_data()

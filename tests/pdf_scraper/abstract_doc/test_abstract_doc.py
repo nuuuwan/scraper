@@ -4,7 +4,7 @@ import unittest
 from pdf_scraper import AbstractDoc
 
 
-class TestDoc(AbstractDoc):
+class DummyDoc(AbstractDoc):
     def __init__(self):
         super().__init__(
             num="1234567890",
@@ -17,26 +17,26 @@ class TestDoc(AbstractDoc):
 
 class TestCase(unittest.TestCase):
     def test_method(self):
-        test_doc = TestDoc()
-        self.assertEqual(test_doc.doc_class_label(), "test")
-        self.assertEqual(test_doc.doc_class_pretty_label(), "Test")
+        doc = DummyDoc()
+        self.assertEqual(doc.doc_class_label(), "dummy")
+        self.assertEqual(doc.doc_class_pretty_label(), "Dummy")
         self.assertEqual(
-            test_doc.doc_class_description(),
-            "A collection of Test documents.",
+            doc.doc_class_description(),
+            "A collection of Dummy documents.",
         )
         self.assertEqual(
-            test_doc.get_dir_docs_root(), os.path.join("data", "test")
+            doc.get_dir_docs_root(), os.path.join("data", "dummy")
         )
-        self.assertEqual(test_doc.num_short, "1234567890")
-        self.assertEqual(test_doc.doc_id, "2023-10-01-1234567890")
-        self.assertEqual(test_doc.decade, "2020s")
-        self.assertEqual(test_doc.year, "2023")
-        self.assertEqual(test_doc.year_and_month, "2023-10")
+        self.assertEqual(doc.num_short, "1234567890")
+        self.assertEqual(doc.doc_id, "2023-10-01-1234567890")
+        self.assertEqual(doc.decade, "2020s")
+        self.assertEqual(doc.year, "2023")
+        self.assertEqual(doc.year_and_month, "2023-10")
 
     def test_num_short_long(self):
-        test_doc = TestDoc()
-        test_doc.num = test_doc.num * 40
+        doc = DummyDoc()
+        doc.num = doc.num * 40
         self.assertEqual(
-            test_doc.num_short,
+            doc.num_short,
             "12345678901234567890123-e92dc0f9",
         )
