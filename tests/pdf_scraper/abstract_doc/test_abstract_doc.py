@@ -1,4 +1,3 @@
-import os
 import unittest
 
 from pdf_scraper import AbstractDoc
