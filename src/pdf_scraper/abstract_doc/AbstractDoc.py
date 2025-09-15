@@ -6,18 +6,18 @@ from functools import cache, cached_property
 
 from utils import Hash, Log
 
-from pdf_scraper.abstract_doc.AbstractDocExtendedDataMixin import \
-    AbstractDocExtendedDataMixin
-from pdf_scraper.abstract_doc.AbstractDocMetadataMixin import \
-    AbstractDocMetadataMixin
+from pdf_scraper.abstract_doc.AbstractDocExtendedDataMixin import (
+    AbstractDocExtendedDataMixin,
+)
+from pdf_scraper.abstract_doc.AbstractDocMetadataMixin import (
+    AbstractDocMetadataMixin,
+)
 
 log = Log("AbstractDoc")
 
 
 @dataclass
-class AbstractDoc(
-    ABC, AbstractDocMetadataMixin, AbstractDocExtendedDataMixin
-):
+class AbstractDoc(ABC, AbstractDocMetadataMixin, AbstractDocExtendedDataMixin):
     num: str
     date_str: str
     description: str
@@ -40,14 +40,6 @@ class AbstractDoc(
     @cache
     def doc_class_description(cls) -> str:
         return f"A collection of {cls.doc_class_pretty_label()} documents."
-
-    @classmethod
-    @cache
-    def get_dir_docs_root(cls) -> str:
-        return os.path.join(
-            "data",
-            cls.doc_class_label(),
-        )
 
     @cached_property
     def num_short(self):

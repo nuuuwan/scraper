@@ -10,6 +10,20 @@ log = Log("AbstractDocMetadataMixin")
 
 
 class AbstractDocMetadataMixin:
+
+    @classmethod
+    def get_dir_root(cls) -> str:
+        return "."
+
+    @classmethod
+    @cache
+    def get_dir_docs_root(cls) -> str:
+        return os.path.join(
+            cls.get_dir_root(),
+            "data",
+            cls.doc_class_label(),
+        )
+
     @cached_property
     def dir_doc(self) -> str:
         return os.path.join(

@@ -25,7 +25,7 @@ class HuggingFaceDataset:
     @cached_property
     def docs_json_path(self):
         return os.path.join(
-            self.doc_class.get_dir_doc_extended_root(), "docs.json"
+            self.doc_class.get_dir_extended_root(), "docs.json"
         )
 
     def build_docs(self):
@@ -58,7 +58,7 @@ class HuggingFaceDataset:
     @cached_property
     def chunks_json_path(self):
         return os.path.join(
-            self.doc_class.get_dir_doc_extended_root(), "chunks.json"
+            self.doc_class.get_dir_extended_root(), "chunks.json"
         )
 
     def build_chunks(self):
@@ -97,9 +97,7 @@ class HuggingFaceDataset:
 
         for ds, suffix in [(docs_ds, "docs"), (chunks_ds, "chunks")]:
             dataset_id = self.get_dataset_id(suffix)
-            repo_id = ds.push_to_hub(
-                dataset_id, token=self.HUGGING_FACE_TOKEN
-            )
+            repo_id = ds.push_to_hub(dataset_id, token=self.HUGGING_FACE_TOKEN)
             log.info(f"🤗 Uploaded {dataset_id} to {repo_id}")
 
     def build_and_upload(self):

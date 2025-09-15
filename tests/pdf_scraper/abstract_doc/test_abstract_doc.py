@@ -24,9 +24,7 @@ class TestCase(unittest.TestCase):
             doc.doc_class_description(),
             "A collection of Dummy documents.",
         )
-        self.assertEqual(
-            doc.get_dir_docs_root(), os.path.join("data", "dummy")
-        )
+
         self.assertEqual(doc.num_short, "1234567890")
         self.assertEqual(doc.doc_id, "2023-10-01-1234567890")
         self.assertEqual(doc.decade, "2020s")

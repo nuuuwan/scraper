@@ -19,10 +19,14 @@ class DummyDoc(AbstractDoc):
 class TestCase(unittest.TestCase):
     def test_base(self):
         doc = DummyDoc()
+
+        self.assertEqual(
+            doc.get_dir_docs_root(), os.path.join(".", "data", "dummy")
+        )
         self.assertEqual(
             doc.dir_doc,
             os.path.join(
-                "data", "dummy", "2020s", "2023", "2023-10-01-1234567890"
+                ".", "data", "dummy", "2020s", "2023", "2023-10-01-1234567890"
             ),
         )
         self.assertEqual(
@@ -34,8 +38,8 @@ class TestCase(unittest.TestCase):
         )
 
     def test_post_write(self):
-        DummyDoc.get_dir_docs_root = lambda: os.path.join(
-            "tests", "output", "data"
+        DummyDoc.get_dir_root = lambda: os.path.join(
+            "tests", "output", "data_parent"
         )
         shutil.rmtree(DummyDoc.get_dir_docs_root(), ignore_errors=True)
         doc = DummyDoc()
