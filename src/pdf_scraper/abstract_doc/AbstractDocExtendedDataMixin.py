@@ -80,7 +80,7 @@ class AbstractDocExtendedDataMixin:
             os.makedirs(self.dir_doc_extended)
             self.copy_metadata()
         if not self.has_pdf:
-            WWW(self.remote_data_url).download_binary(self.pdf_path)
+            WWW(self.url_pdf).download_binary(self.pdf_path)
         if not os.path.exists(self.blocks_path):
             self.extract_blocks()
 
