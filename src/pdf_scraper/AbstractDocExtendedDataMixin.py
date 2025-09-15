@@ -3,7 +3,6 @@ import shutil
 from functools import cached_property
 
 from utils import File, JSONFile, Log
-
 from utils_future import WWW, PDFFile
 
 log = Log("AbstractDocExtendedDataMixin")
