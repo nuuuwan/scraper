@@ -2,7 +2,7 @@ import inspect
 import os
 import pathlib
 from dataclasses import asdict
-from functools import cache, cached_property
+from functools import cached_property
 
 from utils import JSONFile, Log
 

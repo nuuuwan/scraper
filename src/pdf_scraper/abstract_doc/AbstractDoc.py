@@ -1,16 +1,14 @@
 import re
 from abc import ABC
 from dataclasses import dataclass
-from functools import cache, cached_property
+from functools import cached_property
 
 from utils import Hash, Log
 
-from pdf_scraper.abstract_doc.AbstractDocExtendedDataMixin import (
-    AbstractDocExtendedDataMixin,
-)
-from pdf_scraper.abstract_doc.AbstractDocMetadataMixin import (
-    AbstractDocMetadataMixin,
-)
+from pdf_scraper.abstract_doc.AbstractDocExtendedDataMixin import \
+    AbstractDocExtendedDataMixin
+from pdf_scraper.abstract_doc.AbstractDocMetadataMixin import \
+    AbstractDocMetadataMixin
 
 log = Log("AbstractDoc")
 
