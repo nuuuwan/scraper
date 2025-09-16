@@ -4,8 +4,7 @@ import unittest
 from functools import cached_property
 from unittest.mock import patch
 
-from pdf_scraper import (AbstractDataPage, AbstractDoc, AbstractHomePage,
-                         Pipeline)
+from pdf_scraper import AbstractDataPage, AbstractDoc, Pipeline
 from utils_future import WWW
 
 
@@ -37,16 +36,6 @@ class DummyDataPage(AbstractDataPage):
         yield dummy_doc
 
 
-class DummyHomePage(AbstractHomePage):
-    def __init__(self):
-        super().__init__("https://example.com")
-
-    def gen_data_pages(self):
-        dummy_data_page = DummyDataPage(self.url)
-        yield dummy_data_page
-        yield dummy_data_page
-
-
 class TestCase(unittest.TestCase):
     def test_pipeline_run(self):
         def mock_download_binary(local_path):
@@ -59,11 +48,11 @@ class TestCase(unittest.TestCase):
             WWW, "download_binary", side_effect=mock_download_binary
         ):
             pipeline = Pipeline(
-                home_page_class=DummyHomePage,
+                data_page_class=DummyDataPage,
                 doc_class=DummyDoc,
             )
             pipeline.run(max_dt=0.0001)
-            pipeline.run(max_dt=1_000)
+            pipeline.run(max_dt=10)
 
             doc_list = DummyDoc.list_all()
             self.assertEqual(len(doc_list), 1)

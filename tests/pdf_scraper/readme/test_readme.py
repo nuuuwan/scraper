@@ -3,12 +3,7 @@ import unittest
 from functools import cached_property
 from unittest.mock import patch
 
-from pdf_scraper import AbstractDoc, AbstractHomePage, ReadMe
-
-
-class DummyHomePage(AbstractHomePage):
-    def __init__(self):
-        super().__init__("http://example.com")
+from pdf_scraper import AbstractDoc, ReadMe
 
 
 class DummyDoc(AbstractDoc):
@@ -19,9 +14,7 @@ class DummyDoc(AbstractDoc):
 
 class TestCase(unittest.TestCase):
     def test_empty(self):
-        readme = ReadMe(
-            home_page_class=AbstractHomePage, doc_class=AbstractDoc
-        )
+        readme = ReadMe(doc_class=AbstractDoc)
         self.assertEqual(len(readme.doc_list), 0)
         readme.build()
 
@@ -40,6 +33,6 @@ class TestCase(unittest.TestCase):
                 )
             ],
         ), patch.object(DummyDoc, "get_dir_root", return_value=mock_dir_root):
-            readme = ReadMe(home_page_class=DummyHomePage, doc_class=DummyDoc)
+            readme = ReadMe(doc_class=DummyDoc)
             self.assertEqual(len(readme.doc_list), 1)
             readme.build()

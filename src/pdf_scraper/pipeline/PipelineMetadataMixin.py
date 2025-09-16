@@ -14,17 +14,12 @@ class PipelineMetadataMixin:
 
     def scrape_metadata(self, max_dt):
         t_start = time.time()
-        home_page = self.home_page_class()
         docs = []
         dt = 0
-        url_metadata_set = self.doc_class.get_url_metadata_set()
-        for data_page in home_page.gen_data_pages():
-            if data_page.url in url_metadata_set:
-                continue
-            for doc in data_page.gen_docs():
-                doc.write()
-                docs.append(doc)
-            url_metadata_set.add(data_page.url)
+        data_page = self.data_page_class()
+        for doc in data_page.gen_docs():
+            doc.write()
+            docs.append(doc)
             dt = time.time() - t_start
             if dt > max_dt:
                 PipelineMetadataMixin.__log_processed_doc__(docs, dt)

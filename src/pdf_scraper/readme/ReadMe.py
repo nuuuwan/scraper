@@ -2,6 +2,7 @@ import json
 import os
 from dataclasses import asdict
 from functools import cached_property
+from urllib.parse import urlparse
 
 from utils import File, Log
 
@@ -15,8 +16,7 @@ log = Log("ReadMe")
 class ReadMe:
     N_LATEST = 20
 
-    def __init__(self, home_page_class, doc_class):
-        self.home_page_class = home_page_class
+    def __init__(self, doc_class):
         self.doc_class = doc_class
         self.doc_list = self.doc_class.list_all()
 
@@ -76,9 +76,11 @@ class ReadMe:
         date_str_min = min(date_strs)
         date_str_max = max(date_strs)
 
-        url = self.home_page_class().url
         file_size_g = self.doc_class.get_total_file_size() / 1_000_000_000
         log.debug(f"{file_size_g=:.1f}")
+
+        latest_doc = self.doc_list[0]
+        netloc = urlparse(latest_doc.url_metadata).netloc
 
         return (
             [
@@ -88,7 +90,7 @@ class ReadMe:
             + Markdown.table(
                 [
                     {
-                        "Data Source": url,
+                        "Data Source": netloc,
                         "Date Range": f"{date_str_min} to {date_str_max}",
                         "Number of Docs": f"{n_docs:,}",
                         "Number of Docs with PDFs": f"{n_docs_with_pdfs:,}",
