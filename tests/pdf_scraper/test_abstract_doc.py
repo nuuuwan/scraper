@@ -14,7 +14,7 @@ DIR_TEST_PIPELINE = os.path.join("tests", "output", "test_pipeline")
 class DummyDoc(AbstractDoc):
     def __init__(self):
         super().__init__(
-            num="1234567890",
+            num="1234567890" * 100,
             date_str="2023-10-01",
             description="Test Document",
             url_pdf="http://mock.com/doc.pdf",
@@ -51,6 +51,7 @@ class TestCase(unittest.TestCase):
         ):
 
             DummyDoc.run_pipeline(max_dt=0.001)
+            DummyDoc.run_pipeline(max_dt=10)
 
             self.assertTrue(os.path.exists(DummyDoc.get_dir_root()))
             self.assertTrue(os.path.exists(DummyDoc.get_dir_extended_root()))
