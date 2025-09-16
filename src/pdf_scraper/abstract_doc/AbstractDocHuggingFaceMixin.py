@@ -67,12 +67,8 @@ class AbstractDocHuggingFaceMixin:
 
     @classmethod
     def get_hugging_face_project(cls):
-        return "/".join(
-            [
-                cls.HUGGING_FACE_USERNAME,
-                f"lk-docs-{cls.get_doc_class_label()}",
-            ]
-        )
+        label = cls.get_doc_class_label().replace("_", "-").lower()
+        return f"{cls.HUGGING_FACE_USERNAME}/{label}"
 
     @classmethod
     def get_dataset_id(cls, label_suffix: str) -> str:
