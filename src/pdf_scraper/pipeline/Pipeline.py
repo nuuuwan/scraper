@@ -3,13 +3,10 @@ import sys
 from utils import Log
 
 from pdf_scraper.abstract_doc import AbstractDoc
-from pdf_scraper.AbstractDocGenerator import AbstractDocGenerator
-from pdf_scraper.HuggingFaceDataset import HuggingFaceDataset
 from pdf_scraper.pipeline.PipelineCleanupMixin import PipelineCleanupMixin
 from pdf_scraper.pipeline.PipelineExtendedDataMixin import \
     PipelineExtendedDataMixin
 from pdf_scraper.pipeline.PipelineMetadataMixin import PipelineMetadataMixin
-from pdf_scraper.ReadMe import ReadMe
 
 log = Log("Pipeline")
 
@@ -22,10 +19,8 @@ class Pipeline(
 
     def __init__(
         self,
-        data_page_class: type[AbstractDocGenerator],
         doc_class: type[AbstractDoc],
     ):
-        self.data_page_class = data_page_class
         self.doc_class = doc_class
 
     def run(self, max_dt=None):
@@ -38,5 +33,5 @@ class Pipeline(
         self.cleanup()
         self.scrape_metadata(max_dt)
         self.scrape_extended_data(max_dt)
-        ReadMe(self.doc_class).build()
-        HuggingFaceDataset(self.doc_class).build_and_upload()
+        self.doc_class.readme_build()
+        self.doc_class.build_and_upload()

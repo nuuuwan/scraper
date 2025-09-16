@@ -1,33 +1,28 @@
 import json
 import os
 from dataclasses import asdict
-from functools import cached_property
 from urllib.parse import urlparse
 
 from utils import File, Log
 
-from pdf_scraper.ChartDocsByYear import ChartDocsByYear
-from pdf_scraper.HuggingFaceDataset import HuggingFaceDataset
+from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import \
+    AbstractDocChartDocsByYearMixin
 from utils_future import Markdown
 
-log = Log("ReadMe")
+log = Log("AbstractDocReadMeMixin")
 
 
-class ReadMe:
+class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
     N_LATEST = 20
 
-    def __init__(self, doc_class):
-        self.doc_class = doc_class
-        self.doc_list = self.doc_class.list_all()
+    @classmethod
+    def readme_path(cls) -> str:
+        return os.path.join(cls.get_dir_root(), "README.md")
 
-    @cached_property
-    def readme_path(self) -> str:
-        return os.path.join(self.doc_class.get_dir_root(), "README.md")
-
-    @property
-    def lines_for_latest_docs(self):
-        lines = [f"## {self.N_LATEST} Latest documents", ""]
-        for doc in self.doc_list[: self.N_LATEST]:
+    @classmethod
+    def lines_for_latest_docs(cls):
+        lines = [f"## {cls.N_LATEST} Latest documents", ""]
+        for doc in cls.list_all()[: cls.N_LATEST]:
             line = "- " + " | ".join(
                 [
                     doc.date_str,
@@ -40,9 +35,9 @@ class ReadMe:
         lines.append("")
         return lines
 
-    @property
-    def lines_chart_docs_by_year(self) -> list[str]:
-        chart = ChartDocsByYear(self.doc_class)
+    @classmethod
+    def lines_chart_docs_by_year(cls) -> list[str]:
+        chart = ChartDocsByYear(cls)
         chart.build()
         return [
             "## Documents By Year",
@@ -51,9 +46,9 @@ class ReadMe:
             "",
         ]
 
-    @property
-    def lines_for_metadata_example(self) -> list[str]:
-        latest_doc = self.doc_list[0]
+    @classmethod
+    def lines_for_metadata_example(cls) -> list[str]:
+        latest_doc = cls.doc_list[0]
         return [
             "## Document Metadata Example",
             "",
@@ -65,21 +60,21 @@ class ReadMe:
             "",
         ]
 
-    @property
-    def lines_for_summary(self) -> list[str]:
-        n_docs = len(self.doc_list)
+    @classmethod
+    def lines_for_summary(cls) -> list[str]:
+        n_docs = len(cls.doc_list)
         log.debug(f"{n_docs=}")
 
-        n_docs_with_pdfs = len([doc for doc in self.doc_list if doc.has_pdf])
+        n_docs_with_pdfs = len([doc for doc in cls.doc_list if doc.has_pdf])
 
-        date_strs = [doc.date_str for doc in self.doc_list]
+        date_strs = [doc.date_str for doc in cls.doc_list]
         date_str_min = min(date_strs)
         date_str_max = max(date_strs)
 
-        file_size_g = self.doc_class.get_total_file_size() / 1_000_000_000
+        file_size_g = cls.get_total_file_size() / 1_000_000_000
         log.debug(f"{file_size_g=:.1f}")
 
-        latest_doc = self.doc_list[0]
+        latest_doc = cls.doc_list[0]
         netloc = urlparse(latest_doc.url_metadata).netloc
 
         return (
@@ -101,35 +96,36 @@ class ReadMe:
             + [""]
         )
 
-    @property
-    def lines_for_hugging_face(self):
+    @classmethod
+    def lines_for_hugging_face(cls):
         lines = ["## 🤗 Hugging Face Datasets", ""]
-        hf_dataset = HuggingFaceDataset(self.doc_class)
+
         for label_suffix in ["docs", "chunks"]:
-            dataset_id = hf_dataset.get_dataset_id(label_suffix)
-            url = hf_dataset.get_dataset_url(label_suffix)
+            dataset_id = cls.get_dataset_id(label_suffix)
+            url = cls.get_dataset_url(label_suffix)
             lines.append(f"- [{dataset_id}]({url})")
         lines.append("")
         return lines
 
-    @property
-    def lines_for_header(self) -> list[str]:
-        return [f"# {self.doc_class.doc_class_label().title()}", ""]
+    @classmethod
+    def lines_for_header(cls) -> list[str]:
+        return [f"# {cls.doc_class_label().title()}", ""]
 
-    @property
-    def lines(self) -> list[str]:
+    @classmethod
+    def lines(cls) -> list[str]:
         return (
-            self.lines_for_header
-            + self.lines_for_summary
-            + self.lines_for_metadata_example
-            + self.lines_chart_docs_by_year
-            + self.lines_for_hugging_face
-            + self.lines_for_latest_docs
+            cls.lines_for_header()
+            + cls.lines_for_summary()
+            + cls.lines_for_metadata_example()
+            + cls.lines_chart_docs_by_year()
+            + cls.lines_for_hugging_face()
+            + cls.lines_for_latest_docs()
         )
 
-    def build(self):
-        if not self.doc_list:
+    @classmethod
+    def readme_build(cls):
+        if not cls.doc_list:
             log.error("No documents found. Not building README.")
             return
-        File(self.readme_path).write("\n".join(self.lines))
-        log.info(f"Wrote {self.readme_path}")
+        File(cls.readme_path).write("\n".join(cls.lines))
+        log.info(f"Wrote {cls.readme_path}")
