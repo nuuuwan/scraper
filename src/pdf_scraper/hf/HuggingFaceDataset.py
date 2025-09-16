@@ -7,7 +7,7 @@ from datasets import Dataset
 from utils import Hash, JSONFile, Log
 
 from pdf_scraper.abstract_doc import AbstractDoc
-from utils_future import Chunker
+from utils_future import BigJSONFile, Chunker
 
 log = Log("HuggingFaceDataset")
 
@@ -24,14 +24,12 @@ class HuggingFaceDataset:
 
     @cached_property
     def docs_json_path(self):
-        return os.path.join(
-            self.doc_class.get_dir_extended_root(), "docs.json"
-        )
+        return os.path.join(self.doc_class.get_dir_extended_root(), "docs")
 
     def build_docs(self):
-        data_list = [asdict(doc) for doc in self.doc_list]
-        JSONFile(self.docs_json_path).write(data_list)
-        log.info(f"Wrote {self.docs_json_path}")
+        d_list = [asdict(doc) for doc in self.doc_list]
+        BigJSONFile(self.docs_json_path).write(d_list)
+        return d_list
 
     @staticmethod
     def get_data_list_for_doc(doc):
@@ -57,17 +55,15 @@ class HuggingFaceDataset:
 
     @cached_property
     def chunks_json_path(self):
-        return os.path.join(
-            self.doc_class.get_dir_extended_root(), "chunks.json"
-        )
+        return os.path.join(self.doc_class.get_dir_extended_root(), "chunks")
 
     def build_chunks(self):
         d_list = []
         for doc in self.doc_list:
             d_list.extend(HuggingFaceDataset.get_data_list_for_doc(doc))
 
-        JSONFile(self.chunks_json_path).write(d_list)
-        log.info(f"Wrote {self.chunks_json_path}")
+        BigJSONFile(self.chunks_json_path).write(d_list)
+        return d_list
 
     @cached_property
     def hugging_face_project(self):
@@ -88,8 +84,8 @@ class HuggingFaceDataset:
         )
 
     def upload_to_hugging_face(self):
-        docs_df = pd.read_json(self.docs_json_path)
-        chunks_df = pd.read_json(self.chunks_json_path)
+        docs_df = pd.DataFrame(self.build_docs())
+        chunks_df = pd.DataFrame(self.build_chunks())
         docs_ds = Dataset.from_pandas(docs_df)
         chunks_ds = Dataset.from_pandas(chunks_df)
         assert self.HUGGING_FACE_USERNAME
@@ -97,17 +93,11 @@ class HuggingFaceDataset:
 
         for ds, suffix in [(docs_ds, "docs"), (chunks_ds, "chunks")]:
             dataset_id = self.get_dataset_id(suffix)
-            repo_id = ds.push_to_hub(
-                dataset_id, token=self.HUGGING_FACE_TOKEN
-            )
+            repo_id = ds.push_to_hub(dataset_id, token=self.HUGGING_FACE_TOKEN)
             log.info(f"🤗 Uploaded {dataset_id} to {repo_id}")
 
     def build_and_upload(self):
         if not self.doc_list:
-            log.error(
-                "No documents found. Not building Hugging Face dataset."
-            )
+            log.error("No documents found. Not building Hugging Face dataset.")
             return
-        self.build_docs()
-        self.build_chunks()
         self.upload_to_hugging_face()
