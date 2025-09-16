@@ -3,13 +3,13 @@ import sys
 from utils import Log
 
 from pdf_scraper.abstract_doc import AbstractDoc
-from pdf_scraper.hf import HuggingFaceDataset
-from pdf_scraper.pages import AbstractDataPage
+from pdf_scraper.AbstractDataPage import AbstractDataPage
+from pdf_scraper.HuggingFaceDataset import HuggingFaceDataset
 from pdf_scraper.pipeline.PipelineCleanupMixin import PipelineCleanupMixin
 from pdf_scraper.pipeline.PipelineExtendedDataMixin import \
     PipelineExtendedDataMixin
 from pdf_scraper.pipeline.PipelineMetadataMixin import PipelineMetadataMixin
-from pdf_scraper.readme import ReadMe
+from pdf_scraper.ReadMe import ReadMe
 
 log = Log("Pipeline")
 

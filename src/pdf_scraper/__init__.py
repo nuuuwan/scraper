@@ -4,9 +4,10 @@
 from pdf_scraper.abstract_doc import (AbstractDoc,
                                       AbstractDocExtendedDataMixin,
                                       AbstractDocMetadataMixin)
-from pdf_scraper.hf import HuggingFaceDataset
-from pdf_scraper.pages import AbstractDataPage
+from pdf_scraper.AbstractDataPage import AbstractDataPage
+from pdf_scraper.ChartDocsByYear import ChartDocsByYear
+from pdf_scraper.HuggingFaceDataset import HuggingFaceDataset
 from pdf_scraper.pipeline import (Pipeline, PipelineCleanupMixin,
                                   PipelineExtendedDataMixin,
                                   PipelineMetadataMixin)
-from pdf_scraper.readme import ChartDocsByYear, ReadMe
+from pdf_scraper.ReadMe import ReadMe
