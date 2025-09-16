@@ -42,9 +42,28 @@ class AbstractDocExtendedDataMixin:
     def has_pdf(self) -> bool:
         return os.path.exists(self.pdf_path)
 
+    @classmethod
+    def get_remote_data_url_base(cls) -> str:
+        assert os.environ["GITHUB_USERNAME"]
+        return "/".join(
+            [
+                "https://github.com",
+                os.environ["GITHUB_USERNAME"],
+                cls.get_doc_class_label(),
+                "tree",
+                "data",
+            ]
+        )
+
     @cached_property
     def remote_data_url(self) -> str:
-        return None
+        return "/".join(
+            [
+                self.get_remote_data_url_base(),
+                self.__class__.get_dir_docs_for_cls_relative(),
+                self.dir_doc_relative_to_class,
+            ]
+        )
 
     @cached_property
     def blocks_path(self) -> str:
