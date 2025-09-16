@@ -14,7 +14,7 @@ DIR_TEST_PIPELINE = os.path.join("tests", "output", "test_pipeline")
 class DummyDoc(AbstractDoc):
     def __init__(self):
         super().__init__(
-            num="1234567890" * 100,
+            num="1234567890",
             date_str="2023-10-01",
             description="Test Document",
             url_pdf="http://mock.com/doc.pdf",
@@ -35,8 +35,18 @@ class DummyDoc(AbstractDoc):
 
 
 class TestCase(unittest.TestCase):
-    def test_abstract(self):
+    def test_gen_docs(self):
         self.assertEqual(AbstractDoc.gen_docs(), None)
+
+    def test_num_short(self):
+        doc = AbstractDoc(
+            num="1234567890" * 10,
+            date_str="2023-10-01",
+            description="Test Document",
+            url_pdf="http://mock.com/doc.pdf",
+            url_metadata="http://mock.com/doc.html",
+        )
+        self.assertEqual(doc.num_short, "12345678901234567890123-49cb3608")
 
     def test_pipeline(self):
         shutil.rmtree(DIR_TEST_PIPELINE, ignore_errors=True)
