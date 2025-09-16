@@ -4,7 +4,7 @@ import unittest
 from functools import cached_property
 from unittest.mock import patch
 
-from pdf_scraper import AbstractDataPage, AbstractDoc, Pipeline
+from pdf_scraper import AbstractDoc, AbstractDocGenerator, Pipeline
 from utils_future import WWW
 
 
@@ -23,7 +23,7 @@ class DummyDoc(AbstractDoc):
         return self.url_pdf
 
 
-class DummyDataPage(AbstractDataPage):
+class DummyDataPage(AbstractDocGenerator):
     def gen_docs(self):
         dummy_doc = DummyDoc(
             num="1234567890",

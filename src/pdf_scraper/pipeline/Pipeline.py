@@ -3,7 +3,7 @@ import sys
 from utils import Log
 
 from pdf_scraper.abstract_doc import AbstractDoc
-from pdf_scraper.AbstractDataPage import AbstractDataPage
+from pdf_scraper.AbstractDocGenerator import AbstractDocGenerator
 from pdf_scraper.HuggingFaceDataset import HuggingFaceDataset
 from pdf_scraper.pipeline.PipelineCleanupMixin import PipelineCleanupMixin
 from pdf_scraper.pipeline.PipelineExtendedDataMixin import \
@@ -22,7 +22,7 @@ class Pipeline(
 
     def __init__(
         self,
-        data_page_class: type[AbstractDataPage],
+        data_page_class: type[AbstractDocGenerator],
         doc_class: type[AbstractDoc],
     ):
         self.data_page_class = data_page_class
