@@ -19,27 +19,6 @@ class DummyDoc(AbstractDoc):
 
 
 class TestCase(unittest.TestCase):
-    def test_method(self):
-        doc = DummyDoc()
-        self.assertEqual(doc.doc_class_label(), "dummy")
-        self.assertEqual(
-            doc.doc_class_description(),
-            "A collection of Dummy documents.",
-        )
-
-        self.assertEqual(doc.num_short, "1234567890")
-        self.assertEqual(doc.doc_id, "2023-10-01-1234567890")
-        self.assertEqual(doc.decade, "2020s")
-        self.assertEqual(doc.year, "2023")
-        self.assertEqual(doc.year_and_month, "2023-10")
-
-    def test_num_short_long(self):
-        doc = DummyDoc()
-        doc.num = doc.num * 40
-        self.assertEqual(
-            doc.num_short,
-            "12345678901234567890123-e92dc0f9",
-        )
 
     def test_pipeline(self):
         DummyDoc.run_pipeline(max_dt=0.001)

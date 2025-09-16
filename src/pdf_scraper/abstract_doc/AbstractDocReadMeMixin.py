@@ -16,11 +16,11 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
     N_LATEST = 20
 
     @classmethod
-    def readme_path(cls) -> str:
+    def get_readme_path(cls) -> str:
         return os.path.join(cls.get_dir_root(), "README.md")
 
     @classmethod
-    def lines_for_latest_docs(cls):
+    def get_lines_for_latest_docs(cls):
         lines = [f"## {cls.N_LATEST} Latest documents", ""]
         for doc in cls.list_all()[: cls.N_LATEST]:
             line = "- " + " | ".join(
@@ -36,17 +36,17 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         return lines
 
     @classmethod
-    def lines_chart_docs_by_year(cls) -> list[str]:
-        cls.chart_build()
+    def get_lines_chart_docs_by_year(cls) -> list[str]:
+        cls.get_chart_build()
         return [
             "## Documents By Year",
             "",
-            f"![Documents by year]({cls.chart_image_path()})",
+            f"![Documents by year]({cls.get_chart_image_path()})",
             "",
         ]
 
     @classmethod
-    def lines_for_metadata_example(cls) -> list[str]:
+    def get_lines_for_metadata_example(cls) -> list[str]:
         latest_doc = cls.list_all()[0]
         return [
             "## Document Metadata Example",
@@ -60,7 +60,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         ]
 
     @classmethod
-    def lines_for_summary(cls) -> list[str]:
+    def get_lines_for_summary(cls) -> list[str]:
         n_docs = len(cls.list_all())
         log.debug(f"{n_docs=}")
 
@@ -96,7 +96,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         )
 
     @classmethod
-    def lines_for_hugging_face(cls):
+    def get_lines_for_hugging_face(cls):
         lines = ["## 🤗 Hugging Face Datasets", ""]
 
         for label_suffix in ["docs", "chunks"]:
@@ -107,25 +107,25 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         return lines
 
     @classmethod
-    def lines_for_header(cls) -> list[str]:
-        return [f"# {cls.doc_class_label().title()}", ""]
+    def get_lines_for_header(cls) -> list[str]:
+        return [f"# {cls.get_doc_class_label().title()}", ""]
 
     @classmethod
     def lines(cls) -> list[str]:
         return (
-            cls.lines_for_header()
-            + cls.lines_for_summary()
-            + cls.lines_for_metadata_example()
-            + cls.lines_chart_docs_by_year()
-            + cls.lines_for_hugging_face()
-            + cls.lines_for_latest_docs()
+            cls.get_lines_for_header()
+            + cls.get_lines_for_summary()
+            + cls.get_lines_for_metadata_example()
+            + cls.get_lines_chart_docs_by_year()
+            + cls.get_lines_for_hugging_face()
+            + cls.get_lines_for_latest_docs()
         )
 
     @classmethod
-    def readme_build(cls):
+    def build_readme(cls):
         if not cls.list_all():
             log.error("No documents found. Not building README.")
             return
-        readme_path = cls.readme_path()
+        readme_path = cls.get_readme_path()
         File(readme_path).write("\n".join(cls.lines()))
         log.info(f"Wrote {readme_path}")

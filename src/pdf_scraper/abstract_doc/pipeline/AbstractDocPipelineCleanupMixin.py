@@ -8,7 +8,7 @@ log = Log("AbstractDocPipelineCleanupMixin")
 
 class AbstractDocPipelineCleanupMixin:
     @classmethod
-    def cleanup(cls):
+    def cleanup_all(cls):
         delete_dir_docs = []
         for json_path in cls.get_all_json_paths():
             doc = cls.from_file(json_path)

@@ -38,14 +38,16 @@ class AbstractDoc(
     url_metadata: str
 
     @classmethod
-    def doc_class_label(cls) -> str:
+    def get_doc_class_label(cls) -> str:
         class_name = cls.__name__
         assert class_name.endswith("Doc")
         return class_name[:-3].lower()
 
     @classmethod
-    def doc_class_description(cls) -> str:
-        return f"A collection of {cls.doc_class_label().title()} documents."
+    def get_doc_class_description(cls) -> str:
+        return (
+            f"A collection of {cls.get_doc_class_label().title()} documents."
+        )
 
     @cached_property
     def num_short(self):

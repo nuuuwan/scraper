@@ -17,13 +17,13 @@ class AbstractDocHuggingFaceMixin:
     HUGGING_FACE_TOKEN = os.environ.get("HUGGING_FACE_TOKEN")
 
     @classmethod
-    def docs_json_path(cls):
+    def get_docs_json_path(cls):
         return os.path.join(cls.get_dir_extended_root(), "docs")
 
     @classmethod
     def build_docs(cls):
         d_list = [asdict(doc) for doc in cls.list_all()]
-        BigJSONFile(cls.docs_json_path()).write(d_list)
+        BigJSONFile(cls.get_docs_json_path()).write(d_list)
         return d_list
 
     @classmethod
@@ -49,7 +49,7 @@ class AbstractDocHuggingFaceMixin:
         return d_list
 
     @classmethod
-    def chunks_json_path(cls):
+    def get_chunks_json_path(cls):
         return os.path.join(cls.get_dir_extended_root(), "chunks")
 
     @classmethod
@@ -58,21 +58,21 @@ class AbstractDocHuggingFaceMixin:
         for doc in cls.list_all():
             d_list.extend(cls.get_data_list_for_doc(doc))
 
-        BigJSONFile(cls.chunks_json_path()).write(d_list)
+        BigJSONFile(cls.get_chunks_json_path()).write(d_list)
         return d_list
 
     @classmethod
-    def hugging_face_project(cls):
+    def get_hugging_face_project(cls):
         return "/".join(
             [
                 cls.HUGGING_FACE_USERNAME,
-                f"lk-docs-{cls.doc_class_label()}",
+                f"lk-docs-{cls.get_doc_class_label()}",
             ]
         )
 
     @classmethod
     def get_dataset_id(cls, label_suffix: str) -> str:
-        return f"{cls.hugging_face_project()}-{label_suffix}"
+        return f"{cls.get_hugging_face_project()}-{label_suffix}"
 
     @classmethod
     def get_dataset_url(cls, label_suffix: str) -> str:
@@ -96,7 +96,7 @@ class AbstractDocHuggingFaceMixin:
             log.info(f"🤗 Uploaded {dataset_id} to {repo_id}")
 
     @classmethod
-    def build_and_upload(cls):
+    def build_and_upload_to_hugging_face(cls):
         if not cls.list_all():
             log.error(
                 "No documents found. Not building Hugging Face dataset."

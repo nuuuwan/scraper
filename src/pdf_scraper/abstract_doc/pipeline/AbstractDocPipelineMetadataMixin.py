@@ -13,7 +13,7 @@ class AbstractDocPipelineMetadataMixin:
         log.info(f"🛑 Processed {n_docs:,} docs in {dt:,.1f}s")
 
     @classmethod
-    def scrape_metadata(cls, max_dt):
+    def scrape_all_metadata(cls, max_dt):
         t_start = time.time()
         docs = []
         dt = 0

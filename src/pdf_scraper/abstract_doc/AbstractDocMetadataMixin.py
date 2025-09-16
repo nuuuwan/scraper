@@ -19,7 +19,7 @@ class AbstractDocMetadataMixin:
     def get_dir_docs_for_cls_relative(cls) -> str:
         return os.path.join(
             "data",
-            cls.doc_class_label(),
+            cls.get_doc_class_label(),
         )
 
     @classmethod
@@ -27,7 +27,7 @@ class AbstractDocMetadataMixin:
         return os.path.join(
             cls.get_dir_root(),
             "data",
-            cls.doc_class_label(),
+            cls.get_doc_class_label(),
         )
 
     @cached_property
@@ -53,7 +53,7 @@ class AbstractDocMetadataMixin:
         os.makedirs(self.dir_doc, exist_ok=True)
         JSONFile(self.json_path).write(
             dict(
-                doc_type=self.doc_class_label(),
+                doc_type=self.get_doc_class_label(),
                 doc_id=self.doc_id,
             )
             | asdict(self)
@@ -98,7 +98,7 @@ class AbstractDocMetadataMixin:
         }
 
     @classmethod
-    def year_to_n(cls):
+    def get_year_to_n(cls):
         year_to_n = {}
         for doc in cls.list_all():
             year_to_n[doc.year] = year_to_n.get(doc.year, 0) + 1

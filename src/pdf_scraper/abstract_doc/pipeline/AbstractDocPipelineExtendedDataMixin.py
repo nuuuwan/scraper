@@ -7,7 +7,7 @@ log = Log("AbstractDocPipelineExtendedDataMixin")
 
 class AbstractDocPipelineExtendedDataMixin:
     @classmethod
-    def scrape_extended_data(cls, max_dt):
+    def scrape_all_extended_data(cls, max_dt):
         t_start = time.time()
         for doc in cls.list_all():
             try:
