@@ -4,7 +4,7 @@ from functools import cached_property
 
 import pandas as pd
 from datasets import Dataset
-from utils import Hash, JSONFile, Log
+from utils import Hash, Log
 
 from pdf_scraper.abstract_doc import AbstractDoc
 from utils_future import BigJSONFile, Chunker
@@ -93,11 +93,15 @@ class HuggingFaceDataset:
 
         for ds, suffix in [(docs_ds, "docs"), (chunks_ds, "chunks")]:
             dataset_id = self.get_dataset_id(suffix)
-            repo_id = ds.push_to_hub(dataset_id, token=self.HUGGING_FACE_TOKEN)
+            repo_id = ds.push_to_hub(
+                dataset_id, token=self.HUGGING_FACE_TOKEN
+            )
             log.info(f"🤗 Uploaded {dataset_id} to {repo_id}")
 
     def build_and_upload(self):
         if not self.doc_list:
-            log.error("No documents found. Not building Hugging Face dataset.")
+            log.error(
+                "No documents found. Not building Hugging Face dataset."
+            )
             return
         self.upload_to_hugging_face()
