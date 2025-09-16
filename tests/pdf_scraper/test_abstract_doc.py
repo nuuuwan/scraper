@@ -13,6 +13,10 @@ class DummyDoc(AbstractDoc):
             url_metadata="http://example.com/test.json",
         )
 
+    @classmethod
+    def gen_docs(cls):
+        yield DummyDoc()
+
 
 class TestCase(unittest.TestCase):
     def test_method(self):
@@ -36,3 +40,6 @@ class TestCase(unittest.TestCase):
             doc.num_short,
             "12345678901234567890123-e92dc0f9",
         )
+
+    def test_pipeline(self):
+        DummyDoc.run_pipeline(max_dt=0.001)

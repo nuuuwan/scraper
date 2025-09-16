@@ -13,6 +13,10 @@ from pdf_scraper.abstract_doc.AbstractDocHuggingFaceMixin import \
     AbstractDocHuggingFaceMixin
 from pdf_scraper.abstract_doc.AbstractDocMetadataMixin import \
     AbstractDocMetadataMixin
+from pdf_scraper.abstract_doc.AbstractDocReadMeMixin import \
+    AbstractDocReadMeMixin
+from pdf_scraper.abstract_doc.pipeline.AbstractDocPipelineMixin import \
+    AbstractDocPipelineMixin
 
 log = Log("AbstractDoc")
 
@@ -23,7 +27,9 @@ class AbstractDoc(
     AbstractDocGeneratorMixin,
     AbstractDocMetadataMixin,
     AbstractDocExtendedDataMixin,
+    AbstractDocReadMeMixin,
     AbstractDocHuggingFaceMixin,
+    AbstractDocPipelineMixin,
 ):
     num: str
     date_str: str

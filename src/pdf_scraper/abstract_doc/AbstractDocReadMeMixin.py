@@ -37,18 +37,17 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
 
     @classmethod
     def lines_chart_docs_by_year(cls) -> list[str]:
-        chart = ChartDocsByYear(cls)
-        chart.build()
+        cls.chart_build()
         return [
             "## Documents By Year",
             "",
-            f"![Documents by year]({chart.image_path})",
+            f"![Documents by year]({cls.chart_image_path()})",
             "",
         ]
 
     @classmethod
     def lines_for_metadata_example(cls) -> list[str]:
-        latest_doc = cls.doc_list[0]
+        latest_doc = cls.list_all()[0]
         return [
             "## Document Metadata Example",
             "",
@@ -62,19 +61,19 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
 
     @classmethod
     def lines_for_summary(cls) -> list[str]:
-        n_docs = len(cls.doc_list)
+        n_docs = len(cls.list_all())
         log.debug(f"{n_docs=}")
 
-        n_docs_with_pdfs = len([doc for doc in cls.doc_list if doc.has_pdf])
+        n_docs_with_pdfs = len([doc for doc in cls.list_all() if doc.has_pdf])
 
-        date_strs = [doc.date_str for doc in cls.doc_list]
+        date_strs = [doc.date_str for doc in cls.list_all()]
         date_str_min = min(date_strs)
         date_str_max = max(date_strs)
 
         file_size_g = cls.get_total_file_size() / 1_000_000_000
         log.debug(f"{file_size_g=:.1f}")
 
-        latest_doc = cls.doc_list[0]
+        latest_doc = cls.list_all()[0]
         netloc = urlparse(latest_doc.url_metadata).netloc
 
         return (
@@ -124,8 +123,9 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
 
     @classmethod
     def readme_build(cls):
-        if not cls.doc_list:
+        if not cls.list_all():
             log.error("No documents found. Not building README.")
             return
-        File(cls.readme_path).write("\n".join(cls.lines))
-        log.info(f"Wrote {cls.readme_path}")
+        readme_path = cls.readme_path()
+        File(readme_path).write("\n".join(cls.lines()))
+        log.info(f"Wrote {readme_path}")

@@ -9,11 +9,11 @@ log = Log("AbstractDocChartDocsByYearMixin")
 class AbstractDocChartDocsByYearMixin:
 
     @classmethod
-    def image_path(cls) -> str:
+    def chart_image_path(cls) -> str:
         return os.path.join("images", "docs_by_year.png")
 
     @classmethod
-    def build(cls):
+    def chart_build(cls):
         year_to_n = cls.year_to_n()
         years = list(year_to_n.keys())
         ns = list(year_to_n.values())
@@ -27,7 +27,9 @@ class AbstractDocChartDocsByYearMixin:
         )
         ax.set_xticks(years)
         plt.tight_layout()
-        os.makedirs(os.path.dirname(cls.image_path), exist_ok=True)
-        plt.savefig(cls.image_path, dpi=300)
+
+        image_path = cls.chart_image_path()
+        os.makedirs(os.path.dirname(image_path), exist_ok=True)
+        plt.savefig(image_path, dpi=300)
         plt.close()
-        log.info(f"Wrote {cls.image_path}")
+        log.info(f"Wrote {image_path}")
