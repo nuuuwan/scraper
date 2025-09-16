@@ -50,7 +50,7 @@ class AbstractDocHuggingFaceMixin:
 
     @classmethod
     def chunks_json_path(cls):
-        return os.path.join(cls.doc_class.get_dir_extended_root(), "chunks")
+        return os.path.join(cls.get_dir_extended_root(), "chunks")
 
     @classmethod
     def build_chunks(cls):
@@ -66,7 +66,7 @@ class AbstractDocHuggingFaceMixin:
         return "/".join(
             [
                 cls.HUGGING_FACE_USERNAME,
-                f"lk-docs-{cls.doc_class.doc_class_label()}",
+                f"lk-docs-{cls.doc_class_label()}",
             ]
         )
 

@@ -2,13 +2,14 @@ import time
 
 from utils import Log
 
-log = Log("PipelineExtendedDataMixin")
+log = Log("AbstractDocPipelineExtendedDataMixin")
 
 
-class PipelineExtendedDataMixin:
-    def scrape_extended_data(self, max_dt):
+class AbstractDocPipelineExtendedDataMixin:
+    @classmethod
+    def scrape_extended_data(cls, max_dt):
         t_start = time.time()
-        doc_list = self.doc_class.list_all()
+        doc_list = cls.list_all()
         for doc in doc_list:
             try:
                 doc.scrape_extended_data()

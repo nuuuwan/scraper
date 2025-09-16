@@ -23,8 +23,7 @@ class AbstractDocChartDocsByYearMixin:
         ax.set_xlabel("Year")
         ax.set_ylabel("Number of documents")
         ax.set_title(
-            f"Number of {cls.doc_class.doc_class_label()}"
-            + " documents by year"
+            f"Number of {cls.doc_class_label()}" + " documents by year"
         )
         ax.set_xticks(years)
         plt.tight_layout()

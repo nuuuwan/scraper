@@ -3,14 +3,15 @@ import shutil
 
 from utils import Log
 
-log = Log("PipelineCleanupMixin")
+log = Log("AbstractDocPipelineCleanupMixin")
 
 
-class PipelineCleanupMixin:
-    def cleanup(self):
+class AbstractDocPipelineCleanupMixin:
+    @classmethod
+    def cleanup(cls):
         delete_dir_docs = []
-        for json_path in self.doc_class.get_all_json_paths():
-            doc = self.doc_class.from_file(json_path)
+        for json_path in cls.get_all_json_paths():
+            doc = cls.from_file(json_path)
             dir_doc_read = os.path.dirname(json_path)
             dir_doc_expected = doc.dir_doc.lstrip("./")
             if dir_doc_read != dir_doc_expected:

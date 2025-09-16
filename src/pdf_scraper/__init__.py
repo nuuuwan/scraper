@@ -7,7 +7,8 @@ from pdf_scraper.abstract_doc import (AbstractDoc, AbstractDocBase,
                                       AbstractDocGeneratorMixin,
                                       AbstractDocHuggingFaceMixin,
                                       AbstractDocMetadataMixin,
+                                      AbstractDocPipelineCleanupMixin,
+                                      AbstractDocPipelineExtendedDataMixin,
+                                      AbstractDocPipelineMetadataMixin,
+                                      AbstractDocPipelineMixin,
                                       AbstractDocReadMeMixin)
-from pdf_scraper.pipeline import (Pipeline, PipelineCleanupMixin,
-                                  PipelineExtendedDataMixin,
-                                  PipelineMetadataMixin)

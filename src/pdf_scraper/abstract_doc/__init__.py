@@ -15,3 +15,6 @@ from pdf_scraper.abstract_doc.AbstractDocMetadataMixin import \
     AbstractDocMetadataMixin
 from pdf_scraper.abstract_doc.AbstractDocReadMeMixin import \
     AbstractDocReadMeMixin
+from pdf_scraper.abstract_doc.pipeline import (
+    AbstractDocPipelineCleanupMixin, AbstractDocPipelineExtendedDataMixin,
+    AbstractDocPipelineMetadataMixin, AbstractDocPipelineMixin)
