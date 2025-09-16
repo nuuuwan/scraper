@@ -7,7 +7,7 @@ from utils_future import PDFFile
 class TestCase(unittest.TestCase):
     def test_method(self):
         pdf_file = PDFFile(os.path.join("tests", "input", "test.pdf"))
-        block_info_list = pdf_file.get_block_info_list()
+        block_info_list = pdf_file.get_blocks()
         self.assertEqual(len(block_info_list), 4)
         first_block = block_info_list[0]
         self.assertEqual(

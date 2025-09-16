@@ -58,7 +58,7 @@ class AbstractDocExtendedDataMixin:
         if not os.path.exists(self.pdf_path):
             return
         pdf_file = PDFFile(self.pdf_path)
-        blocks = pdf_file.get_block_info_list()
+        blocks = pdf_file.get_blocks()
         JSONFile(self.blocks_path).write(blocks)
         log.info(f"Wrote {self.blocks_path} ({len(blocks):,} blocks)")
 
@@ -76,8 +76,7 @@ class AbstractDocExtendedDataMixin:
             self.extract_blocks()
 
     def get_text(self):
-        if not os.path.exists(self.doc_readme_path):
-            return ""
+        assert os.path.exists(self.doc_readme_path)
         return File(self.doc_readme_path).read()
 
     @classmethod
@@ -88,3 +87,7 @@ class AbstractDocExtendedDataMixin:
                 fp = os.path.join(dirpath, f)
                 total_size += os.path.getsize(fp)
         return total_size
+
+    def get_blocks(self):
+        assert os.path.exists(self.blocks_path)
+        return JSONFile(self.blocks_path).read()

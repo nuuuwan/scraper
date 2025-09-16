@@ -44,7 +44,7 @@ class PDFTextMixin:
         text = PDFTextMixin.__clean_text__(text)
         return fonts, sizes, text
 
-    def get_block_info_list(self):
+    def get_blocks(self):
         doc = pymupdf.open(self.path)
         block_info_list = []
         for page in doc:
