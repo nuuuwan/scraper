@@ -12,7 +12,7 @@ class PipelineCleanupMixin:
         for json_path in self.doc_class.get_all_json_paths():
             doc = self.doc_class.from_file(json_path)
             dir_doc_read = os.path.dirname(json_path)
-            dir_doc_expected = doc.dir_doc
+            dir_doc_expected = doc.dir_doc.lstrip("./")
             if dir_doc_read != dir_doc_expected:
                 log.warning(
                     f"doc_id={doc.doc_id} in wrong dir:"
