@@ -38,7 +38,7 @@ class TestCase(unittest.TestCase):
     def test_base(self):
         doc = DummyDoc()
         self.assertEqual(
-            doc.dir_doc_extended_without_base,
+            doc.dir_doc_extended_relative,
             os.path.join(
                 "data", "dummy", "2020s", "2023", "2023-10-01-1234567890"
             ),
@@ -53,7 +53,7 @@ class TestCase(unittest.TestCase):
             doc.dir_doc_extended,
             os.path.join(
                 doc.get_dir_extended_root(),
-                doc.dir_doc_extended_without_base,
+                doc.dir_doc_extended_relative,
             ),
         )
 

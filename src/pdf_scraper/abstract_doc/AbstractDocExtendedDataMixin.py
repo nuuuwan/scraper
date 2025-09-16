@@ -13,7 +13,7 @@ class AbstractDocExtendedDataMixin:
     T_TIMEOUT_PDF_DOWNLOAD = 120
 
     @cached_property
-    def dir_doc_extended_without_base(self) -> str:
+    def dir_doc_extended_relative(self) -> str:
         return os.path.join(
             "data",
             self.__class__.doc_class_label(),
@@ -34,7 +34,7 @@ class AbstractDocExtendedDataMixin:
     def dir_doc_extended(self) -> str:
         return os.path.join(
             self.__class__.get_dir_extended_root(),
-            self.dir_doc_extended_without_base,
+            self.dir_doc_extended_relative,
         )
 
     def copy_metadata(self):
