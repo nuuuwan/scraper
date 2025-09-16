@@ -2,12 +2,15 @@ import sys
 
 from utils import Log
 
-from pdf_scraper.abstract_doc.pipeline.AbstractDocPipelineCleanupMixin import \
-    AbstractDocPipelineCleanupMixin
-from pdf_scraper.abstract_doc.pipeline.AbstractDocPipelineExtendedDataMixin import \
-    AbstractDocPipelineExtendedDataMixin
-from pdf_scraper.abstract_doc.pipeline.AbstractDocPipelineMetadataMixin import \
-    AbstractDocPipelineMetadataMixin
+from pdf_scraper.abstract_doc.pipeline.AbstractDocPipelineCleanupMixin import (
+    AbstractDocPipelineCleanupMixin,
+)
+from pdf_scraper.abstract_doc.pipeline.AbstractDocPipelineExtendedDataMixin import (
+    AbstractDocPipelineExtendedDataMixin,
+)
+from pdf_scraper.abstract_doc.pipeline.AbstractDocPipelineMetadataMixin import (
+    AbstractDocPipelineMetadataMixin,
+)
 
 log = Log("AbstractDocPipelineMixin")
 
@@ -20,7 +23,7 @@ class AbstractDocPipelineMixin(
     MAX_DT = 750.0
 
     @classmethod
-    def run(cls, max_dt=None):
+    def run_pipeline(cls, max_dt=None):
         max_dt = (
             max_dt
             or (float(sys.argv[1]) if len(sys.argv) > 1 else None)
