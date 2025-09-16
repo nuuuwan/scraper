@@ -75,7 +75,8 @@ class AbstractDocExtendedDataMixin:
             self.extract_blocks()
 
     def get_text(self):
-        assert os.path.exists(self.doc_readme_path)
+        if not os.path.exists(self.doc_readme_path):
+            return ""
         return File(self.doc_readme_path).read()
 
     @classmethod
