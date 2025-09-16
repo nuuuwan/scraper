@@ -18,7 +18,6 @@ class TestCase(unittest.TestCase):
     def test_method(self):
         doc = DummyDoc()
         self.assertEqual(doc.doc_class_label(), "dummy")
-        self.assertEqual(doc.doc_class_pretty_label(), "Dummy")
         self.assertEqual(
             doc.doc_class_description(),
             "A collection of Dummy documents.",

@@ -112,7 +112,7 @@ class ReadMe:
 
     @property
     def lines_for_header(self) -> list[str]:
-        return [f"# {self.doc_class.doc_class_pretty_label()}", ""]
+        return [f"# {self.doc_class.doc_class_label().title()}", ""]
 
     @property
     def lines(self) -> list[str]:

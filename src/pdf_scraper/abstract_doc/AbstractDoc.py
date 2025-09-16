@@ -30,12 +30,8 @@ class AbstractDoc(
         return class_name[:-3].lower()
 
     @classmethod
-    def doc_class_pretty_label(cls) -> str:
-        return cls.doc_class_label().title()
-
-    @classmethod
     def doc_class_description(cls) -> str:
-        return f"A collection of {cls.doc_class_pretty_label()} documents."
+        return f"A collection of {cls.doc_class_label().title()} documents."
 
     @cached_property
     def num_short(self):
