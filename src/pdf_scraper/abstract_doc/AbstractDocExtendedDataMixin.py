@@ -21,20 +21,11 @@ class AbstractDocExtendedDataMixin:
         )
 
     @cached_property
-    def dir_doc_extended_relative(self) -> str:
-        return os.path.join(
-            "data",
-            self.__class__.doc_class_label(),
-            self.decade,
-            self.year,
-            self.doc_id,
-        )
-
-    @cached_property
     def dir_doc_extended(self) -> str:
         return os.path.join(
             self.__class__.get_dir_extended_root(),
-            self.dir_doc_extended_relative,
+            self.get_dir_docs_for_cls_relative(),
+            self.dir_doc_relative_to_class,
         )
 
     def copy_metadata(self):
