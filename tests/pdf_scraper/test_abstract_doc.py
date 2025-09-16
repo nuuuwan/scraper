@@ -35,6 +35,9 @@ class DummyDoc(AbstractDoc):
 
 
 class TestCase(unittest.TestCase):
+    def test_abstract(self):
+        self.assertEqual(AbstractDoc.gen_docs(), None)
+
     def test_pipeline(self):
         shutil.rmtree(DIR_TEST_PIPELINE, ignore_errors=True)
 
