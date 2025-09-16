@@ -6,7 +6,7 @@ log = Log("PipelineExtendedDataMixin")
 
 
 class PipelineExtendedDataMixin:
-    def __scrape_extended_data__(self, max_dt):
+    def scrape_extended_data(self, max_dt):
         t_start = time.time()
         doc_list = self.doc_class.list_all()
         for doc in doc_list:
