@@ -17,8 +17,12 @@ class AbstractDocHuggingFaceMixin:
     HUGGING_FACE_TOKEN = os.environ.get("HUGGING_FACE_TOKEN")
 
     @classmethod
+    def get_dir_hugging_face_data(cls):
+        return os.path.join(cls.get_dir_extended_root(), "hugging_face_data")
+
+    @classmethod
     def get_docs_json_path(cls):
-        return os.path.join(cls.get_dir_extended_root(), "docs")
+        return os.path.join(cls.get_dir_hugging_face_data(), "docs")
 
     @classmethod
     def build_docs(cls):
@@ -50,7 +54,7 @@ class AbstractDocHuggingFaceMixin:
 
     @classmethod
     def get_chunks_json_path(cls):
-        return os.path.join(cls.get_dir_extended_root(), "chunks")
+        return os.path.join(cls.get_dir_hugging_face_data(), "chunks")
 
     @classmethod
     def build_chunks(cls):
@@ -98,8 +102,6 @@ class AbstractDocHuggingFaceMixin:
     @classmethod
     def build_and_upload_to_hugging_face(cls):
         if not cls.list_all():
-            log.error(
-                "No documents found. Not building Hugging Face dataset."
-            )
+            log.error("No documents found. Not building Hugging Face dataset.")
             return
         cls.upload_to_hugging_face()
