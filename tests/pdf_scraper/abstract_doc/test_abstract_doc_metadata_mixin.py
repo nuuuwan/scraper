@@ -22,7 +22,7 @@ class TestCase(unittest.TestCase):
         doc = DummyDoc()
 
         self.assertEqual(
-            doc.get_dir_docs_root(), os.path.join(".", "data", "dummy")
+            doc.get_dir_docs_for_cls(), os.path.join(".", "data", "dummy")
         )
         self.assertEqual(
             doc.dir_doc,
