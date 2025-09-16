@@ -50,8 +50,3 @@ class AbstractDocBase(ABC):
     def year(self) -> str:
         assert len(self.date_str) == 10
         return self.date_str[:4]
-
-    @cached_property
-    def year_and_month(self) -> str:
-        assert len(self.date_str) == 10
-        return self.date_str[:7]
