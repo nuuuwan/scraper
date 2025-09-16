@@ -101,9 +101,5 @@ class AbstractDocHuggingFaceMixin:
 
     @classmethod
     def build_and_upload_to_hugging_face(cls):
-        if not cls.list_all():
-            log.error(
-                "No documents found. Not building Hugging Face dataset."
-            )
-            return
+        assert cls.list_all()
         cls.upload_to_hugging_face()

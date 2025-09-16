@@ -55,8 +55,7 @@ class AbstractDocExtendedDataMixin:
         return os.path.join(self.dir_doc_extended, "README.md")
 
     def extract_blocks(self):
-        if not os.path.exists(self.pdf_path):
-            return
+        assert os.path.exists(self.pdf_path)
         pdf_file = PDFFile(self.pdf_path)
         blocks = pdf_file.get_blocks()
         JSONFile(self.blocks_path).write(blocks)

@@ -129,9 +129,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
 
     @classmethod
     def build_readme(cls):
-        if not cls.list_all():
-            log.error("No documents found. Not building README.")
-            return
+        assert cls.list_all()
         readme_path = cls.get_readme_path()
         File(readme_path).write("\n".join(cls.lines()))
         log.info(f"Wrote {readme_path}")

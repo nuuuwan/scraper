@@ -48,6 +48,14 @@ class TestCase(unittest.TestCase):
         )
         self.assertEqual(doc.num_short, "12345678901234567890123-49cb3608")
 
+    def test_get_dir_root(self):
+        self.assertEqual(AbstractDoc.get_dir_root(), ".")
+
+    def test_get_dir_extended_root(self):
+        self.assertEqual(
+            AbstractDoc.get_dir_extended_root(), "../pdf_scraper_data"
+        )
+
     def test_pipeline(self):
         shutil.rmtree(DIR_TEST_PIPELINE, ignore_errors=True)
 
@@ -82,3 +90,6 @@ class TestCase(unittest.TestCase):
 
             blocks = first_doc.get_blocks()
             self.assertEqual(len(blocks), 4)
+
+            url_metadata_set = DummyDoc.get_url_metadata_set()
+            self.assertEqual(url_metadata_set, {"http://mock.com/doc.html"})
