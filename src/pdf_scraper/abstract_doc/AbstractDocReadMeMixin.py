@@ -4,8 +4,9 @@ from dataclasses import asdict
 
 from utils import File, Log, Time, TimeFormat
 
-from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import \
-    AbstractDocChartDocsByYearMixin
+from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import (
+    AbstractDocChartDocsByYearMixin,
+)
 
 log = Log("AbstractDocReadMeMixin")
 
@@ -75,7 +76,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             + f" from **{date_str_min}** to **{date_str_max}**,"
             + f" scraped from **[{url_source}]({url_source})**",
             "",
-            "📑 In JSON, PDF, and @HuggingFace Formats",
+            "📑 In JSON, PDF, TXT and 🤗 Hugging Face Formats",
             "",
             "⏰ Updated **at least Daily**",
             "",
