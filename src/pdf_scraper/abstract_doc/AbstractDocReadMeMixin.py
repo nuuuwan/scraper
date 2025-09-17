@@ -6,6 +6,7 @@ from utils import File, Log, Time, TimeFormat
 
 from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import \
     AbstractDocChartDocsByYearMixin
+from utils_future import PDFFile
 
 log = Log("AbstractDocReadMeMixin")
 
@@ -126,18 +127,35 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         return title
 
     @classmethod
+    def get_lines_for_pdf_preview(cls) -> list[str]:
+        image_path = os.path.join("images", "pdf_preview.png")
+        doc_list = cls.list_all()
+        docs_with_pdf = [doc for doc in doc_list if doc.has_pdf]
+        if not docs_with_pdf:
+            return []
+        first_doc = docs_with_pdf[-1]
+        pdf_path = first_doc.pdf_path
+        PDFFile(pdf_path).download_image(0, image_path)
+        return [f"![PDF Preview]({image_path})", ""]
+
+    @classmethod
     def get_lines_for_header(cls) -> list[str]:
         time_updated = TimeFormat("%Y--%m--%d_%H:%M:%S").format(Time.now())
         file_size_g = cls.get_total_file_size() / 1_000_000_000
-        return [
-            f"# {cls.get_title()}",
-            "",
-            "![LastUpdated](https://img.shields.io/badge"
-            + f"/last_updated-{time_updated}-green)",
-            "![DatasetSize](https://img.shields.io/badge"
-            + f"/dataset_size-{file_size_g:.1f}_GB-green)",
-            "",
-        ]
+        return (
+            [
+                f"# {cls.get_title()}",
+                "",
+            ]
+            + cls.get_lines_for_pdf_preview()
+            + [
+                "![LastUpdated](https://img.shields.io/badge"
+                + f"/last_updated-{time_updated}-green)",
+                "![DatasetSize](https://img.shields.io/badge"
+                + f"/dataset_size-{file_size_g:.1f}_GB-green)",
+                "",
+            ]
+        )
 
     @classmethod
     def get_lines_for_footer(cls) -> list[str]:
