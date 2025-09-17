@@ -61,7 +61,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         ]
 
     @classmethod
-    def get_lines_for_summary(cls) -> list[str]:
+    def get_summary_data(cls) -> dict[str, str]:
         n_docs = len(cls.list_all())
         log.debug(f"{n_docs=}")
 
@@ -79,25 +79,21 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
 
         url_data = cls.get_remote_data_url_base()
 
-        return (
-            [
-                "## 📊 Dataset Summary",
-                "",
-            ]
-            + Markdown.table(
-                [
-                    {
-                        "🔗 Data Source": netloc,
-                        "🔗 All Raw Data": f"[{url_data}]({url_data})",
-                        "📅 Date Range": f"{date_str_min} to {date_str_max}",
-                        "📑 Number of Docs": f"{n_docs:,}",
-                        "📎 Number of Docs with PDFs": f"{n_docs_with_pdfs:,}",
-                        "💾 Dataset Size": f"{file_size_g:.1f}GB",
-                    },
-                ]
-            )
-            + [""]
-        )
+        return {
+            "🔗 Data Source": netloc,
+            "🔗 All Raw Data": f"[{url_data}]({url_data})",
+            "📅 Date Range": f"{date_str_min} to {date_str_max}",
+            "📑 Number of Docs": f"{n_docs:,}",
+            "📎 Number of Docs with PDFs": f"{n_docs_with_pdfs:,}",
+            "💾 Dataset Size": f"{file_size_g:.1f}GB",
+        }
+
+    @classmethod
+    def get_lines_for_summary(cls) -> list[str]:
+        lines = []
+        for k, v in cls.get_summary_data().items():
+            lines.extend([f" {k}: {v}", ""])
+        return lines
 
     @classmethod
     def get_lines_for_hugging_face(cls):
@@ -119,27 +115,31 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
     @classmethod
     def get_lines_for_header(cls) -> list[str]:
         url_repo = cls.get_remote_repo_url()
-        return [
-            f"# 📜 {cls.get_title()}",
-            "",
-            "🆓 Public data, fully open-source – fork freely!",
-            "",
-            "🔍 Useful for Journalists, Researchers,"
-            + " Lawyers & law students,"
-            + " Policy watchers & Citizens who want to stay informed",
-            "",
-            "🐞 #WorkInProgress - Suggestions, Questions, Ideas,"
-            + f" [Bug Reports]({url_repo}/issues)"
-            + " are welcome!",
-            "",
-            "#SriLanka #OpenData #GovTech",
-        ]
+        return (
+            [
+                f"# 📜 {cls.get_title()}",
+                "",
+            ]
+            + cls.get_lines_for_summary()
+            + [
+                "🆓 Public data, fully open-source – fork freely!",
+                "",
+                "🔍 Useful for Journalists, Researchers,"
+                + " Lawyers & law students,"
+                + " Policy watchers & Citizens who want to stay informed",
+                "",
+                "🐞 #WorkInProgress - Suggestions, Questions, Ideas,"
+                + f" [Bug Reports]({url_repo}/issues)"
+                + " are welcome!",
+                "",
+                "#SriLanka #OpenData #GovTech",
+            ]
+        )
 
     @classmethod
     def lines(cls) -> list[str]:
         return (
             cls.get_lines_for_header()
-            + cls.get_lines_for_summary()
             + cls.get_lines_for_metadata_example()
             + cls.get_lines_chart_docs_by_year()
             + cls.get_lines_for_hugging_face()
