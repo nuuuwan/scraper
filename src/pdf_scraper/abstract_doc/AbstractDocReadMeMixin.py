@@ -58,17 +58,12 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
     @classmethod
     def get_lines_for_summary(cls) -> list[str]:
         n_docs = len(cls.list_all())
-        log.debug(f"{n_docs=}")
         n_docs_with_pdfs = len([doc for doc in cls.list_all() if doc.has_pdf])
         p_docs_with_pdfs = n_docs_with_pdfs / n_docs
-
         date_strs = [doc.date_str for doc in cls.list_all()]
         date_str_min = min(date_strs)
         date_str_max = max(date_strs)
-
         file_size_g = cls.get_total_file_size() / 1_000_000_000
-        log.debug(f"{file_size_g=:.1f}")
-
         latest_doc = cls.list_all()[0]
         url_source = latest_doc.url_metadata.split("?")[0]
         url_data = cls.get_remote_data_url_base()
