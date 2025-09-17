@@ -84,7 +84,8 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             + f" scraped from **[{url_source}]({url_source})**.",
             "",
             "📒 PDFs have been downloaded for"
-            + f" **{n_docs_with_pdfs:,}** ({p_docs_with_pdfs:.0%}) documents.",
+            + f" **{n_docs_with_pdfs:,}**"
+            + f" (**{p_docs_with_pdfs:.0%}**) documents.",
             "",
             f"📚 Complete [Dataset]({url_data}) (**{file_size_g:.1f} GB**)",
             " - 🆓 Public data, & fully open-source.",
