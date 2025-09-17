@@ -5,8 +5,9 @@ from urllib.parse import urlparse
 
 from utils import File, Log
 
-from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import \
-    AbstractDocChartDocsByYearMixin
+from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import (
+    AbstractDocChartDocsByYearMixin,
+)
 from utils_future import Markdown
 
 log = Log("AbstractDocReadMeMixin")
@@ -114,10 +115,21 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
 
     @classmethod
     def get_lines_for_header(cls) -> list[str]:
-
+        url_repo = cls.get_remote_repo_url()
         return [
             f"# 📜 {cls.get_title()}",
             "",
+            "🆓 Public data, fully open-source – fork freely!",
+            "",
+            "🔍 Useful for Journalists, Researchers,"
+            + " Lawyers & law students,"
+            + " Policy watchers & Citizens who want to stay informed",
+            "",
+            "🐞 #WorkInProgress - Suggestions, Questions, Ideas,"
+            + f" [Bug Reports]({url_repo}/issues)"
+            + " are welcome!",
+            "",
+            "#Legal #OpenData #GovTech",
         ]
 
     @classmethod

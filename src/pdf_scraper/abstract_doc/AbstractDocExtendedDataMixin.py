@@ -43,13 +43,22 @@ class AbstractDocExtendedDataMixin:
         return os.path.exists(self.pdf_path)
 
     @classmethod
-    def get_remote_data_url_base(cls) -> str:
+    def get_remote_repo_url(cls) -> str:
         assert os.environ["GITHUB_USERNAME"]
         return "/".join(
             [
                 "https://github.com",
                 os.environ["GITHUB_USERNAME"],
                 cls.get_doc_class_label(),
+            ]
+        )
+
+    @classmethod
+    def get_remote_data_url_base(cls) -> str:
+        assert os.environ["GITHUB_USERNAME"]
+        return "/".join(
+            [
+                cls.get_remote_repo_url(),
                 "tree",
                 "data",
             ]
