@@ -5,8 +5,9 @@ from urllib.parse import urlparse
 
 from utils import File, Log
 
-from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import \
-    AbstractDocChartDocsByYearMixin
+from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import (
+    AbstractDocChartDocsByYearMixin,
+)
 from utils_future import Markdown
 
 log = Log("AbstractDocReadMeMixin")
@@ -87,8 +88,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
                 [
                     {
                         "🔗 Data Source": netloc,
-                        "🔗 All Raw Data": f"[{url_data}]({url_data})"
-                        + ' (in "data" branch)',
+                        "🔗 All Raw Data": f"[{url_data}]({url_data})",
                         "📅 Date Range": f"{date_str_min} to {date_str_max}",
                         "📑 Number of Docs": f"{n_docs:,}",
                         "📎 Number of Docs with PDFs": f"{n_docs_with_pdfs:,}",
