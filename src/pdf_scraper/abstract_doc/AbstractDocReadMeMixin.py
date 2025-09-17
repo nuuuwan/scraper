@@ -4,9 +4,8 @@ from dataclasses import asdict
 
 from utils import File, Log, Time, TimeFormat
 
-from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import (
-    AbstractDocChartDocsByYearMixin,
-)
+from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import \
+    AbstractDocChartDocsByYearMixin
 
 log = Log("AbstractDocReadMeMixin")
 
@@ -137,7 +136,8 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             f"# {cls.get_title()}",
             "",
             f"![LastUpdated](https://img.shields.io/badge/last_updated-{time_updated}-green)",
-            f"![DatasetSize](https://img.shields.io/badge/dataset_size-{file_size_g:.1f}_GB-green)",
+            f"![DatasetSize](https://img.shields.io/badge/dataset_size-{
+                file_size_g:.1f}_GB-green)",
             "",
         ]
 

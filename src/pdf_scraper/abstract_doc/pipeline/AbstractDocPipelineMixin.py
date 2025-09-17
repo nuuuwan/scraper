@@ -2,15 +2,12 @@ import sys
 
 from utils import Log
 
-from pdf_scraper.abstract_doc.pipeline.AbstractDocPipelineCleanupMixin import (  # noqa: E501
-    AbstractDocPipelineCleanupMixin,
-)
-from pdf_scraper.abstract_doc.pipeline.AbstractDocPipelineExtendedDataMixin import (  # noqa: E501
-    AbstractDocPipelineExtendedDataMixin,
-)
-from pdf_scraper.abstract_doc.pipeline.AbstractDocPipelineMetadataMixin import (  # noqa: E501
-    AbstractDocPipelineMetadataMixin,
-)
+from pdf_scraper.abstract_doc.pipeline.AbstractDocPipelineCleanupMixin import \
+    AbstractDocPipelineCleanupMixin  # noqa: E501
+from pdf_scraper.abstract_doc.pipeline.AbstractDocPipelineExtendedDataMixin import \
+    AbstractDocPipelineExtendedDataMixin  # noqa: E501
+from pdf_scraper.abstract_doc.pipeline.AbstractDocPipelineMetadataMixin import \
+    AbstractDocPipelineMetadataMixin  # noqa: E501
 
 log = Log("AbstractDocPipelineMixin")
 
