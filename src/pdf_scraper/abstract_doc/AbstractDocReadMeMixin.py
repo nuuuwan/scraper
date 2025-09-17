@@ -4,8 +4,9 @@ from dataclasses import asdict
 
 from utils import File, Log, Time, TimeFormat
 
-from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import \
-    AbstractDocChartDocsByYearMixin
+from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import (
+    AbstractDocChartDocsByYearMixin,
+)
 from utils_future import PDFFile
 
 log = Log("AbstractDocReadMeMixin")
@@ -135,8 +136,8 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         docs_with_pdf = [doc for doc in doc_list if doc.has_pdf]
         if not docs_with_pdf:
             return []
-        first_doc = docs_with_pdf[-1]
-        pdf_path = first_doc.pdf_path
+        latest_doc_with_pdf = docs_with_pdf[0]
+        pdf_path = latest_doc_with_pdf.pdf_path
         try:
             PDFFile(pdf_path).download_image(0, image_path)
         except Exception as e:
@@ -147,7 +148,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             "",
             f"![PDF Preview]({image_path})",
             "",
-            f"[More details]({first_doc.remote_data_url})",
+            f"[More details]({latest_doc_with_pdf.remote_data_url})",
             "",
         ]
 
