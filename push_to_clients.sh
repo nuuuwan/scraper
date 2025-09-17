@@ -13,7 +13,7 @@ for CLIENT_REPO in "${CLIENT_REPOS[@]}"; do
 
     DIR_CLIENT_REPO="../$CLIENT_REPO"
 
-    [[ -d "$DIR_CLIENT_REPO" ]]   || { echo "❌ Missing source dir: $DIR_CLIENT_REPO"; exit 1; }
+    [[ -d "$DIR_CLIENT_REPO" ]] || { echo "❌ Missing source dir: $DIR_CLIENT_REPO"; exit 1; }
     
     cd $DIR_CLIENT_REPO;
 
