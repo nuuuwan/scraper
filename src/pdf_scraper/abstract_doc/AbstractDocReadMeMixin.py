@@ -80,7 +80,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
 
         return {
             "🔗 Data Source": netloc,
-            "🔗 All Raw Data": f"[{url_data}]({url_data})",
+            "🪣 All Raw Data": f"[{url_data}]({url_data})",
             "📅 Date Range": f"{date_str_min} to {date_str_max}",
             "📑 Number of Docs": f"{n_docs:,}",
             "📎 Number of Docs with PDFs": f"{n_docs_with_pdfs:,}",
@@ -91,7 +91,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
     def get_lines_for_summary(cls) -> list[str]:
         lines = []
         for k, v in cls.get_summary_data().items():
-            lines.extend([f" {k}: {v}", ""])
+            lines.extend([f" {k}: **{v}**", ""])
         return lines
 
     @classmethod
