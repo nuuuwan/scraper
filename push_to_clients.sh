@@ -8,7 +8,7 @@ CLIENT_REPOS=(
 
 for CLIENT_REPO in "${CLIENT_REPOS[@]}"; do
     echo "------------------------------------------------------"
-    echo "Pushing to $CLIENT_REPO"
+    echo "Pushing to $CLIENT_REPO..."
     echo "------------------------------------------------------"
 
     DIR_CLIENT_REPO="../$CLIENT_REPO"
@@ -37,6 +37,8 @@ for CLIENT_REPO in "${CLIENT_REPOS[@]}"; do
     git commit -m "[push_to_clients] Updated utils_future"
 
     git push origin main
+
+    echo "✅ Push to $CLIENT_REPO complete."
 done
 
 
