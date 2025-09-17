@@ -5,7 +5,7 @@ from utils_future import PDFFile
 
 
 class TestCase(unittest.TestCase):
-    def test_method(self):
+    def test_all(self):
         pdf_file = PDFFile(os.path.join("tests", "input", "test.pdf"))
         block_info_list = pdf_file.get_blocks()
         self.assertEqual(len(block_info_list), 4)
@@ -20,3 +20,6 @@ class TestCase(unittest.TestCase):
                 "sizes": [24.0],
             },
         )
+
+        image_path = os.path.join("tests", "output", "test_page1.png")
+        pdf_file.download_image(0, image_path)
