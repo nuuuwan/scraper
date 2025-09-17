@@ -91,7 +91,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             " - 🆓 Public data, & fully open-source.",
             " - 🙏 Please share & fork!",
             "",
-            "⏰ Updated **atleast Daily**.",
+            "⏰ Updated **at least Daily**.",
             "",
             "🪲 #WorkInProgress - Suggestions, Questions, Ideas,"
             + f" & [Bug Reports]({url_repo}/issues)"
