@@ -4,8 +4,9 @@ from dataclasses import asdict
 
 from utils import File, Log, Time, TimeFormat
 
-from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import \
-    AbstractDocChartDocsByYearMixin
+from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import (
+    AbstractDocChartDocsByYearMixin,
+)
 from utils_future import PDFFile
 
 log = Log("AbstractDocReadMeMixin")
@@ -135,7 +136,11 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             return []
         first_doc = docs_with_pdf[-1]
         pdf_path = first_doc.pdf_path
-        PDFFile(pdf_path).download_image(0, image_path)
+        try:
+            PDFFile(pdf_path).download_image(0, image_path)
+        except Exception as e:
+            log.error(f"Failed to generate PDF preview image: {e}")
+            return []
         return [f"![PDF Preview]({image_path})", ""]
 
     @classmethod
@@ -144,7 +149,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         file_size_g = cls.get_total_file_size() / 1_000_000_000
         return (
             [
-                f"# {cls.get_title()}",
+                f"# {cls.get_title()} `Dataset`",
                 "",
             ]
             + cls.get_lines_for_pdf_preview()
