@@ -55,7 +55,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             json.dumps(asdict(latest_doc), indent=4),
             "```",
             "",
-            f"[source data]({latest_doc.remote_data_url})",
+            f"[More details]({latest_doc.remote_data_url})",
             "",
         ]
 
@@ -130,7 +130,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         return title
 
     @classmethod
-    def get_lines_for_pdf_preview(cls) -> list[str]:
+    def get_lines_for_example_document(cls) -> list[str]:
         image_path = os.path.join("images", "pdf_preview.png")
         doc_list = cls.list_all()
         docs_with_pdf = [doc for doc in doc_list if doc.has_pdf]
@@ -143,26 +143,28 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         except Exception as e:
             log.error(f"Failed to generate PDF preview image: {e}")
             return []
-        return [f"![PDF Preview]({image_path})", ""]
+        return [
+            "## 📃 Example Document",
+            "",
+            f"![PDF Preview]({image_path})",
+            "",
+            f"[More details]({first_doc.remote_data_url})",
+            "",
+        ]
 
     @classmethod
     def get_lines_for_header(cls) -> list[str]:
         time_updated = TimeFormat("%Y--%m--%d_%H:%M:%S").format(Time.now())
         file_size_g = cls.get_total_file_size() / 1_000_000_000
-        return (
-            [
-                f"# {cls.get_title()} `Dataset`",
-                "",
-            ]
-            + cls.get_lines_for_pdf_preview()
-            + [
-                "![LastUpdated](https://img.shields.io/badge"
-                + f"/last_updated-{time_updated}-green)",
-                "![DatasetSize](https://img.shields.io/badge"
-                + f"/dataset_size-{file_size_g:.1f}_GB-green)",
-                "",
-            ]
-        )
+        return [
+            f"# {cls.get_title()} `Dataset`",
+            "",
+            "![LastUpdated](https://img.shields.io/badge"
+            + f"/last_updated-{time_updated}-green)",
+            "![DatasetSize](https://img.shields.io/badge"
+            + f"/dataset_size-{file_size_g:.1f}_GB-green)",
+            "",
+        ]
 
     @classmethod
     def get_lines_for_footer(cls) -> list[str]:
@@ -183,6 +185,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             + cls.get_lines_for_metadata_example()
             + cls.get_lines_chart_docs_by_year()
             + cls.get_lines_for_hugging_face()
+            + cls.get_lines_for_example_document()
             + cls.get_lines_for_latest_docs()
             + cls.get_lines_for_footer()
         )
