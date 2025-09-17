@@ -5,8 +5,9 @@ from urllib.parse import urlparse
 
 from utils import File, Log
 
-from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import \
-    AbstractDocChartDocsByYearMixin
+from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import (
+    AbstractDocChartDocsByYearMixin,
+)
 
 log = Log("AbstractDocReadMeMixin")
 
@@ -115,7 +116,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         url_repo = cls.get_remote_repo_url()
         return (
             [
-                f"# 📜 {cls.get_title()}",
+                f"# {cls.get_title()}",
                 "",
             ]
             + cls.get_lines_for_summary()
