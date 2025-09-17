@@ -1,6 +1,10 @@
 # HACK! Delete this once pdf_scraper is in pypi
 
-CLIENT_REPOS=("lk_hansard", "lk_judiciary_appeals_court",  "lk_supreme_court_judgements")
+CLIENT_REPOS=(
+    "lk_hansard"
+    "lk_judiciary_appeals_court"
+    "lk_supreme_court_judgements"
+)
 
 for CLIENT_REPO in "${CLIENT_REPOS[@]}"; do
     echo "------------------------------------------------------"
