@@ -77,6 +77,8 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         latest_doc = cls.list_all()[0]
         netloc = urlparse(latest_doc.url_metadata).netloc
 
+        url_data = cls.get_remote_data_url_base()
+
         return (
             [
                 "## 📊 Dataset Summary",
@@ -86,6 +88,8 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
                 [
                     {
                         "🔗 Data Source": netloc,
+                        "🔗 All Raw Data": f"[{url_data}]({url_data})"
+                        + ' (in "data" branch)',
                         "📅 Date Range": f"{date_str_min} to {date_str_max}",
                         "📑 Number of Docs": f"{n_docs:,}",
                         "📎 Number of Docs with PDFs": f"{n_docs_with_pdfs:,}",
