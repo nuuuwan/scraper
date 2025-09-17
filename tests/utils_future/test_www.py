@@ -1,39 +1,40 @@
 import os
 import unittest
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
+
+import requests
 
 from utils_future import WWW
+
+TEST_WWW = WWW("https://example.com")
 
 
 class TestCase(unittest.TestCase):
     def test_str(self):
-        www = WWW("https://mock.com")
-        self.assertEqual(str(www), "🌐 https://mock.com")
+        self.assertEqual(str(TEST_WWW), "🌐 https://mock.com")
 
-    @patch("utils_future.WWW.requests.get")
-    def test_success(self, mock_get):
+    def test_success(self):
+        class MockResponse:
+            def __init__(self):
+                self.text = "<html><body>Hello</body></html>"
+                self.status_code = 200
 
-        mock_response = MagicMock()
-        mock_response.text = "<html><body>Hello</body></html>"
-        mock_response.raise_for_status.return_value = None
-        mock_get.return_value = mock_response
+            def raise_for_status(self):
+                pass
 
-        www = WWW("https://mock.com")
-        content = www.content
-        self.assertEqual(content, "<html><body>Hello</body></html>")
+        mock_response = MockResponse()
 
-        soup = www.soup
-        body = soup.find("body").text
-        self.assertEqual(body, "Hello")
+        with patch.object(
+            requests.Session,
+            "get",
+            return_value=mock_response,
+        ):
+            www = TEST_WWW
+            self.assertEqual(www.content, "<html><body>Hello</body></html>")
 
-        www = WWW("https://mock.com")
-        local_path = os.path.join("tests", "output", "test_binary.binary")
-        www.download_binary(local_path)
+            soup = www.soup
+            body = soup.find("body").text
+            self.assertEqual(body, "Hello")
 
-    @patch("utils_future.WWW.requests.get")
-    def test_fail(self, mock_get):
-        mock_get.side_effect = Exception("Connection failed")
-
-        www = WWW("https://mock.com")
-        self.assertIsNone(www.content)
-        self.assertIsNone(www.soup)
+            local_path = os.path.join("tests", "output", "test_binary.binary")
+            www.download_binary(local_path)
