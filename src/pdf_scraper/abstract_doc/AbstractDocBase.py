@@ -23,9 +23,7 @@ class AbstractDocBase(ABC):
 
     @classmethod
     def get_doc_class_description(cls) -> str:
-        return (
-            f"A collection of {cls.get_doc_class_label().title()} documents."
-        )
+        return f"A collection of {cls.get_doc_class_label()} documents."
 
     @cached_property
     def num_short(self):

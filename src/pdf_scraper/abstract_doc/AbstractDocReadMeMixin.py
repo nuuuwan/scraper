@@ -5,8 +5,9 @@ from urllib.parse import urlparse
 
 from utils import File, Log
 
-from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import \
-    AbstractDocChartDocsByYearMixin
+from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import (
+    AbstractDocChartDocsByYearMixin,
+)
 from utils_future import Markdown
 
 log = Log("AbstractDocReadMeMixin")
@@ -107,11 +108,16 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         return lines
 
     @classmethod
+    def get_title(cls) -> str:
+        title = cls.get_doc_class_label().title().replace("_", " ")
+        title = title.replace("Lk", "🇱🇰 #SriLanka")
+        return title
+
+    @classmethod
     def get_lines_for_header(cls) -> list[str]:
+
         return [
-            f"# {cls.get_doc_class_label().title()}",
-            "",
-            cls.get_doc_class_description(),
+            f"# {cls.get_title()}",
             "",
         ]
 
