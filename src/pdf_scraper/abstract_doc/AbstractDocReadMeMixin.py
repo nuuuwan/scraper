@@ -1,9 +1,8 @@
 import json
 import os
 from dataclasses import asdict
-from urllib.parse import urlparse
 
-from utils import File, Log
+from utils import File, Log, Time, TimeFormat
 
 from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import (
     AbstractDocChartDocsByYearMixin,
@@ -60,7 +59,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         ]
 
     @classmethod
-    def get_summary_data(cls) -> dict[str, str]:
+    def get_lines_for_summary(cls) -> list[str]:
         n_docs = len(cls.list_all())
         log.debug(f"{n_docs=}")
 
@@ -74,29 +73,48 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         log.debug(f"{file_size_g=:.1f}")
 
         latest_doc = cls.list_all()[0]
-        netloc = urlparse(latest_doc.url_metadata).netloc
+        url_source = latest_doc.url_metadata.split("?")[0]
 
         url_data = cls.get_remote_data_url_base()
 
-        return {
-            "🔗 Data Source": netloc,
-            "🪣 All Raw Data": f"[{url_data}]({url_data})",
-            "📅 Date Range": f"{date_str_min} to {date_str_max}",
-            "📑 Number of Docs": f"{n_docs:,}",
-            "📎 Number of Docs with PDFs": f"{n_docs_with_pdfs:,}",
-            "💾 Dataset Size": f"{file_size_g:.1f}GB",
-        }
+        url_repo = cls.get_remote_repo_url()
 
-    @classmethod
-    def get_lines_for_summary(cls) -> list[str]:
-        lines = []
-        for k, v in cls.get_summary_data().items():
-            lines.extend([f" {k}: **{v}**", ""])
+        lines = [
+            f"📜 **{n_docs:,}** documents,"
+            + f" from **{date_str_min}** to **{date_str_max}**,"
+            + f" scraped from **[{url_source}]({url_source})**.",
+            "",
+            "📒 PDFs have been downloaded for"
+            + f" **{n_docs_with_pdfs:,}** documents.",
+            "",
+            f"📚 Complete [Dataset]({url_data}) (**{file_size_g:.1f} GB**)",
+            " - 🆓 Public data, & fully open-source.",
+            " - 🙏 Please share & fork!",
+            "",
+            "🪲 #WorkInProgress - Suggestions, Questions, Ideas,"
+            + f" & [Bug Reports]({url_repo}/issues)"
+            + " are welcome!",
+            "",
+            "⏰ Updated **daily**.",
+            "",
+            "#OpenData #DataScience #DataForGood #ResearchData #NLP",
+            "",
+        ]
         return lines
 
     @classmethod
     def get_lines_for_hugging_face(cls):
-        lines = ["## 🤗 Hugging Face Datasets", ""]
+        url_hf = (
+            "https://img.shields.io/badge"
+            + "/-HuggingFace-FDEE21"
+            + "?style=for-the-badge&logo=HuggingFace"
+        )
+        lines = [
+            "## 🤗 Hugging Face Datasets",
+            "",
+            f"![HuggingFace]({url_hf})",
+            "",
+        ]
 
         for emoji, label_suffix in [["📄", "docs"], ["📦", "chunks"]]:
             dataset_id = cls.get_dataset_id(label_suffix)
@@ -113,29 +131,36 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
 
     @classmethod
     def get_lines_for_header(cls) -> list[str]:
-        url_repo = cls.get_remote_repo_url()
-        return (
-            [
-                f"# {cls.get_title()}",
-                "",
-            ]
-            + cls.get_lines_for_summary()
-            + [
-                "🪲 #WorkInProgress - Suggestions, Questions, Ideas,"
-                + f" and [Bug Reports]({url_repo}/issues)"
-                + " are welcome!",
-                "",
-            ]
-        )
+        time_updated = TimeFormat("%Y--%m--%d_%H:%M:%S").format(Time.now())
+        file_size_g = cls.get_total_file_size() / 1_000_000_000
+        return [
+            f"# {cls.get_title()}",
+            "",
+            f"![LastUpdated](https://img.shields.io/badge/last_updated-{time_updated}-green)",
+            f"![DatasetSize](https://img.shields.io/badge/dataset_size-{file_size_g:.1f}_GB-green)",
+            "",
+        ]
+
+    @classmethod
+    def get_lines_for_footer(cls) -> list[str]:
+        return [
+            "---",
+            "",
+            "![Maintainer](https://img.shields.io/badge/maintainer-nuuuwan-red)",
+            "![MadeWith](https://img.shields.io/badge/made_with-python-blue)",
+            "",
+        ]
 
     @classmethod
     def lines(cls) -> list[str]:
         return (
             cls.get_lines_for_header()
+            + cls.get_lines_for_summary()
             + cls.get_lines_for_metadata_example()
             + cls.get_lines_chart_docs_by_year()
             + cls.get_lines_for_hugging_face()
             + cls.get_lines_for_latest_docs()
+            + cls.get_lines_for_footer()
         )
 
     @classmethod
