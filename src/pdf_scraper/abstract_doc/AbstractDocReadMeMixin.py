@@ -4,8 +4,9 @@ from dataclasses import asdict
 
 from utils import File, Log, Time, TimeFormat
 
-from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import \
-    AbstractDocChartDocsByYearMixin
+from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import (
+    AbstractDocChartDocsByYearMixin,
+)
 
 log = Log("AbstractDocReadMeMixin")
 
@@ -61,7 +62,6 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
     def get_lines_for_summary(cls) -> list[str]:
         n_docs = len(cls.list_all())
         log.debug(f"{n_docs=}")
-
         n_docs_with_pdfs = len([doc for doc in cls.list_all() if doc.has_pdf])
 
         date_strs = [doc.date_str for doc in cls.list_all()]
@@ -73,9 +73,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
 
         latest_doc = cls.list_all()[0]
         url_source = latest_doc.url_metadata.split("?")[0]
-
         url_data = cls.get_remote_data_url_base()
-
         url_repo = cls.get_remote_repo_url()
 
         lines = [
@@ -135,9 +133,10 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         return [
             f"# {cls.get_title()}",
             "",
-            f"![LastUpdated](https://img.shields.io/badge/last_updated-{time_updated}-green)",
-            f"![DatasetSize](https://img.shields.io/badge/dataset_size-{
-                file_size_g:.1f}_GB-green)",
+            "![LastUpdated](https://img.shields.io/badge"
+            + f"/last_updated-{time_updated}-green)",
+            "![DatasetSize](https://img.shields.io/badge"
+            + f"/dataset_size-{file_size_g:.1f}_GB-green)",
             "",
         ]
 
@@ -146,7 +145,8 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         return [
             "---",
             "",
-            "![Maintainer](https://img.shields.io/badge/maintainer-nuuuwan-red)",
+            "![Maintainer](https://img.shields.io/badge"
+            + "/maintainer-nuuuwan-red)",
             "![MadeWith](https://img.shields.io/badge/made_with-python-blue)",
             "",
         ]
