@@ -5,10 +5,8 @@ from urllib.parse import urlparse
 
 from utils import File, Log
 
-from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import (
-    AbstractDocChartDocsByYearMixin,
-)
-from utils_future import Markdown
+from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import \
+    AbstractDocChartDocsByYearMixin
 
 log = Log("AbstractDocReadMeMixin")
 
