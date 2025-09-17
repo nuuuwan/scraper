@@ -121,17 +121,10 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             ]
             + cls.get_lines_for_summary()
             + [
-                "🆓 Public data, fully open-source – fork freely!",
-                "",
-                "🔍 Useful for Journalists, Researchers,"
-                + " Lawyers & law students,"
-                + " Policy watchers & Citizens who want to stay informed",
-                "",
-                "🐞 #WorkInProgress - Suggestions, Questions, Ideas,"
-                + f" [Bug Reports]({url_repo}/issues)"
+                "🪲 #WorkInProgress - Suggestions, Questions, Ideas,"
+                + f" and [Bug Reports]({url_repo}/issues)"
                 + " are welcome!",
                 "",
-                "#SriLanka #OpenData #GovTech",
             ]
         )
 
