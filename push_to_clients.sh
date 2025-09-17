@@ -12,11 +12,15 @@ for CLIENT_REPO in "${CLIENT_REPOS[@]}"; do
     echo "------------------------------------------------------"
 
     DIR_CLIENT_REPO="../$CLIENT_REPO"
+
+    [[ -d "$DIR_CLIENT_REPO" ]]   || { echo "❌ Missing source dir: $DIR_CLIENT_REPO"; exit 1; }
     
     cd $DIR_CLIENT_REPO;
 
     git reset --hard HEAD;
     git clean -fd;
+
+    git pull origin main --rebase;
 
     cp ../pdf_scraper/copy_from_pdf_scraper.sh .
     git add copy_from_pdf_scraper.sh
@@ -31,6 +35,8 @@ for CLIENT_REPO in "${CLIENT_REPOS[@]}"; do
     cp -r ../pdf_scraper/src/utils_future src/
     git add src/utils_future
     git commit -m "[push_to_clients] Updated utils_future"
+
+    git push origin main
 done
 
 
