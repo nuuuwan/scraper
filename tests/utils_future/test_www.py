@@ -6,7 +6,7 @@ import requests
 
 from utils_future import WWW
 
-TEST_WWW = WWW("https://example.com")
+TEST_WWW = WWW("https://mock.com")
 
 
 class TestCase(unittest.TestCase):
