@@ -64,6 +64,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         n_docs = len(cls.list_all())
         log.debug(f"{n_docs=}")
         n_docs_with_pdfs = len([doc for doc in cls.list_all() if doc.has_pdf])
+        p_docs_with_pdfs = n_docs_with_pdfs / n_docs
 
         date_strs = [doc.date_str for doc in cls.list_all()]
         date_str_min = min(date_strs)
@@ -83,7 +84,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             + f" scraped from **[{url_source}]({url_source})**.",
             "",
             "📒 PDFs have been downloaded for"
-            + f" **{n_docs_with_pdfs:,}** documents.",
+            + f" **{n_docs_with_pdfs:,}** ({p_docs_with_pdfs:.0%}) documents.",
             "",
             f"📚 Complete [Dataset]({url_data}) (**{file_size_g:.1f} GB**)",
             " - 🆓 Public data, & fully open-source.",
