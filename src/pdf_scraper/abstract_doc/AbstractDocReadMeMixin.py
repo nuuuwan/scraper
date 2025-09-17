@@ -4,10 +4,8 @@ from dataclasses import asdict
 
 from utils import File, Log, Time, TimeFormat
 
-from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import (
-    AbstractDocChartDocsByYearMixin,
-)
-from utils_future import PDFFile
+from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import \
+    AbstractDocChartDocsByYearMixin
 
 log = Log("AbstractDocReadMeMixin")
 
@@ -55,8 +53,6 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             json.dumps(asdict(latest_doc), indent=4),
             "```",
             "",
-            f"[More details]({latest_doc.remote_data_url})",
-            "",
         ]
 
     @classmethod
@@ -79,25 +75,28 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         url_repo = cls.get_remote_repo_url()
 
         lines = [
-            f"📜 **{n_docs:,}** documents,"
+            f"📜 [**{n_docs:,}** documents]({url_data})"
+            + f" (**{file_size_g:.1f} GB**),"
             + f" from **{date_str_min}** to **{date_str_max}**,"
-            + f" scraped from **[{url_source}]({url_source})**.",
+            + f" scraped from **[{url_source}]({url_source})**",
             "",
-            "📒 PDFs have been downloaded for"
+            "📑 In JSON, PDF, and @HuggingFace Formats",
+            "",
+            "⏰ Updated **at least Daily**",
+            "",
+            "🆓 Public data & fully open-source",
+            "",
+            "#OpenData #DataScience #DataForGood #ResearchData #NLP",
+            "",
+            "...",
+            "",
+            "*📒 PDFs have been downloaded for"
             + f" **{n_docs_with_pdfs:,}**"
-            + f" (**{p_docs_with_pdfs:.0%}**) documents.",
-            "",
-            f"📚 Complete [Dataset]({url_data}) (**{file_size_g:.1f} GB**)",
-            " - 🆓 Public data, & fully open-source.",
-            " - 🙏 Please share & fork!",
-            "",
-            "⏰ Updated **at least Daily**.",
+            + f" (**{p_docs_with_pdfs:.0%}**) documents*",
             "",
             "🪲 #WorkInProgress - Suggestions, Questions, Ideas,"
             + f" & [Bug Reports]({url_repo}/issues)"
             + " are welcome!",
-            "",
-            "#OpenData #DataScience #DataForGood #ResearchData #NLP",
             "",
         ]
         return lines
@@ -133,6 +132,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
     def get_lines_for_header(cls) -> list[str]:
         time_updated = TimeFormat("%Y--%m--%d_%H:%M:%S").format(Time.now())
         file_size_g = cls.get_total_file_size() / 1_000_000_000
+        url_repo = cls.get_remote_repo_url()
         return [
             f"# {cls.get_title()} `Dataset`",
             "",
@@ -140,6 +140,8 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             + f"/last_updated-{time_updated}-green)",
             "![DatasetSize](https://img.shields.io/badge"
             + f"/dataset_size-{file_size_g:.1f}_GB-green)",
+            "",
+            f"[{url_repo}]({url_repo})",
             "",
         ]
 
