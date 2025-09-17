@@ -133,7 +133,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             + f" [Bug Reports]({url_repo}/issues)"
             + " are welcome!",
             "",
-            "#Legal #OpenData #GovTech",
+            "#SriLanka #OpenData #GovTech",
         ]
 
     @classmethod
