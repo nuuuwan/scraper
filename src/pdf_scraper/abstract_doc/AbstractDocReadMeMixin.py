@@ -135,7 +135,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             "![LastUpdated](https://img.shields.io/badge"
             + f"/last_updated-{time_updated}-green)",
             "![DatasetSize](https://img.shields.io/badge"
-            + f"/dataset_size-{file_size_g:.1f}_GB-green)",
+            + f"/dataset_size-{file_size_g:.1f}_GB-yellow)",
             "",
             f"[{url_repo}]({url_repo})",
             "",
