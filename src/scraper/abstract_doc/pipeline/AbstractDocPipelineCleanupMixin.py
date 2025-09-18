@@ -9,19 +9,6 @@ log = Log("AbstractDocPipelineCleanupMixin")
 class AbstractDocPipelineCleanupMixin:
 
     @classmethod
-    def cleanup_incorrect_doc_dir(cls, json_path):
-        doc = cls.from_file(json_path)
-        dir_doc_actual = os.path.dirname(json_path)
-        dir_doc_expected = doc.dir_doc.lstrip("./")
-        if dir_doc_actual != dir_doc_expected:
-            log.warning(
-                f"doc_id={doc.doc_id} in wrong dir:"
-                + f" {dir_doc_expected} != {dir_doc_actual}"
-            )
-            shutil.rmtree(dir_doc_actual)
-            log.warning(f"🧹 Deleted {dir_doc_actual}")
-
-    @classmethod
     def add_lang(cls, json_path):
         json_file = JSONFile(json_path)
         d = json_file.read()
@@ -38,7 +25,6 @@ class AbstractDocPipelineCleanupMixin:
 
         for json_path in cls.get_all_json_paths():
             cls.add_lang(json_path)
-            cls.cleanup_incorrect_doc_dir(json_path)
 
     @classmethod
     def correct_pdf_path(cls, doc):
