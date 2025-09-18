@@ -134,7 +134,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         time_updated = TimeFormat("%Y--%m--%d_%H:%M:%S").format(Time.now())
         total_size_humanized = FileOrDirFuture(
             cls.get_dir_root()
-        ).size_humanized
+        ).size_humanized.replace(" ", "_")
         url_repo = cls.get_remote_repo_url()
         return [
             f"# {cls.get_title()} `Dataset`",
