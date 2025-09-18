@@ -11,7 +11,7 @@ class AbstractDocExtendedDataMixin:
     T_TIMEOUT_PDF_DOWNLOAD = 120
 
     @classmethod
-    def get_dir_extended_root(cls) -> str:
+    def get_dir_data_root(cls) -> str:
         dir_metadata = os.path.basename(os.getcwd())
         return os.path.join(
             "..",
@@ -21,7 +21,7 @@ class AbstractDocExtendedDataMixin:
     @cached_property
     def dir_doc_extended(self) -> str:
         return os.path.join(
-            self.__class__.get_dir_extended_root(),
+            self.__class__.get_dir_data_root(),
             self.get_dir_docs_for_cls_relative(),
             self.dir_doc_relative_to_class,
         )
@@ -67,7 +67,7 @@ class AbstractDocExtendedDataMixin:
     @classmethod
     def get_total_file_size(cls):
         total_size = 0
-        for dirpath, _, filenames in os.walk(cls.get_dir_extended_root()):
+        for dirpath, _, filenames in os.walk(cls.get_dir_data_root()):
             for f in filenames:
                 fp = os.path.join(dirpath, f)
                 total_size += os.path.getsize(fp)

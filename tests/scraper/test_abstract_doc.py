@@ -25,7 +25,7 @@ class DummyDoc(AbstractDoc):
         return os.path.join(DIR_TEST_ABSTRACT_DOC, "data_root")
 
     @classmethod
-    def get_dir_extended_root(cls):
+    def get_dir_data_root(cls):
         return os.path.join(DIR_TEST_ABSTRACT_DOC, "extended_data_root")
 
 
@@ -46,7 +46,5 @@ class TestCase(unittest.TestCase):
     def test_get_dir_root(self):
         self.assertEqual(AbstractDoc.get_dir_root(), ".")
 
-    def test_get_dir_extended_root(self):
-        self.assertEqual(
-            AbstractDoc.get_dir_extended_root(), "../scraper_data"
-        )
+    def test_get_dir_data_root(self):
+        self.assertEqual(AbstractDoc.get_dir_data_root(), "../scraper_data")

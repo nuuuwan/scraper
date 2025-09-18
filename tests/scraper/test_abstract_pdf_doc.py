@@ -31,7 +31,7 @@ class DummyDoc(AbstractPDFDoc):
         return os.path.join(DIR_TEST_PIPELINE, "data_root")
 
     @classmethod
-    def get_dir_extended_root(cls):
+    def get_dir_data_root(cls):
         return os.path.join(DIR_TEST_PIPELINE, "extended_data_root")
 
 
@@ -56,7 +56,7 @@ class TestCase(unittest.TestCase):
             DummyDoc.run_pipeline(max_dt=10)
 
             self.assertTrue(os.path.exists(DummyDoc.get_dir_root()))
-            self.assertTrue(os.path.exists(DummyDoc.get_dir_extended_root()))
+            self.assertTrue(os.path.exists(DummyDoc.get_dir_data_root()))
 
             doc_list = DummyDoc.list_all()
             self.assertEqual(len(doc_list), 1)
