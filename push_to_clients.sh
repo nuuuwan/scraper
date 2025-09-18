@@ -1,14 +1,9 @@
 # HACK! Delete this once scraper is in pypi
 
-# CLIENT_REPOS=(
-#     "lk_hansard"
-#     "lk_appeal_court_judgements"
-#     "lk_supreme_court_judgements"
-# )
-
 CLIENT_REPOS=(
-    "lk_supreme_court_judgements"
     "lk_hansard"
+    "lk_appeal_court_judgements"
+    "lk_supreme_court_judgements"
 )
 
 
