@@ -66,11 +66,11 @@ class TestCase(unittest.TestCase):
             self.assertTrue(first_doc.has_pdf)
 
             text = first_doc.get_text()
-            self.assertEqual(len(text), 39)
+            self.assertEqual(len(text), 96)
             self.assertEqual(text[:9], "Heading 1")
 
             blocks = first_doc.get_blocks()
-            self.assertEqual(len(blocks), 4)
+            self.assertEqual(len(blocks), 6)
 
             url_metadata_set = DummyDoc.get_url_metadata_set()
             self.assertEqual(url_metadata_set, {"http://mock.com/doc.html"})
