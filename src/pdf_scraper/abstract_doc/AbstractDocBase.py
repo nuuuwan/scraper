@@ -14,8 +14,8 @@ class AbstractDocBase(ABC):
     num: str
     date_str: str
     description: str
-    url_pdf: str
     url_metadata: str
+    url_pdf: str
 
     @classmethod
     def get_doc_class_label(cls) -> str:
