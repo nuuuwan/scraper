@@ -41,15 +41,6 @@ class AbstractDocExtendedDataMixin:
             ]
         )
 
-    @classmethod
-    def get_total_file_size(cls):
-        total_size = 0
-        for dirpath, _, filenames in os.walk(cls.get_dir_data_root()):
-            for f in filenames:
-                fp = os.path.join(dirpath, f)
-                total_size += os.path.getsize(fp)
-        return total_size
-
     @cached_property
     def doc_readme_path(self) -> str:
         return os.path.join(self.dir_doc, "README.md")

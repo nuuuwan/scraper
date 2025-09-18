@@ -5,6 +5,7 @@ from utils import File, Log, Time, TimeFormat
 
 from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import \
     AbstractDocChartDocsByYearMixin
+from utils_future import FileOrDirFuture
 
 log = Log("AbstractDocReadMeMixin")
 
@@ -66,7 +67,9 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         date_strs = [doc.date_str for doc in cls.list_all()]
         date_str_min = min(date_strs)
         date_str_max = max(date_strs)
-        file_size_g = cls.get_total_file_size() / 1_000_000_000
+        total_size_humanized = FileOrDirFuture(
+            cls.get_dir_root()
+        ).size_humanized
         latest_doc = cls.list_all()[0]
         url_source = latest_doc.url_metadata.split("?")[0]
         url_data = cls.get_remote_data_url_base()
@@ -74,7 +77,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
 
         lines = [
             f"📜 [**{n_docs:,}** documents]({url_data})"
-            + f" (**{file_size_g:.1f} GB**),"
+            + f" (**{total_size_humanized}**),"
             + f" from **{date_str_min}** to **{date_str_max}**,"
             + f" scraped from **[{url_source}]({url_source})**",
             "",
@@ -129,7 +132,9 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
     @classmethod
     def get_lines_for_header(cls) -> list[str]:
         time_updated = TimeFormat("%Y--%m--%d_%H:%M:%S").format(Time.now())
-        file_size_g = cls.get_total_file_size() / 1_000_000_000
+        total_size_humanized = FileOrDirFuture(
+            cls.get_dir_root()
+        ).size_humanized
         url_repo = cls.get_remote_repo_url()
         return [
             f"# {cls.get_title()} `Dataset`",
@@ -137,7 +142,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             "![LastUpdated](https://img.shields.io/badge"
             + f"/last_updated-{time_updated}-green)",
             "![DatasetSize](https://img.shields.io/badge"
-            + f"/dataset_size-{file_size_g:.1f}_GB-yellow)",
+            + f"/dataset_size-{total_size_humanized}-yellow)",
             "",
             f"[{url_repo}]({url_repo})",
             "",
