@@ -15,6 +15,7 @@ class AbstractDocBase(ABC):
     date_str: str
     description: str
     url_metadata: str
+    lang: str
 
     @classmethod
     def get_doc_class_label(cls) -> str:

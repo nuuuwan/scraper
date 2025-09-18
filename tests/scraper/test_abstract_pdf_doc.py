@@ -19,6 +19,7 @@ class DummyDoc(AbstractPDFDoc):
             description="Test Document",
             url_metadata="http://mock.com/doc.html",
             url_pdf="http://mock.com/doc.pdf",
+            lang="en",
         )
 
     @classmethod

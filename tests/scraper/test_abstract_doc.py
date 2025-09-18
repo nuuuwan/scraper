@@ -13,6 +13,7 @@ class DummyDoc(AbstractDoc):
             date_str="2023-10-01",
             description="Test Document",
             url_metadata="http://mock.com/doc.html",
+            lang="en",
         )
 
     @classmethod
@@ -38,6 +39,7 @@ class TestCase(unittest.TestCase):
             date_str="2023-10-01",
             description="Test Document",
             url_metadata="http://mock.com/doc.html",
+            lang="en",
         )
         self.assertEqual(doc.num_short, "12345678901234567890123-49cb3608")
 
