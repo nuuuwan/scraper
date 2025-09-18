@@ -1,10 +1,4 @@
-# scraper.abstract_doc (auto generate by build_inits.py)
-# flake8: noqa: F408
-
-from scraper.abstract_doc.AbstractDoc import AbstractDoc
 from scraper.abstract_doc.AbstractDocBase import AbstractDocBase
-from scraper.abstract_doc.AbstractDocChartDocsByYearMixin import \
-    AbstractDocChartDocsByYearMixin
 from scraper.abstract_doc.AbstractDocExtendedDataMixin import \
     AbstractDocExtendedDataMixin
 from scraper.abstract_doc.AbstractDocGeneratorMixin import \
@@ -14,6 +8,17 @@ from scraper.abstract_doc.AbstractDocHuggingFaceMixin import \
 from scraper.abstract_doc.AbstractDocMetadataMixin import \
     AbstractDocMetadataMixin
 from scraper.abstract_doc.AbstractDocReadMeMixin import AbstractDocReadMeMixin
-from scraper.abstract_doc.pipeline import (
-    AbstractDocPipelineCleanupMixin, AbstractDocPipelineExtendedDataMixin,
-    AbstractDocPipelineMetadataMixin, AbstractDocPipelineMixin)
+from scraper.abstract_doc.pipeline.AbstractDocPipelineMixin import \
+    AbstractDocPipelineMixin
+
+
+class AbstractDoc(
+    AbstractDocBase,
+    AbstractDocGeneratorMixin,
+    AbstractDocMetadataMixin,
+    AbstractDocExtendedDataMixin,
+    AbstractDocReadMeMixin,
+    AbstractDocHuggingFaceMixin,
+    AbstractDocPipelineMixin,
+):
+    pass
