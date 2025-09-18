@@ -4,7 +4,7 @@ from functools import cached_property
 from utils import File
 
 
-class FileFuture(File):
+class FileOrDirFuture(File):
 
     def __str__(self):
         return f"{self.path} ({self.size_humanized})"
@@ -30,5 +30,4 @@ class FileFuture(File):
         ]:
             if size > unit:
                 return f"{size / unit:.1f} {label}"
-
         return f"{size} B"
