@@ -10,6 +10,16 @@ TEST_WWW = WWW("https://mock.com")
 
 
 class TestCase(unittest.TestCase):
+    def test_eq(self):
+        www1 = WWW("https://mock.com")
+        www2 = WWW("https://mock.com")
+        self.assertEqual(www1, www2)
+
+        www_set = set()
+        www_set.add(www1)
+        www_set.add(www2)
+        self.assertEqual(len(www_set), 1)
+
     def test_str(self):
         self.assertEqual(str(TEST_WWW), "🌐 https://mock.com")
 
