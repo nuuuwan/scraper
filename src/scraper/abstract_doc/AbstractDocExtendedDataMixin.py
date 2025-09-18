@@ -18,12 +18,6 @@ class AbstractDocExtendedDataMixin:
             self.dir_doc_relative_to_class,
         )
 
-    def copy_metadata(self):
-        shutil.copytree(
-            self.dir_doc, self.dir_doc_extended, dirs_exist_ok=True
-        )
-        log.info(f"Copied metadata to {self.dir_doc_extended}")
-
     @classmethod
     def get_remote_repo_url(cls) -> str:
         assert os.environ["GITHUB_USERNAME"]
@@ -74,11 +68,5 @@ class AbstractDocExtendedDataMixin:
             return ""
         return File(self.doc_readme_path).read()
 
-    def scrape_extended_data_for_doc_text_part(self):
-        raise NotImplementedError
-
     def scrape_extended_data_for_doc(self):
-        if not os.path.exists(self.dir_doc_extended):
-            os.makedirs(self.dir_doc_extended)
-            self.copy_metadata()
-        self.scrape_extended_data_for_doc_text_part()
+        raise NotImplementedError

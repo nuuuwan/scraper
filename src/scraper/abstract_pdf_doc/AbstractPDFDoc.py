@@ -42,7 +42,7 @@ class AbstractPDFDoc(AbstractDoc, ABC):
         assert os.path.exists(self.blocks_path)
         return JSONFile(self.blocks_path).read()
 
-    def scrape_extended_data_for_doc_text_part(self):
+    def scrape_extended_data_for_doc(self):
         if not self.has_pdf:
             WWW(self.url_pdf).download_binary(self.pdf_path)
         if not os.path.exists(self.blocks_path) or not os.path.getsize(
