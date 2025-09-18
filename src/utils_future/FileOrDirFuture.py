@@ -35,9 +35,8 @@ class FileOrDirFuture(File):
 
         return total
 
-    @cached_property
-    def size_humanized(self):
-        size = self.size
+    @staticmethod
+    def humanize_size(size):
         for unit, label in [
             (1_000_000_000, "GB"),
             (1_000_000, "MB"),
@@ -46,3 +45,7 @@ class FileOrDirFuture(File):
             if size >= unit:
                 return f"{size / unit:.1f} {label}"
         return f"{size} B"
+
+    @cached_property
+    def size_humanized(self):
+        return FileOrDirFuture.humanize_size(self.size)

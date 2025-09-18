@@ -12,7 +12,7 @@ log = Log("AbstractDocMetadataMixin")
 class AbstractDocMetadataMixin:
 
     @classmethod
-    def get_dir_data_root(cls) -> str:
+    def get_data_branch_dir_root(cls) -> str:
         dir_metadata = os.path.basename(os.getcwd())
         return os.path.join(
             "..",
@@ -29,7 +29,7 @@ class AbstractDocMetadataMixin:
     @classmethod
     def get_dir_docs_for_cls(cls) -> str:
         return os.path.join(
-            cls.get_dir_data_root(),
+            cls.get_data_branch_dir_root(),
             "data",
             cls.get_doc_class_label(),
         )

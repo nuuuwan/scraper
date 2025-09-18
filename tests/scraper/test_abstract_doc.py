@@ -21,11 +21,11 @@ class DummyDoc(AbstractDoc):
         yield DummyDoc()
 
     @classmethod
-    def get_dir_root(cls):
+    def get_main_branch_dir_root(cls):
         return os.path.join(DIR_TEST_ABSTRACT_DOC, "data_root")
 
     @classmethod
-    def get_dir_data_root(cls):
+    def get_data_branch_dir_root(cls):
         return os.path.join(DIR_TEST_ABSTRACT_DOC, "extended_data_root")
 
 
@@ -44,7 +44,9 @@ class TestCase(unittest.TestCase):
         self.assertEqual(doc.num_short, "12345678901234567890123-49cb3608")
 
     def test_get_dir_root(self):
-        self.assertEqual(AbstractDoc.get_dir_root(), ".")
+        self.assertEqual(AbstractDoc.get_main_branch_dir_root(), ".")
 
-    def test_get_dir_data_root(self):
-        self.assertEqual(AbstractDoc.get_dir_data_root(), "../scraper_data")
+    def test_get_data_branch_dir_root(self):
+        self.assertEqual(
+            AbstractDoc.get_data_branch_dir_root(), "../scraper_data"
+        )

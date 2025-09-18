@@ -17,7 +17,9 @@ class AbstractDocHuggingFaceMixin:
 
     @classmethod
     def get_dir_hugging_face_data(cls):
-        return os.path.join(cls.get_dir_data_root(), "hugging_face_data")
+        return os.path.join(
+            cls.get_data_branch_dir_root(), "hugging_face_data"
+        )
 
     @classmethod
     def get_docs_json_path(cls):
