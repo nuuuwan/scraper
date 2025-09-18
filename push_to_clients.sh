@@ -8,6 +8,7 @@
 
 CLIENT_REPOS=(
     "lk_supreme_court_judgements"
+    "lk_hansard"
 )
 
 
