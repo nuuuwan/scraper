@@ -1,5 +1,6 @@
 import os
 from abc import ABC
+from dataclasses import dataclass
 from functools import cached_property
 
 from utils import File, JSONFile, Log
@@ -10,6 +11,7 @@ from utils_future import WWW, PDFFile
 log = Log("AbstractPDFDoc")
 
 
+@dataclass
 class AbstractPDFDoc(AbstractDoc, ABC):
     url_pdf: str
 
