@@ -1,10 +1,11 @@
 import json
 import os
 
-from utils import File, Log, Time, TimeFormat
+from utils import File, JSONFile, Log, Time, TimeFormat
 
-from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import \
-    AbstractDocChartDocsByYearMixin
+from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import (
+    AbstractDocChartDocsByYearMixin,
+)
 from utils_future import FileOrDirFuture
 
 log = Log("AbstractDocReadMeMixin")
@@ -60,7 +61,8 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         ]
 
     @classmethod
-    def get_lines_for_summary(cls) -> list[str]:
+    def get_summary(cls) -> dict:
+        time_updated = TimeFormat("%Y--%m--%d_%H:%M:%S").format(Time.now())
         n_docs = len(cls.list_all())
         n_docs_with_pdfs = len([doc for doc in cls.list_all() if doc.has_pdf])
         p_docs_with_pdfs = n_docs_with_pdfs / n_docs
@@ -75,12 +77,22 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         url_data = cls.get_remote_data_url_base()
         url_repo = cls.get_remote_repo_url()
 
-        lines = [
-            f"📜 [**{n_docs:,}** documents]({url_data})"
-            + f" (**{total_size_humanized}**),"
-            + f" from **{date_str_min}** to **{date_str_max}**,"
-            + f" scraped from **[{url_source}]({url_source})**",
-            "",
+        return dict(
+            time_updated=time_updated,
+            n_docs=n_docs,
+            n_docs_with_pdfs=n_docs_with_pdfs,
+            p_docs_with_pdfs=p_docs_with_pdfs,
+            date_str_min=date_str_min,
+            date_str_max=date_str_max,
+            total_size_humanized=total_size_humanized,
+            url_source=url_source,
+            url_data=url_data,
+            url_repo=url_repo,
+        )
+
+    @classmethod
+    def get_lines_for_summary_static(cls) -> list[str]:
+        return [
             "📑 In JSON, PDF, TXT and 🤗 Hugging Face Formats",
             "",
             "⏰ Updated **at least Daily**",
@@ -91,15 +103,49 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             "",
             "...",
             "",
-            "*📒 PDFs have been downloaded for"
-            + f" **{n_docs_with_pdfs:,}**"
-            + f" (**{p_docs_with_pdfs:.0%}**) documents*",
-            "",
-            "🪲 #WorkInProgress - Suggestions, Questions, Ideas,"
-            + f" & [Bug Reports]({url_repo}/issues)"
-            + " are welcome!",
-            "",
         ]
+
+    @classmethod
+    def get_lines_for_summary(cls) -> list[str]:
+        summary = cls.get_summary()
+        time_updated = summary["time_updated"]
+        n_docs = summary["n_docs"]
+        n_docs_with_pdfs = summary["n_docs_with_pdfs"]
+        p_docs_with_pdfs = summary["p_docs_with_pdfs"]
+        date_str_min = summary["date_str_min"]
+        date_str_max = summary["date_str_max"]
+        total_size_humanized = summary["total_size_humanized"]
+        url_source = summary["url_source"]
+        url_data = summary["url_data"]
+        url_repo = summary["url_repo"]
+
+        lines = (
+            [
+                "![LastUpdated](https://img.shields.io/badge"
+                + f"/last_updated-{time_updated}-green)",
+                "![DatasetSize](https://img.shields.io/badge"
+                + f"/dataset_size-{total_size_humanized}-yellow)",
+                "",
+                f"[{url_repo}]({url_repo})",
+                "",
+                f"📜 [**{n_docs:,}** documents]({url_data})"
+                + f" (**{total_size_humanized}**),"
+                + f" from **{date_str_min}** to **{date_str_max}**,"
+                + f" scraped from **[{url_source}]({url_source})**",
+                "",
+            ]
+            + cls.get_lines_for_summary_static()
+            + [
+                "*📒 PDFs have been downloaded for"
+                + f" **{n_docs_with_pdfs:,}**"
+                + f" (**{p_docs_with_pdfs:.0%}**) documents*",
+                "",
+                "🪲 #WorkInProgress - Suggestions, Questions, Ideas,"
+                + f" & [Bug Reports]({url_repo}/issues)"
+                + " are welcome!",
+                "",
+            ]
+        )
         return lines
 
     @classmethod
@@ -131,20 +177,8 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
 
     @classmethod
     def get_lines_for_header(cls) -> list[str]:
-        time_updated = TimeFormat("%Y--%m--%d_%H:%M:%S").format(Time.now())
-        total_size_humanized = FileOrDirFuture(
-            cls.get_dir_root()
-        ).size_humanized.replace(" ", "_")
-        url_repo = cls.get_remote_repo_url()
         return [
             f"# {cls.get_title()} `Dataset`",
-            "",
-            "![LastUpdated](https://img.shields.io/badge"
-            + f"/last_updated-{time_updated}-green)",
-            "![DatasetSize](https://img.shields.io/badge"
-            + f"/dataset_size-{total_size_humanized}-yellow)",
-            "",
-            f"[{url_repo}]({url_repo})",
             "",
         ]
 
@@ -172,9 +206,19 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         )
 
     @classmethod
+    def get_summary_json_path(cls) -> str:
+        return os.path.join(cls.get_dir_root(), "summary.json")
+
+    @classmethod
     def build_readme(cls):
         assert cls.list_all()
         os.makedirs(cls.get_dir_root(), exist_ok=True)
         readme_path = cls.get_readme_path()
         File(readme_path).write("\n".join(cls.lines()))
         log.info(f"Wrote {readme_path}")
+
+        summary = cls.get_summary()
+        log.debug(summary)
+        summary_json_path = cls.get_summary_json_path()
+        JSONFile(summary_json_path).write(summary)
+        log.info(f"Wrote {summary_json_path}")
