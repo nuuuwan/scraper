@@ -17,7 +17,7 @@ class AbstractPDFDoc(AbstractDoc, ABC):
 
     @cached_property
     def pdf_path(self) -> str:
-        return os.path.join(self.dir_doc_extended, "doc.pdf")
+        return os.path.join(self.dir_doc, "doc.pdf")
 
     @property
     def has_pdf(self) -> bool:
@@ -25,7 +25,7 @@ class AbstractPDFDoc(AbstractDoc, ABC):
 
     @cached_property
     def blocks_path(self) -> str:
-        return os.path.join(self.dir_doc_extended, "blocks.json")
+        return os.path.join(self.dir_doc, "blocks.json")
 
     def extract_blocks(self):
         assert os.path.exists(self.pdf_path)

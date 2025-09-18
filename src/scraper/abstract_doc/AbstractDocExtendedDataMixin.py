@@ -1,5 +1,4 @@
 import os
-import shutil
 from functools import cached_property
 
 from utils import File, Log
@@ -9,14 +8,6 @@ log = Log("AbstractDocExtendedDataMixin")
 
 class AbstractDocExtendedDataMixin:
     T_TIMEOUT_PDF_DOWNLOAD = 120
-
-    @cached_property
-    def dir_doc_extended(self) -> str:
-        return os.path.join(
-            self.__class__.get_dir_data_root(),
-            self.get_dir_docs_for_cls_relative(),
-            self.dir_doc_relative_to_class,
-        )
 
     @classmethod
     def get_remote_repo_url(cls) -> str:
@@ -61,7 +52,7 @@ class AbstractDocExtendedDataMixin:
 
     @cached_property
     def doc_readme_path(self) -> str:
-        return os.path.join(self.dir_doc_extended, "README.md")
+        return os.path.join(self.dir_doc, "README.md")
 
     def get_text(self):
         if not os.path.exists(self.doc_readme_path):

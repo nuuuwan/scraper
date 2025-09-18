@@ -38,8 +38,8 @@ class AbstractDocPipelineCleanupMixin:
 
     @classmethod
     def correct_pdf_path(cls, doc):
-        expected_pdf_path = os.path.join(doc.dir_doc_extended, "doc.pdf")
-        legacy_pdf_path = os.path.join(doc.dir_doc_extended, "en.pdf")
+        expected_pdf_path = os.path.join(doc.dir_doc, "doc.pdf")
+        legacy_pdf_path = os.path.join(doc.dir_doc, "en.pdf")
 
         if os.path.exists(legacy_pdf_path):
             if os.path.exists(expected_pdf_path):

@@ -3,9 +3,8 @@ import os
 
 from utils import File, Log, Time, TimeFormat
 
-from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import (
-    AbstractDocChartDocsByYearMixin,
-)
+from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import \
+    AbstractDocChartDocsByYearMixin
 
 log = Log("AbstractDocReadMeMixin")
 
@@ -170,6 +169,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
     @classmethod
     def build_readme(cls):
         assert cls.list_all()
+        os.makedirs(cls.get_dir_root(), exist_ok=True)
         readme_path = cls.get_readme_path()
         File(readme_path).write("\n".join(cls.lines()))
         log.info(f"Wrote {readme_path}")
