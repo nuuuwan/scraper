@@ -39,8 +39,8 @@ for CLIENT_REPO in "${CLIENT_REPOS[@]}"; do
     git commit -m "[push_to_clients] Updated utils_future"
 
     git push origin main
-    # open https://github.com/nuuuwan/$CLIENT_REPO
-    # code $DIR_CLIENT_REPO
+    open https://github.com/nuuuwan/$CLIENT_REPO
+    code $DIR_CLIENT_REPO
 
     echo "✅ Push to $CLIENT_REPO complete."
 done
