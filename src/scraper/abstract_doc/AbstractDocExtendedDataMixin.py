@@ -1,7 +1,7 @@
 import os
 from functools import cached_property
 
-from utils import File, Log
+from utils import Log
 
 log = Log("AbstractDocExtendedDataMixin")
 
@@ -40,15 +40,6 @@ class AbstractDocExtendedDataMixin:
                 self.dir_doc_relative_to_class,
             ]
         )
-
-    @cached_property
-    def doc_readme_path(self) -> str:
-        return os.path.join(self.dir_doc, "README.md")
-
-    def get_text(self):
-        if not os.path.exists(self.doc_readme_path):
-            return ""
-        return File(self.doc_readme_path).read()
 
     def scrape_extended_data_for_doc(self):
         raise NotImplementedError
