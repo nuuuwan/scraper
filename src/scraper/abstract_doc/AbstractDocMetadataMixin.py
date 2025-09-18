@@ -49,15 +49,15 @@ class AbstractDocMetadataMixin:
     def json_path(self) -> str:
         return os.path.join(self.dir_doc, "doc.json")
 
+    def to_dict(self) -> dict:
+        return dict(
+            doc_type=self.get_doc_class_label(),
+            doc_id=self.doc_id,
+        ) | asdict(self)
+
     def write(self):
         os.makedirs(self.dir_doc, exist_ok=True)
-        JSONFile(self.json_path).write(
-            dict(
-                doc_type=self.get_doc_class_label(),
-                doc_id=self.doc_id,
-            )
-            | asdict(self)
-        )
+        JSONFile(self.json_path).write(self.to_dict())
         log.info(f"Wrote {self.json_path}")
 
     @classmethod
