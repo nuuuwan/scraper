@@ -38,3 +38,17 @@ class TestCase(unittest.TestCase):
 
             local_path = os.path.join("tests", "output", "test_binary.binary")
             www.download_binary(local_path)
+
+    def test_download_binary_with_real(self):
+        for i_real, url_pdf in enumerate(
+            [
+                "https://www.police.lk/wp-content/uploads"
+                + "/2025/09/Media-on-2025.09.18-at-0630-_compressed.pdf"
+            ]
+        ):
+            www = WWW(url_pdf)
+            pdf_path = os.path.join("tests", "output", f"www-{i_real}.pdf")
+            www.download_binary(pdf_path)
+            self.assertTrue(os.path.exists(pdf_path))
+            pdf_size = os.path.getsize(pdf_path)
+            self.assertGreater(pdf_size, 1_000)
