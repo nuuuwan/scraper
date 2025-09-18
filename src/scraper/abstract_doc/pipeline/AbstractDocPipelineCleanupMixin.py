@@ -32,6 +32,10 @@ class AbstractDocPipelineCleanupMixin:
 
     @classmethod
     def cleanup_all_by_file_path(cls):
+        if os.path.exists("data"):
+            shutil.rmtree("data")
+            log.warning("🧹 Deleted data/ directory")
+
         for json_path in cls.get_all_json_paths():
             cls.add_lang(json_path)
             cls.cleanup_incorrect_doc_dir(json_path)
