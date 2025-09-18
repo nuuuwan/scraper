@@ -23,12 +23,12 @@ for CLIENT_REPO in "${CLIENT_REPOS[@]}"; do
     git pull origin main --rebase;
 
     rm -rf src/pdf_scraper
-    cp -r ../pdf_scraper/src/pdf_scraper src/
+    cp -r ../scraper/src/pdf_scraper src/
     git add src/pdf_scraper
     git commit -m "[push_to_clients] Updated pdf_scraper"
 
     rm -rf src/utils_future
-    cp -r ../pdf_scraper/src/utils_future src/
+    cp -r ../scraper/src/utils_future src/
     git add src/utils_future
     git commit -m "[push_to_clients] Updated utils_future"
 
