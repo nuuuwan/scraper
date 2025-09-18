@@ -40,7 +40,7 @@ for CLIENT_REPO in "${CLIENT_REPOS[@]}"; do
 
     git push origin main
     open https://github.com/nuuuwan/$CLIENT_REPO
-    code $DIR_CLIENT_REPO
+    # code $DIR_CLIENT_REPO
 
     echo "✅ Push to $CLIENT_REPO complete."
 done
