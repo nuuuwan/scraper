@@ -3,9 +3,8 @@ import os
 
 from utils import File, JSONFile, Log, Time, TimeFormat
 
-from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import (
-    AbstractDocChartDocsByYearMixin,
-)
+from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import \
+    AbstractDocChartDocsByYearMixin
 from utils_future import FileOrDirFuture
 
 log = Log("AbstractDocReadMeMixin")
