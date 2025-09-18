@@ -10,14 +10,6 @@ log = Log("AbstractDocExtendedDataMixin")
 class AbstractDocExtendedDataMixin:
     T_TIMEOUT_PDF_DOWNLOAD = 120
 
-    @classmethod
-    def get_dir_data_root(cls) -> str:
-        dir_metadata = os.path.basename(os.getcwd())
-        return os.path.join(
-            "..",
-            f"{dir_metadata}_data",
-        )
-
     @cached_property
     def dir_doc_extended(self) -> str:
         return os.path.join(

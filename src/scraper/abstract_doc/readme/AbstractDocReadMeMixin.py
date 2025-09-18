@@ -3,14 +3,19 @@ import os
 
 from utils import File, Log, Time, TimeFormat
 
-from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import \
-    AbstractDocChartDocsByYearMixin
+from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import (
+    AbstractDocChartDocsByYearMixin,
+)
 
 log = Log("AbstractDocReadMeMixin")
 
 
 class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
     N_LATEST = 20
+
+    @classmethod
+    def get_dir_root(cls) -> str:
+        return "."
 
     @classmethod
     def get_readme_path(cls) -> str:
