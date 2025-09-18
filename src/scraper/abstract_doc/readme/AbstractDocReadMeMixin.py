@@ -5,7 +5,7 @@ from utils import File, JSONFile, Log, Time, TimeFormat
 
 from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import \
     AbstractDocChartDocsByYearMixin
-from utils_future import FileOrDirFuture
+from utils_future import FileOrDirFuture, Parse
 
 log = Log("AbstractDocReadMeMixin")
 
@@ -114,12 +114,8 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         url_repo = summary["url_repo"]
 
         dataset_size_humanized = FileOrDirFuture.humanize_size(dataset_size)
-        dataset_size_humanized_for_badge = dataset_size_humanized.replace(
-            " ", "_"
-        )
-        time_updated_for_badge = time_updated.replace(" ", "_").replace(
-            "-", "--"
-        )
+        dataset_size_humanized_for_badge = Parse.badge(dataset_size_humanized)
+        time_updated_for_badge = Parse.badge(time_updated)
 
         return [
             "![LastUpdated](https://img.shields.io/badge"
