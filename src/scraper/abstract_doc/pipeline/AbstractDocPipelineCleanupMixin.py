@@ -1,7 +1,7 @@
 import os
 import shutil
 
-from utils import Log
+from utils import JSONFile, Log
 
 log = Log("AbstractDocPipelineCleanupMixin")
 
@@ -22,8 +22,18 @@ class AbstractDocPipelineCleanupMixin:
             log.warning(f"🧹 Deleted {dir_doc_actual}")
 
     @classmethod
+    def add_lang(cls, json_path):
+        json_file = JSONFile(json_path)
+        d = json_file.read()
+        if "lang" not in d:
+            d["lang"] = "en"
+            json_file.write(d)
+            log.warning(f"➕ Added lang=en to {json_path}")
+
+    @classmethod
     def cleanup_all_by_file_path(cls):
         for json_path in cls.get_all_json_paths():
+            cls.add_lang(json_path)
             cls.cleanup_incorrect_doc_dir(json_path)
 
     @classmethod
