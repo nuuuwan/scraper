@@ -17,17 +17,32 @@ class FileOrDirFuture(File):
         return os.path.exists(self.path)
 
     @cached_property
+    def is_dir(self):
+        return os.path.isdir(self.path)
+
+    @cached_property
     def size(self):
-        return os.path.getsize(self.path)
+        if not self.exists:
+            return 0
+
+        if os.path.isfile(self.path):
+            return os.path.getsize(self.path)
+
+        total = 0
+        for root, _, files in os.walk(self.path):
+            for f in files:
+                total += os.path.getsize(os.path.join(root, f))
+
+        return total
 
     @cached_property
     def size_humanized(self):
         size = self.size
         for unit, label in [
-            [1_000_000_000, "GB"],
-            [1_000_000, "MB"],
-            [1_000, "kB"],
+            (1_000_000_000, "GB"),
+            (1_000_000, "MB"),
+            (1_000, "kB"),
         ]:
-            if size > unit:
+            if size >= unit:
                 return f"{size / unit:.1f} {label}"
         return f"{size} B"
