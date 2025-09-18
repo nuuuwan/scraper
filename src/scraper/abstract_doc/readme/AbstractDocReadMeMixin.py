@@ -3,7 +3,7 @@ import os
 
 from utils import File, Log, Time, TimeFormat
 
-from scraper.abstract_doc.AbstractDocChartDocsByYearMixin import \
+from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import \
     AbstractDocChartDocsByYearMixin
 
 log = Log("AbstractDocReadMeMixin")
