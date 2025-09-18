@@ -13,7 +13,6 @@ class PDFTextMixin:
     def __clean_text__(text: str) -> str:
         text = text or ""
         text = text.replace("\n", " ")
-        text = re.sub(r"[^\x00-\x7F]+", "", text)
         text = re.sub(r"\s+", " ", text)
         text = text.strip()
         return text
