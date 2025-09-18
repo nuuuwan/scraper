@@ -1,4 +1,4 @@
-# HACK! Delete this once pdf_scraper is in pypi
+# HACK! Delete this once scraper is in pypi
 
 CLIENT_REPOS=(
     "lk_hansard"
@@ -22,10 +22,10 @@ for CLIENT_REPO in "${CLIENT_REPOS[@]}"; do
 
     git pull origin main --rebase;
 
-    rm -rf src/pdf_scraper
-    cp -r ../scraper/src/pdf_scraper src/
-    git add src/pdf_scraper
-    git commit -m "[push_to_clients] Updated pdf_scraper"
+    rm -rf src/scraper
+    cp -r ../scraper/src/scraper src/
+    git add src/scraper
+    git commit -m "[push_to_clients] Updated scraper"
 
     rm -rf src/utils_future
     cp -r ../scraper/src/utils_future src/

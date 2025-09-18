@@ -4,7 +4,7 @@ from functools import cached_property
 
 from utils import File, JSONFile, Log
 
-from pdf_scraper.abstract_doc import AbstractDoc
+from scraper.abstract_doc import AbstractDoc
 from utils_future import WWW, PDFFile
 
 log = Log("AbstractPDFDoc")

@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 from datasets import Dataset
 
-from pdf_scraper import AbstractDoc
+from scraper import AbstractDoc
 from utils_future import WWW
 
 DIR_TEST_PIPELINE = os.path.join("tests", "output", "test_pipeline")
@@ -53,7 +53,7 @@ class TestCase(unittest.TestCase):
 
     def test_get_dir_extended_root(self):
         self.assertEqual(
-            AbstractDoc.get_dir_extended_root(), "../pdf_scraper_data"
+            AbstractDoc.get_dir_extended_root(), "../scraper_data"
         )
 
     def test_pipeline(self):
