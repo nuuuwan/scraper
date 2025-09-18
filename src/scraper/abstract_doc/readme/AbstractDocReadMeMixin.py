@@ -5,7 +5,7 @@ from utils import File, Log
 
 from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import \
     AbstractDocChartDocsByYearMixin
-from utils_future import FileOrDirFuture, Parse
+from utils_future import FileOrDirFuture, Format
 
 log = Log("AbstractDocReadMeMixin")
 
@@ -30,11 +30,12 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         ]
 
     @classmethod
-    def get_lines_for_blurn_item_files(cls, summary) -> list[str]:
+    def get_line_for_blurb_item_files(cls, summary) -> list[str]:
         n_docs = summary["n_docs"]
         n_docs_with_pdfs = summary["n_docs_with_pdfs"]
         n_docs_with_text = summary["n_docs_with_text"]
-        lines = ["### Data Formats", ""]
+
+        blob_list = []
         for doc_type, n in [
             ("JSON", n_docs),
             ("PDF", n_docs_with_pdfs),
@@ -51,9 +52,22 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
                 emoji = "☑️"
                 label = f"({p:.0%})"
 
-            lines.append(f"- {emoji} {doc_type} {label}".strip())
-        lines.append("")
-        return lines
+            blob_list.append(f"{emoji} **{doc_type}** {label}".strip())
+        return "💾 In " + Format.and_list(blob_list)
+
+    @classmethod
+    def get_line_for_blurb_item_lang(cls, summary) -> list[str]:
+        lang = summary["latest_doc_d"]["lang"]
+        blurb_langs = []
+        for lang_i, lang_label in [
+            ["en", "English"],
+            ["si", "සිංහල"],
+            ["ta", "தமிழ்"],
+        ]:
+            if lang_i in lang:
+                blurb_langs.append(f"**{lang_label}**")
+
+        return "🗣️ In " + Format.and_list(blurb_langs)
 
     @classmethod
     def get_lines_for_blurn(cls, summary) -> list[str]:
@@ -67,7 +81,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         url_repo = summary["url_repo"]
 
         dataset_size_humanized = FileOrDirFuture.humanize_size(dataset_size)
-        time_updated_for_badge = Parse.badge(time_updated)
+        time_updated_for_badge = Format.badge(time_updated)
 
         return [
             "![LastUpdated](https://img.shields.io/badge"
@@ -80,7 +94,11 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             + f" from **{date_str_min}** to **{date_str_max}**,"
             + f" scraped from **[{url_source}]({url_source})**",
             "",
-        ] + cls.get_lines_for_blurn_item_files(summary)
+            cls.get_line_for_blurb_item_files(summary),
+            "",
+            cls.get_line_for_blurb_item_lang(summary),
+            "",
+        ]
 
     @classmethod
     def get_lines_for_metadata_example(cls, summary) -> list[str]:

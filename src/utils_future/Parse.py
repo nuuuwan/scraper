@@ -8,9 +8,3 @@ class Parse:
     def time_str(x) -> str:
         dt = parser.parse(x)
         return dt.strftime(Parse.TIME_FORMAT)
-
-    @staticmethod
-    def badge(x) -> str:
-        for before, after in [("-", "--"), (" ", "_")]:
-            x = x.replace(before, after)
-        return x
