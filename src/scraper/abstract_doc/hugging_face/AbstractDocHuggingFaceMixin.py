@@ -42,7 +42,7 @@ class AbstractDocHuggingFaceMixin:
             d = doc.to_dict() | dict(
                 chunk_id=chunk_id,
                 chunk_index=chunk_index,
-                language="en",
+                language=doc.lang,
                 md5=Hash.md5(chunk_text),
                 chunk_size_bytes=len(chunk_text.encode("utf-8")),
                 chunk_text=chunk_text,
