@@ -64,7 +64,9 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         time_updated = TimeFormat.TIME.format(Time.now())
         n_docs = len(cls.list_all())
         n_docs_with_pdfs = len([doc for doc in cls.list_all() if doc.has_pdf])
-        p_docs_with_pdfs = n_docs_with_pdfs / n_docs
+        n_docs_with_text = len(
+            [doc for doc in cls.list_all() if doc.has_text]
+        )
         date_strs = [doc.date_str for doc in cls.list_all()]
         date_str_min = min(date_strs)
         date_str_max = max(date_strs)
@@ -78,7 +80,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             time_updated=time_updated,
             n_docs=n_docs,
             n_docs_with_pdfs=n_docs_with_pdfs,
-            p_docs_with_pdfs=p_docs_with_pdfs,
+            n_docs_with_text=n_docs_with_text,
             date_str_min=date_str_min,
             date_str_max=date_str_max,
             dataset_size=dataset_size,
@@ -88,19 +90,47 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         )
 
     @classmethod
+    def get_lines_for_summary_files(cls, summary) -> list[str]:
+        n_docs = summary["n_docs"]
+        n_docs_with_pdfs = summary["n_docs_with_pdfs"]
+        n_docs_with_text = summary["n_docs_with_text"]
+        lines = []
+        for doc_type, n in [
+            ("JSON", n_docs),
+            ("PDF", n_docs_with_pdfs),
+            ("TXT", n_docs_with_text),
+            ("🤗 Hugging Face", n_docs_with_text),
+        ]:
+            if n == 0:
+                continue
+            p = n / n_docs
+            if n == n_docs:
+                emoji = "✅"
+                label = ""
+            else:
+                emoji = "☑️"
+                label = f"({p:.0%})"
+
+            lines.append(f"- {emoji} {doc_type} {label}".strip())
+        lines.append("")
+        return lines
+
+    @classmethod
     def get_lines_for_summary_static(cls) -> list[str]:
-        return [
-            "📑 In JSON, PDF, TXT and 🤗 Hugging Face Formats",
-            "",
-            "⏰ Updated **at least Daily**",
-            "",
-            "🆓 Public data & fully open-source",
-            "",
-            "#OpenData #DataScience #DataForGood #ResearchData #NLP",
-            "",
-            "...",
-            "",
-        ]
+        return (
+            []
+            + cls.get_lines_for_summary_files(cls.get_summary())
+            + [
+                "⏰ Updated **at least Daily**",
+                "",
+                "🆓 Public data & fully open-source",
+                "",
+                "#OpenData #DataScience #DataForGood #ResearchData #NLP",
+                "",
+                "...",
+                "",
+            ]
+        )
 
     @classmethod
     def get_lines_for_summary_top(cls, summary) -> list[str]:
@@ -114,14 +144,11 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         url_repo = summary["url_repo"]
 
         dataset_size_humanized = FileOrDirFuture.humanize_size(dataset_size)
-        dataset_size_humanized_for_badge = Parse.badge(dataset_size_humanized)
         time_updated_for_badge = Parse.badge(time_updated)
 
         return [
             "![LastUpdated](https://img.shields.io/badge"
             + f"/last_updated-{time_updated_for_badge}-green)",
-            "![DatasetSize](https://img.shields.io/badge"
-            + f"/dataset_size-{dataset_size_humanized_for_badge}-yellow)",
             "",
             f"[{url_repo}]({url_repo})",
             "",
@@ -135,9 +162,9 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
     @classmethod
     def get_lines_for_summary_bottom(cls, summary) -> list[str]:
         n_docs_with_pdfs = summary["n_docs_with_pdfs"]
-        p_docs_with_pdfs = summary["p_docs_with_pdfs"]
+        n_docs = summary["n_docs"]
         url_repo = summary["url_repo"]
-
+        p_docs_with_pdfs = n_docs_with_pdfs / n_docs
         return [
             "*📒 PDFs have been downloaded for"
             + f" **{n_docs_with_pdfs:,}**"
