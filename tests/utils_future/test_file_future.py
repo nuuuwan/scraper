@@ -22,3 +22,10 @@ class TestCase(unittest.TestCase):
         content = "12345678"
         f.write(content)
         self.assertEqual(str(f), f"{file_path} (8 B)")
+
+    def test_dir(self):
+        dir_path = os.path.join("tests", "input")
+        d = FileOrDirFuture(dir_path)
+        self.assertTrue(d.exists)
+        self.assertEqual(d.size, 231_412)
+        self.assertEqual(d.size_humanized, "231.4 kB")
