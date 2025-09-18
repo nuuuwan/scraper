@@ -4,9 +4,8 @@ from dataclasses import asdict
 
 from utils import File, Log, Time, TimeFormat
 
-from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import (
-    AbstractDocChartDocsByYearMixin,
-)
+from pdf_scraper.abstract_doc.AbstractDocChartDocsByYearMixin import \
+    AbstractDocChartDocsByYearMixin
 
 log = Log("AbstractDocReadMeMixin")
 

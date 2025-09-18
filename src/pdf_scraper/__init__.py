@@ -12,3 +12,4 @@ from pdf_scraper.abstract_doc import (AbstractDoc, AbstractDocBase,
                                       AbstractDocPipelineMetadataMixin,
                                       AbstractDocPipelineMixin,
                                       AbstractDocReadMeMixin)
+from pdf_scraper.abstract_pdf_doc import AbstractPDFDoc
