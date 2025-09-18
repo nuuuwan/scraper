@@ -7,10 +7,9 @@ from utils_future import PDFFile
 class TestCase(unittest.TestCase):
     def test_all(self):
         pdf_file = PDFFile(os.path.join("tests", "input", "test.pdf"))
-        block_info_list = pdf_file.get_blocks()
-        self.assertEqual(len(block_info_list), 6)
-
-        en_block = block_info_list[3]
+        blocks = pdf_file.get_blocks()
+        self.assertEqual(len(blocks), 6)
+        en_block = blocks[3]
         self.assertEqual(
             en_block,
             {
@@ -22,7 +21,7 @@ class TestCase(unittest.TestCase):
             },
         )
 
-        si_block = block_info_list[4]
+        si_block = blocks[4]
         self.assertEqual(
             si_block,
             {
@@ -34,8 +33,7 @@ class TestCase(unittest.TestCase):
             },
         )
 
-        ta_block = block_info_list[5]
-        print(ta_block)
+        ta_block = blocks[5]
         self.assertEqual(
             ta_block,
             {
@@ -49,3 +47,34 @@ class TestCase(unittest.TestCase):
 
         image_path = os.path.join("tests", "output", "test_page1.png")
         pdf_file.download_image(0, image_path)
+
+    def test_si(self):
+        pdf_file = PDFFile(os.path.join("tests", "input", "si.pdf"))
+        blocks = pdf_file.get_blocks()
+        self.assertEqual(len(blocks), 13)
+
+        self.assertEqual(
+            blocks[0],
+            {
+                "page_number": 0,
+                "bbox": (72.02, 137.08, 400.69, 267.79),
+                "text": "ප ොලිස් මොධ්\u200dය ප ොට්ඨොසය පෙත ෙොර්තො වූ ෙැදගත් පතොරතුරු 01. මනුෂ්\u200dය ඝොතනයක් - තිස්සමහොරොම ප ොලිස් ෙසම.",
+                "fonts": ["IskoolaPota-Bold"],
+                "sizes": [
+                    6.960000038146973,
+                    9.960000038146973,
+                    14.039999961853027,
+                ],
+            },
+        )
+
+        self.assertEqual(
+            blocks[7],
+            {
+                "page_number": 1,
+                "bbox": (72.02, 36.38, 527.01, 77.3),
+                "text": "03. දය අනතුරකින් තරුණයින් තිපදපනකු පේරො ගැනීම - ප ොලිස් ජීවිතොරක්ෂ්\u200d ඒ ය ගල්කකිස්ස.",
+                "fonts": ["IskoolaPota-Bold"],
+                "sizes": [6.960000038146973, 14.039999961853027],
+            },
+        )
