@@ -116,24 +116,8 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         return lines
 
     @classmethod
-    def get_lines_for_summary_static(cls) -> list[str]:
-        return (
-            []
-            + cls.get_lines_for_summary_files(cls.get_summary())
-            + [
-                "⏰ Updated **at least Daily**",
-                "",
-                "🆓 Public data & fully open-source",
-                "",
-                "#OpenData #DataScience #DataForGood #ResearchData #NLP",
-                "",
-                "...",
-                "",
-            ]
-        )
-
-    @classmethod
-    def get_lines_for_summary_top(cls, summary) -> list[str]:
+    def get_lines_for_summary(cls) -> list[str]:
+        summary = cls.get_summary()
         time_updated = summary["time_updated"]
         n_docs = summary["n_docs"]
         date_str_min = summary["date_str_min"]
@@ -157,35 +141,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             + f" from **{date_str_min}** to **{date_str_max}**,"
             + f" scraped from **[{url_source}]({url_source})**",
             "",
-        ]
-
-    @classmethod
-    def get_lines_for_summary_bottom(cls, summary) -> list[str]:
-        n_docs_with_pdfs = summary["n_docs_with_pdfs"]
-        n_docs = summary["n_docs"]
-        url_repo = summary["url_repo"]
-        p_docs_with_pdfs = n_docs_with_pdfs / n_docs
-        return [
-            "*📒 PDFs have been downloaded for"
-            + f" **{n_docs_with_pdfs:,}**"
-            + f" (**{p_docs_with_pdfs:.0%}**) documents*",
-            "",
-            "🪲 #WorkInProgress - Suggestions, Questions, Ideas,"
-            + f" & [Bug Reports]({url_repo}/issues)"
-            + " are welcome!",
-            "",
-        ]
-
-    @classmethod
-    def get_lines_for_summary(cls) -> list[str]:
-        summary = cls.get_summary()
-
-        lines = (
-            cls.get_lines_for_summary_top(summary)
-            + cls.get_lines_for_summary_static()
-            + cls.get_lines_for_summary_bottom(summary)
-        )
-        return lines
+        ] + cls.get_lines_for_summary_files(summary)
 
     @classmethod
     def get_lines_for_hugging_face(cls):
