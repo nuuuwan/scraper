@@ -1,6 +1,5 @@
 import json
 import os
-from dataclasses import asdict
 
 from utils import File, Log, Time, TimeFormat
 
@@ -50,7 +49,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             "## 📝 Example Metadata",
             "",
             "```json",
-            json.dumps(asdict(latest_doc), indent=4),
+            json.dumps(latest_doc.to_dict(), indent=4),
             "```",
             "",
         ]

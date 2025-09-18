@@ -1,5 +1,4 @@
 import os
-from dataclasses import asdict
 
 import pandas as pd
 from datasets import Dataset
@@ -26,7 +25,7 @@ class AbstractDocHuggingFaceMixin:
 
     @classmethod
     def build_docs(cls):
-        d_list = [asdict(doc) for doc in cls.list_all()]
+        d_list = [doc.to_dict() for doc in cls.list_all()]
         BigJSONFile(cls.get_docs_json_path()).write(d_list)
         return d_list
 
@@ -40,7 +39,7 @@ class AbstractDocHuggingFaceMixin:
         d_list = []
         for chunk_index, chunk_text in enumerate(chunks):
             chunk_id = f"{doc.doc_id}-{chunk_index:04d}"
-            d = asdict(doc) | dict(
+            d = doc.to_dict() | dict(
                 chunk_id=chunk_id,
                 chunk_index=chunk_index,
                 language="en",
