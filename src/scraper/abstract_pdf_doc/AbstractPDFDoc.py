@@ -17,7 +17,7 @@ class AbstractPDFDoc(AbstractDoc, ABC):
 
     @cached_property
     def pdf_path(self) -> str:
-        return os.path.join(self.dir_doc_extended, "en.pdf")
+        return os.path.join(self.dir_doc_extended, "doc.pdf")
 
     @property
     def has_pdf(self) -> bool:
