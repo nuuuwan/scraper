@@ -9,6 +9,8 @@ from scraper.abstract_doc.hugging_face import AbstractDocHuggingFaceMixin
 from scraper.abstract_doc.pipeline.AbstractDocPipelineMixin import \
     AbstractDocPipelineMixin
 from scraper.abstract_doc.readme import AbstractDocReadMeMixin
+from scraper.abstract_doc.readme.AbstractDocSummaryMixin import \
+    AbstractDocSummaryMixin
 
 
 class AbstractDoc(
@@ -17,6 +19,7 @@ class AbstractDoc(
     AbstractDocMetadataMixin,
     AbstractDocExtendedDataMixin,
     AbstractDocReadMeMixin,
+    AbstractDocSummaryMixin,
     AbstractDocHuggingFaceMixin,
     AbstractDocPipelineMixin,
 ):

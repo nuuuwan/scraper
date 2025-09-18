@@ -12,6 +12,10 @@ log = Log("AbstractDocMetadataMixin")
 class AbstractDocMetadataMixin:
 
     @classmethod
+    def get_main_branch_dir_root(cls) -> str:
+        return "."
+
+    @classmethod
     def get_data_branch_dir_root(cls) -> str:
         dir_metadata = os.path.basename(os.getcwd())
         return os.path.join(
