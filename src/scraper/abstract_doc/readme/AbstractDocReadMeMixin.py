@@ -3,9 +3,8 @@ import os
 
 from utils import File, JSONFile, Log, Time, TimeFormat
 
-from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import (
-    AbstractDocChartDocsByYearMixin,
-)
+from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import \
+    AbstractDocChartDocsByYearMixin
 from utils_future import FileOrDirFuture
 
 log = Log("AbstractDocReadMeMixin")
@@ -119,7 +118,9 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         url_data = summary["url_data"]
         url_repo = summary["url_repo"]
 
-        total_size_humanized_for_badge = total_size_humanized.replace(" ", "_")
+        total_size_humanized_for_badge = total_size_humanized.replace(
+            " ", "_"
+        )
 
         lines = (
             [
