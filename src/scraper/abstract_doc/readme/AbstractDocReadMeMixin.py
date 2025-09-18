@@ -3,9 +3,8 @@ import os
 
 from utils import File, JSONFile, Log, Time, TimeFormat
 
-from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import (
-    AbstractDocChartDocsByYearMixin,
-)
+from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import \
+    AbstractDocChartDocsByYearMixin
 from utils_future import FileOrDirFuture
 
 log = Log("AbstractDocReadMeMixin")
@@ -104,12 +103,9 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         ]
 
     @classmethod
-    def get_lines_for_summary(cls) -> list[str]:  # noqa: CFQ001
-        summary = cls.get_summary()
+    def get_lines_for_summary_top(cls, summary) -> list[str]:
         time_updated = summary["time_updated"]
         n_docs = summary["n_docs"]
-        n_docs_with_pdfs = summary["n_docs_with_pdfs"]
-        p_docs_with_pdfs = summary["p_docs_with_pdfs"]
         date_str_min = summary["date_str_min"]
         date_str_max = summary["date_str_max"]
         dataset_size = summary["dataset_size"]
@@ -125,32 +121,46 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             "-", "--"
         )
 
+        return [
+            "![LastUpdated](https://img.shields.io/badge"
+            + f"/last_updated-{time_updated_for_badge}-green)",
+            "![DatasetSize](https://img.shields.io/badge"
+            + f"/dataset_size-{dataset_size_humanized_for_badge}-yellow)",
+            "",
+            f"[{url_repo}]({url_repo})",
+            "",
+            f"📜 [**{n_docs:,}** documents]({url_data})"
+            + f" (**{dataset_size_humanized}**),"
+            + f" from **{date_str_min}** to **{date_str_max}**,"
+            + f" scraped from **[{url_source}]({url_source})**",
+            "",
+        ]
+
+    @classmethod
+    def get_lines_for_summary_bottom(cls, summary) -> list[str]:
+        n_docs_with_pdfs = summary["n_docs_with_pdfs"]
+        p_docs_with_pdfs = summary["p_docs_with_pdfs"]
+        url_repo = summary["url_repo"]
+
+        return [
+            "*📒 PDFs have been downloaded for"
+            + f" **{n_docs_with_pdfs:,}**"
+            + f" (**{p_docs_with_pdfs:.0%}**) documents*",
+            "",
+            "🪲 #WorkInProgress - Suggestions, Questions, Ideas,"
+            + f" & [Bug Reports]({url_repo}/issues)"
+            + " are welcome!",
+            "",
+        ]
+
+    @classmethod
+    def get_lines_for_summary(cls) -> list[str]:
+        summary = cls.get_summary()
+
         lines = (
-            [
-                "![LastUpdated](https://img.shields.io/badge"
-                + f"/last_updated-{time_updated_for_badge}-green)",
-                "![DatasetSize](https://img.shields.io/badge"
-                + f"/dataset_size-{dataset_size_humanized_for_badge}-yellow)",
-                "",
-                f"[{url_repo}]({url_repo})",
-                "",
-                f"📜 [**{n_docs:,}** documents]({url_data})"
-                + f" (**{dataset_size_humanized}**),"
-                + f" from **{date_str_min}** to **{date_str_max}**,"
-                + f" scraped from **[{url_source}]({url_source})**",
-                "",
-            ]
+            cls.get_lines_for_summary_top(summary)
             + cls.get_lines_for_summary_static()
-            + [
-                "*📒 PDFs have been downloaded for"
-                + f" **{n_docs_with_pdfs:,}**"
-                + f" (**{p_docs_with_pdfs:.0%}**) documents*",
-                "",
-                "🪲 #WorkInProgress - Suggestions, Questions, Ideas,"
-                + f" & [Bug Reports]({url_repo}/issues)"
-                + " are welcome!",
-                "",
-            ]
+            + cls.get_lines_for_summary_bottom(summary)
         )
         return lines
 
