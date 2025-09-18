@@ -14,3 +14,9 @@ class Format:
         if len(x_list) == 1:
             return x_list[0]
         return ", ".join(x_list[:-1]) + " and " + x_list[-1]
+
+    @staticmethod
+    def title(x) -> str:
+        title = x.title().replace("_", " ")
+        title = title.replace("Lk", "🇱🇰 #SriLanka")
+        return title

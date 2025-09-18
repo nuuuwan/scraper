@@ -14,6 +14,7 @@ class AbstractDocSummaryMixin:
 
     @classmethod
     def get_summary(cls) -> dict:
+        doc_class_label = cls.get_doc_class_label()
         time_updated = TimeFormat.TIME.format(Time.now())
         n_docs = len(cls.list_all())
         n_docs_with_pdfs = len([doc for doc in cls.list_all() if doc.has_pdf])
@@ -32,6 +33,7 @@ class AbstractDocSummaryMixin:
         latest_doc_d = latest_doc.to_dict()
 
         return dict(
+            doc_class_label=doc_class_label,
             time_updated=time_updated,
             n_docs=n_docs,
             n_docs_with_pdfs=n_docs_with_pdfs,

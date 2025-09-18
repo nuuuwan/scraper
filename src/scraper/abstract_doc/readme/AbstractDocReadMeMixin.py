@@ -17,15 +17,10 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
     # ----------------------------------------------------------------
 
     @classmethod
-    def get_title(cls) -> str:
-        title = cls.get_doc_class_label().title().replace("_", " ")
-        title = title.replace("Lk", "🇱🇰 #SriLanka")
-        return title
-
-    @classmethod
     def get_lines_for_header(cls) -> list[str]:
+        title = Format.title(cls.get_doc_class_label())
         return [
-            f"# {cls.get_title()} `Dataset`",
+            f"# {title} `Dataset`",
             "",
         ]
 
