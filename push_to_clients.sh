@@ -1,10 +1,16 @@
 # HACK! Delete this once scraper is in pypi
 
+# CLIENT_REPOS=(
+#     "lk_hansard"
+#     "lk_appeal_court_judgements"
+#     "lk_supreme_court_judgements"
+# )
+
 CLIENT_REPOS=(
-    "lk_hansard"
-    "lk_appeal_court_judgements"
     "lk_supreme_court_judgements"
 )
+
+
 
 for CLIENT_REPO in "${CLIENT_REPOS[@]}"; do
     echo "------------------------------------------------------"
@@ -22,6 +28,9 @@ for CLIENT_REPO in "${CLIENT_REPOS[@]}"; do
 
     git pull origin main --rebase;
 
+    git rm -rf src/pdf_scraper
+    git commit -m "[push_to_clients] Deleted pdf_scraper"
+
     rm -rf src/scraper
     cp -r ../scraper/src/scraper src/
     git add src/scraper
@@ -34,6 +43,9 @@ for CLIENT_REPO in "${CLIENT_REPOS[@]}"; do
 
     git push origin main
     open https://github.com/nuuuwan/$CLIENT_REPO
+
+    code $DIR_CLIENT_REPO
+
     echo "✅ Push to $CLIENT_REPO complete."
 done
 
