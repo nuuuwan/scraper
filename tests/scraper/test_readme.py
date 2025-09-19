@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 from utils import JSONFile
 
-from scraper import AbstractDoc, ReadMe
+from scraper import AbstractDoc
 
 
 class TestCase(unittest.TestCase):
@@ -50,13 +50,13 @@ class TestCase(unittest.TestCase):
         if os.path.exists(mock_main_branch_dir_root):
             shutil.rmtree(mock_main_branch_dir_root)
         os.makedirs(mock_main_branch_dir_root, exist_ok=True)
-        mock_readme_path = os.path.join(
+        mock_global_readme_path = os.path.join(
             mock_main_branch_dir_root, "README.md"
         )
         with patch.object(
-            ReadMe,
-            "PATH",
-            new=mock_readme_path,
+            AbstractDoc,
+            "GLOBAL_README_PATH",
+            new=mock_global_readme_path,
         ), patch.object(
             AbstractDoc,
             "get_data_branch_dir_root_data",
@@ -66,6 +66,8 @@ class TestCase(unittest.TestCase):
                 AbstractDoc.get_data_branch_dir_root_data(),
                 mock_data_branch_dir_root_data,
             )
-            self.assertEqual(ReadMe.PATH, mock_readme_path)
-            ReadMe.build()
-            self.assertTrue(os.path.exists(mock_readme_path))
+            self.assertEqual(
+                AbstractDoc.GLOBAL_README_PATH, mock_global_readme_path
+            )
+            AbstractDoc.build_global_readme()
+            self.assertTrue(os.path.exists(mock_global_readme_path))
