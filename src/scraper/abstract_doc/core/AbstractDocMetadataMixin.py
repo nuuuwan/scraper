@@ -17,10 +17,10 @@ class AbstractDocMetadataMixin:
 
     @classmethod
     def get_data_branch_dir_root(cls) -> str:
-        dir_metadata = os.path.basename(os.getcwd())
+        repo_name = cls.get_repo_name()
         return os.path.join(
             "..",
-            f"{dir_metadata}_data",
+            f"{repo_name}_data",
         )
 
     @classmethod

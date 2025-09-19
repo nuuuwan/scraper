@@ -40,6 +40,3 @@ class AbstractDocExtendedDataMixin:
                 self.dir_doc_relative_to_class,
             ]
         )
-
-    def scrape_extended_data_for_doc(self):
-        raise NotImplementedError
