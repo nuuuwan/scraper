@@ -50,7 +50,9 @@ class TestCase(unittest.TestCase):
         if os.path.exists(mock_main_branch_dir_root):
             shutil.rmtree(mock_main_branch_dir_root)
         os.makedirs(mock_main_branch_dir_root, exist_ok=True)
-        mock_readme_path = os.path.join(mock_main_branch_dir_root, "README.md")
+        mock_readme_path = os.path.join(
+            mock_main_branch_dir_root, "README.md"
+        )
         with patch.object(
             ReadMe,
             "PATH",
