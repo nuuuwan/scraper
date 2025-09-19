@@ -2,12 +2,15 @@ import sys
 
 from utils import Log
 
-from scraper.abstract_doc.pipeline.AbstractDocPipelineCleanupMixin import \
-    AbstractDocPipelineCleanupMixin  # noqa: E501
-from scraper.abstract_doc.pipeline.AbstractDocPipelineExtendedDataMixin import \
-    AbstractDocPipelineExtendedDataMixin  # noqa: E501
-from scraper.abstract_doc.pipeline.AbstractDocPipelineMetadataMixin import \
-    AbstractDocPipelineMetadataMixin  # noqa: E501
+from scraper.abstract_doc.pipeline.AbstractDocPipelineCleanupMixin import (  # noqa: E501
+    AbstractDocPipelineCleanupMixin,
+)
+from scraper.abstract_doc.pipeline.AbstractDocPipelineExtendedDataMixin import (  # noqa: E501
+    AbstractDocPipelineExtendedDataMixin,
+)
+from scraper.abstract_doc.pipeline.AbstractDocPipelineMetadataMixin import (  # noqa: E501
+    AbstractDocPipelineMetadataMixin,
+)
 
 log = Log("AbstractDocPipelineMixin")
 
@@ -33,4 +36,7 @@ class AbstractDocPipelineMixin(
         cls.build_summary()
         cls.build_doc_class_readme()
         cls.build_and_upload_to_hugging_face()
-        cls.build_global_readme()
+
+        # HACK to prevent race conditions
+        if cls.doc_class_label == "lk_acts":
+            cls.build_global_readme()
