@@ -183,13 +183,13 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         )
 
     @classmethod
-    def get_doc_readme_path(cls) -> str:
+    def get_doc_class_readme_path(cls) -> str:
         return os.path.join(cls.get_main_branch_dir_root(), "README.md")
 
     @classmethod
-    def build_readme(cls):
+    def build_doc_class_readme(cls):
         assert cls.list_all()
         os.makedirs(cls.get_main_branch_dir_root(), exist_ok=True)
-        readme_path = cls.get_doc_readme_path()
+        readme_path = cls.get_doc_class_readme_path()
         File(readme_path).write("\n".join(cls.lines()))
         log.info(f"Wrote {readme_path}")
