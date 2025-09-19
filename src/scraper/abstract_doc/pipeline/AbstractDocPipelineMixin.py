@@ -36,7 +36,4 @@ class AbstractDocPipelineMixin(
         cls.build_summary()
         cls.build_doc_class_readme()
         cls.build_and_upload_to_hugging_face()
-
-        # HACK to prevent race conditions
-        if cls.doc_class_label == "lk_acts":
-            cls.build_global_readme()
+        cls.build_global_readme()
