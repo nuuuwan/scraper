@@ -8,9 +8,6 @@ log = Log("AbstractDocSummaryMixin")
 
 
 class AbstractDocSummaryMixin:
-    @classmethod
-    def get_summary_path(cls) -> str:
-        return os.path.join(cls.get_dir_docs_for_cls(), "summary.json")
 
     @classmethod
     def get_summary(cls) -> dict:
@@ -42,6 +39,11 @@ class AbstractDocSummaryMixin:
             url_data=url_data,
             latest_doc_d=latest_doc_d,
         )
+
+    @classmethod
+    def get_summary_path(cls) -> str:
+        # E.g. ../lk_acts_data/data/lk_acts/summary.json
+        return os.path.join(cls.get_dir_docs_for_cls(), "summary.json")
 
     @classmethod
     def build_summary(cls):
