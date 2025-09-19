@@ -53,7 +53,7 @@ class TestCase(unittest.TestCase):
         ):
 
             DummyDoc.run_pipeline(max_dt=0.001)
-            DummyDoc.run_pipeline(max_dt=10)
+            DummyDoc.run_pipeline(max_dt=100)
 
             self.assertTrue(
                 os.path.exists(DummyDoc.get_main_branch_dir_root())

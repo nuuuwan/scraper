@@ -34,6 +34,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             ("PDF", n_docs_with_pdfs),
             ("TXT", n_docs_with_text),
             ("🤗 Hugging Face", n_docs_with_text),
+            ("Something New", 0),
         ]:
             if n == 0:
                 continue
