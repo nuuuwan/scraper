@@ -3,8 +3,9 @@ import os
 
 from utils import File, Log
 
-from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import \
-    AbstractDocChartDocsByYearMixin
+from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import (
+    AbstractDocChartDocsByYearMixin,
+)
 from utils_future import FileOrDirFuture, Format
 
 log = Log("AbstractDocReadMeMixin")
@@ -12,9 +13,6 @@ log = Log("AbstractDocReadMeMixin")
 
 class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
     N_LATEST = 20
-
-    # lines
-    # ----------------------------------------------------------------
 
     @classmethod
     def get_lines_for_header(cls, summary) -> list[str]:
