@@ -16,16 +16,14 @@ class AbstractDocSummaryMixin:
         time_updated = TimeFormat.TIME.format(Time.now())
         n_docs = len(cls.list_all())
         n_docs_with_pdfs = len([doc for doc in cls.list_all() if doc.has_pdf])
-        n_docs_with_text = len(
-            [doc for doc in cls.list_all() if doc.has_text]
-        )
+        n_docs_with_text = len([doc for doc in cls.list_all() if doc.has_text])
         date_strs = [doc.date_str for doc in cls.list_all()]
         date_str_min = min(date_strs)
         date_str_max = max(date_strs)
         dataset_size = FileOrDirFuture(cls.get_data_branch_dir_root()).size
         latest_doc = cls.list_all()[0]
         url_source = latest_doc.url_metadata.split("?")[0]
-        url_data = cls.get_remote_data_url_base()
+        url_data = cls.get_remote_data_url_for_class()
         latest_doc = cls.list_all()[0]
         latest_doc_d = latest_doc.to_dict()
 
