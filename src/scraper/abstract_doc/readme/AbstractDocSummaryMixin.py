@@ -10,7 +10,7 @@ log = Log("AbstractDocSummaryMixin")
 class AbstractDocSummaryMixin:
     @classmethod
     def get_summary_path(cls) -> str:
-        return os.path.join(cls.get_main_branch_dir_root(), "summary.json")
+        return os.path.join(cls.get_dir_docs_for_cls(), "summary.json")
 
     @classmethod
     def get_summary(cls) -> dict:
@@ -18,9 +18,7 @@ class AbstractDocSummaryMixin:
         time_updated = TimeFormat.TIME.format(Time.now())
         n_docs = len(cls.list_all())
         n_docs_with_pdfs = len([doc for doc in cls.list_all() if doc.has_pdf])
-        n_docs_with_text = len(
-            [doc for doc in cls.list_all() if doc.has_text]
-        )
+        n_docs_with_text = len([doc for doc in cls.list_all() if doc.has_text])
         date_strs = [doc.date_str for doc in cls.list_all()]
         date_str_min = min(date_strs)
         date_str_max = max(date_strs)
