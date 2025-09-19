@@ -2,6 +2,7 @@
 # flake8: noqa: F408
 
 from scraper.abstract_doc import (AbstractDoc, AbstractDocBase,
+                                  AbstractDocBasePathsMixin,
                                   AbstractDocChartDocsByYearMixin,
                                   AbstractDocExtendedDataMixin,
                                   AbstractDocGeneratorMixin,

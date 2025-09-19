@@ -3,6 +3,7 @@
 
 from scraper.abstract_doc.AbstractDoc import AbstractDoc
 from scraper.abstract_doc.core import (AbstractDocBase,
+                                       AbstractDocBasePathsMixin,
                                        AbstractDocExtendedDataMixin,
                                        AbstractDocGeneratorMixin,
                                        AbstractDocMetadataMixin)
