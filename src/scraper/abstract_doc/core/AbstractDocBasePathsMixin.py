@@ -18,6 +18,14 @@ class AbstractDocBasePathsMixin:
         )
 
     @classmethod
+    def get_data_branch_dir_root_data(cls) -> str:
+        # e.g. ../lk_acts_data/data
+        return os.path.join(
+            cls.get_data_branch_dir_root(),
+            "data",
+        )
+
+    @classmethod
     def get_dir_docs_for_cls_relative(cls) -> str:
         # e.g. data/lk_acts
         return os.path.join(
@@ -29,8 +37,7 @@ class AbstractDocBasePathsMixin:
     def get_dir_docs_for_cls(cls) -> str:
         # e.g. ../lk_acts_data/data/lk_acts
         return os.path.join(
-            cls.get_data_branch_dir_root(),
-            "data",
+            cls.get_data_branch_dir_root_data,
             cls.get_doc_class_label(),
         )
 
