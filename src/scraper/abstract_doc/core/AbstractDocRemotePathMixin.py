@@ -3,10 +3,10 @@ from functools import cached_property
 
 from utils import Log
 
-log = Log("AbstractDocExtendedDataMixin")
+log = Log("AbstractDocRemotePathMixin")
 
 
-class AbstractDocExtendedDataMixin:
+class AbstractDocRemotePathMixin:
     @classmethod
     def get_remote_repo_url(cls) -> str:
         assert os.environ["GITHUB_USERNAME"]

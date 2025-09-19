@@ -4,9 +4,9 @@
 from scraper.abstract_doc.core.AbstractDocBase import AbstractDocBase
 from scraper.abstract_doc.core.AbstractDocBasePathsMixin import \
     AbstractDocBasePathsMixin
-from scraper.abstract_doc.core.AbstractDocExtendedDataMixin import \
-    AbstractDocExtendedDataMixin
 from scraper.abstract_doc.core.AbstractDocGeneratorMixin import \
     AbstractDocGeneratorMixin
 from scraper.abstract_doc.core.AbstractDocMetadataMixin import \
     AbstractDocMetadataMixin
+from scraper.abstract_doc.core.AbstractDocRemotePathMixin import \
+    AbstractDocRemotePathMixin
