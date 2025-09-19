@@ -23,6 +23,13 @@ class AbstractDocPipelineCleanupMixin:
             shutil.rmtree("data")
             log.warning("🧹 Deleted data/ directory")
 
+        legacy_dir_hugging_face_data = os.path.join(
+            cls.get_data_branch_dir_root(), "hugging_face_data"
+        )
+        if os.path.exists(legacy_dir_hugging_face_data):
+            shutil.rmtree(legacy_dir_hugging_face_data)
+            log.warning(f"🧹 Deleted {legacy_dir_hugging_face_data}")
+
         for json_path in cls.get_all_json_paths():
             cls.add_lang(json_path)
 
