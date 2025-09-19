@@ -28,7 +28,7 @@ class TestCase(unittest.TestCase):
             JSONFile(mock_summary_path).write(
                 dict(
                     doc_class_label=f"mock_doc_class-{i}",
-                    doc_class_description="This is a mock doc class for testing",
+                    doc_class_description="This is a mock doc for testing",
                     time_updated="2024-01-01 12:00:00",
                     n_docs=10,
                     n_docs_with_pdfs=5,
