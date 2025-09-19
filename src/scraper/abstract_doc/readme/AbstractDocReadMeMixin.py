@@ -3,8 +3,9 @@ import os
 
 from utils import File, Log
 
-from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import \
-    AbstractDocChartDocsByYearMixin
+from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import (
+    AbstractDocChartDocsByYearMixin,
+)
 from utils_future import FileOrDirFuture, Format
 
 log = Log("AbstractDocReadMeMixin")
@@ -183,7 +184,8 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
 
     @classmethod
     def get_doc_class_readme_path(cls) -> str:
-        return os.path.join(cls.get_main_branch_dir_root(), "README.md")
+        # E.g. ../lk_acts_data/data/README.md
+        return os.path.join(cls.get_dir_docs_for_cls(), "README.md")
 
     @classmethod
     def build_doc_class_readme(cls):
