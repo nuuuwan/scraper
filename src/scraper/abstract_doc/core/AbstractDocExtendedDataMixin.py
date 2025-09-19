@@ -7,8 +7,6 @@ log = Log("AbstractDocExtendedDataMixin")
 
 
 class AbstractDocExtendedDataMixin:
-    T_TIMEOUT_PDF_DOWNLOAD = 120
-
     @classmethod
     def get_remote_repo_url(cls) -> str:
         assert os.environ["GITHUB_USERNAME"]
