@@ -26,8 +26,8 @@ class TestCase(unittest.TestCase):
     def test_title(self):
         for x, expected_result in [
             ("hello_world", "Hello World"),
-            ("Lk_news", "🇱🇰 #SriLanka News"),
-            ("test_Lk_case", "Test 🇱🇰 #SriLanka Case"),
+            ("Lk_news", "#SriLanka 🇱🇰 News"),
+            ("test_Lk_case", "Test #SriLanka 🇱🇰 Case"),
         ]:
 
             self.assertEqual(Format.title(x), expected_result)
