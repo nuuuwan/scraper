@@ -39,9 +39,8 @@ class TestCase(unittest.TestCase):
                     dataset_size=123_456_789,
                     url_source="https://example.com/mock_doc_class",
                     url_data="https://example.com/mock_doc_class/data",
-                    latest_doc_d=dict(
-                        lang="si-en",
-                    ),
+                    latest_doc_d=dict(),
+                    langs=["si-en", "ta", "en"],
                 )
             )
 
