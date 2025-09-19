@@ -76,6 +76,8 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             "![LastUpdated](https://img.shields.io/badge"
             + f"/last_updated-{time_updated_for_badge}-green)",
             "",
+            f"[{url_data}]({url_data})",
+            "",
             doc_class_description,
             "",
             f"- [**{n_docs:,}** documents]({url_data})"
