@@ -1,0 +1,10 @@
+# scraper.abstract_doc.core (auto generate by build_inits.py)
+# flake8: noqa: F408
+
+from scraper.abstract_doc.core.AbstractDocBase import AbstractDocBase
+from scraper.abstract_doc.core.AbstractDocExtendedDataMixin import \
+    AbstractDocExtendedDataMixin
+from scraper.abstract_doc.core.AbstractDocGeneratorMixin import \
+    AbstractDocGeneratorMixin
+from scraper.abstract_doc.core.AbstractDocMetadataMixin import \
+    AbstractDocMetadataMixin
