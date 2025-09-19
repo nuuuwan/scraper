@@ -184,7 +184,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
 
     @classmethod
     def get_doc_class_readme_path(cls) -> str:
-        # E.g. ../lk_acts_data/data/README.md
+        # E.g. ../lk_acts_data/data/lk_acts/README.md
         return os.path.join(cls.get_dir_docs_for_cls(), "README.md")
 
     @classmethod
