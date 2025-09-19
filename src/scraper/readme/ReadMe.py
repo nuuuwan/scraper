@@ -52,6 +52,7 @@ class ReadMe:
     def get_lines(cls) -> list[str]:
         return (
             cls.get_lines_for_doc_classes()
+            + ["", "---", ""]
             + AbstractDoc.get_lines_for_footer()
         )
 
