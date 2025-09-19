@@ -66,7 +66,6 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
         dataset_size = summary["dataset_size"]
         url_source = summary["url_source"]
         url_data = summary["url_data"]
-        url_repo = summary["url_repo"]
 
         dataset_size_humanized = FileOrDirFuture.humanize_size(dataset_size)
         time_updated_for_badge = Format.badge(time_updated)
@@ -75,7 +74,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             "![LastUpdated](https://img.shields.io/badge"
             + f"/last_updated-{time_updated_for_badge}-green)",
             "",
-            f"[{url_repo}]({url_repo})",
+            f"[{url_data}]({url_data})",
             "",
             f"- [**{n_docs:,}** documents]({url_data})"
             + f" (**{dataset_size_humanized}**),"
