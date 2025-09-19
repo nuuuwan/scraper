@@ -3,8 +3,9 @@ import os
 
 from utils import File, Log
 
-from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import \
-    AbstractDocChartDocsByYearMixin
+from scraper.abstract_doc.readme.AbstractDocChartDocsByYearMixin import (
+    AbstractDocChartDocsByYearMixin,
+)
 from utils_future import FileOrDirFuture, Format
 
 log = Log("AbstractDocReadMeMixin")
@@ -58,6 +59,7 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
 
     @classmethod
     def get_lines_for_blurb(cls, summary) -> list[str]:
+        doc_class_description = summary["doc_class_description"]
         time_updated = summary["time_updated"]
         n_docs = summary["n_docs"]
         date_str_min = summary["date_str_min"]
@@ -74,6 +76,8 @@ class AbstractDocReadMeMixin(AbstractDocChartDocsByYearMixin):
             + f"/last_updated-{time_updated_for_badge}-green)",
             "",
             f"[{url_data}]({url_data})",
+            "",
+            doc_class_description,
             "",
             f"- [**{n_docs:,}** documents]({url_data})"
             + f" (**{dataset_size_humanized}**),"
