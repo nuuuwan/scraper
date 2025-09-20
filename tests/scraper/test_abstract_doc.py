@@ -60,7 +60,6 @@ class TestCase(unittest.TestCase):
                 "en": random.randint(0, 40),
                 "si": random.randint(0, 20),
                 "ta": random.randint(0, 10),
-                "si-ta-en": random.randint(0, 5),
             }
 
         mock_chart_image_path = os.path.join(
