@@ -8,11 +8,12 @@ log = Log("AbstractDocChartDocsByYearMixin")
 
 
 class AbstractDocChartDocsByYearMixin:
+    LANGS = ["si", "ta", "en"]
     COLOR_MAP = {
-        "si-ta-en": "#1e4b99",
         "si": "#8D153A",
         "ta": "#EB7400",
         "en": "#00534E",
+        "si-ta-en": "#FFBE29",
     }
 
     @classmethod
@@ -27,7 +28,19 @@ class AbstractDocChartDocsByYearMixin:
         )
 
     @classmethod
+    def get_raw_remote_chart_image_url(cls) -> str:
+        # E.g. https://raw.githubusercontent.com/nuuuwan/lk_appeal_court_judgements/refs/heads/data/data/lk_appeal_court_judgements/docs_by_year_and_lang.png # noqa: E501
+        return "/".join(
+            [
+                cls.get_raw_remote_data_branch_url(),
+                cls.get_dir_docs_for_cls_relative(),
+                cls.get_chart_image_name(),
+            ]
+        )
+
+    @classmethod
     def build_chart_by_year_and_lang(cls, year_to_lang_to_n):
+
         years = sorted(year_to_lang_to_n.keys())
         langs = sorted(
             {lang for v in year_to_lang_to_n.values() for lang in v.keys()}
@@ -43,12 +56,11 @@ class AbstractDocChartDocsByYearMixin:
         _, ax = plt.subplots(figsize=(10, 6))
         bottom = np.zeros(len(years))
 
-        for lang, color in cls.COLOR_MAP.items():
-            color = cls.COLOR_MAP[lang]
+        for lang in cls.LANGS:
+            color = cls.COLOR_MAP.get(lang, "grey")
             values = counts.get(lang, 0)
-            if values:
-                ax.bar(years, values, bottom=bottom, label=lang, color=color)
-                bottom += np.array(values)
+            ax.bar(years, values, bottom=bottom, label=lang, color=color)
+            bottom += np.array(values)
 
         ax.set_xlabel("Year")
         ax.set_ylabel("Number of documents")
