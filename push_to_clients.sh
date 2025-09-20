@@ -1,12 +1,13 @@
 # HACK! Delete this once scraper is in pypi
 
 CLIENT_REPOS=(
+    "lk_cabinet_decisions"
     "lk_datasets"
     "lk_hansard"
     "lk_appeal_court_judgements"
     "lk_supreme_court_judgements"
     "lk_police_press_releases"
-    "lk_legal_docs"
+    "lk_legal_docs"    
 )
 
 
