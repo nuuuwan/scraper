@@ -53,22 +53,18 @@ class TestCase(unittest.TestCase):
         )
 
     def test_chart(self):
-        mock_year_to_lang_to_n = {
+        year_to_lang_to_n = {
             2020: {"en": 5, "si": 3},
             2021: {"en": 10, "si": 7, "ta": 2},
             2022: {"en": 15, "si": 5},
         }
         mock_chart_image_path = os.path.join(
-            DIR_TEST_ABSTRACT_DOC, "docs_by_year.png"
+            DIR_TEST_ABSTRACT_DOC, "docs_by_year_and_lang.png"
         )
         with patch.object(
-            AbstractDoc,
-            "get_year_to_lang_to_n",
-            return_value=mock_year_to_lang_to_n,
-        ), patch.object(
             AbstractDoc,
             "get_chart_image_path",
             return_value=mock_chart_image_path,
         ):
-            AbstractDoc.build_chart()
+            AbstractDoc.build_chart_by_year_and_lang(year_to_lang_to_n)
             self.assertTrue(os.path.exists(mock_chart_image_path))

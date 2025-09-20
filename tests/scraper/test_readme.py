@@ -41,6 +41,10 @@ class TestCase(unittest.TestCase):
                     url_data="https://example.com/mock_doc_class/data",
                     latest_doc_d=dict(),
                     langs=["si-en", "ta", "en"],
+                    year_to_lang_to_n={
+                        2020: {"en": 5, "si": 3},
+                        2021: {"en": 10, "si": 7, "ta": 2},
+                    },
                 )
             )
 
