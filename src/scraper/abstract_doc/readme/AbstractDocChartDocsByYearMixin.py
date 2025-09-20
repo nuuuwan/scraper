@@ -9,6 +9,7 @@ log = Log("AbstractDocChartDocsByYearMixin")
 
 class AbstractDocChartDocsByYearMixin:
     COLOR_MAP = {
+        "si-ta-en": "#1e4b99",
         "si": "#8D153A",
         "ta": "#EB7400",
         "en": "#00534E",
@@ -27,7 +28,6 @@ class AbstractDocChartDocsByYearMixin:
 
     @classmethod
     def build_chart_by_year_and_lang(cls, year_to_lang_to_n):
-
         years = sorted(year_to_lang_to_n.keys())
         langs = sorted(
             {lang for v in year_to_lang_to_n.values() for lang in v.keys()}
@@ -43,11 +43,12 @@ class AbstractDocChartDocsByYearMixin:
         _, ax = plt.subplots(figsize=(10, 6))
         bottom = np.zeros(len(years))
 
-        for lang in cls.LANGS:
-            color = cls.COLOR_MAP.get(lang, "grey")
+        for lang, color in cls.COLOR_MAP.items():
+            color = cls.COLOR_MAP[lang]
             values = counts.get(lang, 0)
-            ax.bar(years, values, bottom=bottom, label=lang, color=color)
-            bottom += np.array(values)
+            if values:
+                ax.bar(years, values, bottom=bottom, label=lang, color=color)
+                bottom += np.array(values)
 
         ax.set_xlabel("Year")
         ax.set_ylabel("Number of documents")

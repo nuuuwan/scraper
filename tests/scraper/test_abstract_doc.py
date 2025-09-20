@@ -57,9 +57,10 @@ class TestCase(unittest.TestCase):
         year_to_lang_to_n = {}
         for year in range(1930, 2026):
             year_to_lang_to_n[year] = {
-                "en": random.randint(0, 20),
+                "en": random.randint(0, 40),
                 "si": random.randint(0, 20),
-                "ta": random.randint(0, 20),
+                "ta": random.randint(0, 10),
+                "si-ta-en": random.randint(0, 5),
             }
 
         mock_chart_image_path = os.path.join(
