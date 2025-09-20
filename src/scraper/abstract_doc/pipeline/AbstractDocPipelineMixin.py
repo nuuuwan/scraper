@@ -2,12 +2,15 @@ import sys
 
 from utils import Log
 
-from scraper.abstract_doc.pipeline.AbstractDocPipelineCleanupMixin import \
-    AbstractDocPipelineCleanupMixin  # noqa: E501
-from scraper.abstract_doc.pipeline.AbstractDocPipelineExtendedDataMixin import \
-    AbstractDocPipelineExtendedDataMixin  # noqa: E501
-from scraper.abstract_doc.pipeline.AbstractDocPipelineMetadataMixin import \
-    AbstractDocPipelineMetadataMixin  # noqa: E501
+from scraper.abstract_doc.pipeline.AbstractDocPipelineCleanupMixin import (  # noqa: E501
+    AbstractDocPipelineCleanupMixin,
+)
+from scraper.abstract_doc.pipeline.AbstractDocPipelineExtendedDataMixin import (  # noqa: E501
+    AbstractDocPipelineExtendedDataMixin,
+)
+from scraper.abstract_doc.pipeline.AbstractDocPipelineMetadataMixin import (  # noqa: E501
+    AbstractDocPipelineMetadataMixin,
+)
 
 log = Log("AbstractDocPipelineMixin")
 
@@ -29,6 +32,7 @@ class AbstractDocPipelineMixin(
         log.debug(f"{max_dt=}s")
         cls.cleanup_all()
         cls.scrape_all_metadata(max_dt)
+        cls.write_all()
         cls.scrape_all_extended_data(max_dt)
         cls.build_summary()
         cls.build_doc_class_readme()
