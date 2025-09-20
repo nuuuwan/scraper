@@ -1,6 +1,6 @@
 # 📄Scraper `Dataset`
 
-![LastUpdated](https://img.shields.io/badge/last_updated-2025--09--20_11:52:38-green)
+![LastUpdated](https://img.shields.io/badge/last_updated-2025--09--20_16:34:21-green)
 
 [https://github.com/nuuuwan/scraper/tree/data/data/scraper](https://github.com/nuuuwan/scraper/tree/data/data/scraper)
 
