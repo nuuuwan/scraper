@@ -82,7 +82,7 @@ class AbstractDocMetadataMixin:
             [100, "last100"],
             [1000, "last10000"],
         ]:
-            if n > len(d_list):
+            if n and n > len(d_list):
                 continue
 
             d_list_for_file = d_list[:n] if n else d_list
