@@ -1,12 +1,12 @@
 # 📄Scraper `Dataset`
 
-![LastUpdated](https://img.shields.io/badge/last_updated-2025--09--20_09:26:10-green)
+![LastUpdated](https://img.shields.io/badge/last_updated-2025--09--20_09:46:59-green)
 
 [https://github.com/nuuuwan/scraper/tree/data/data/scraper](https://github.com/nuuuwan/scraper/tree/data/data/scraper)
 
 A collection of scraper documents.
 
-- [**1** documents](https://github.com/nuuuwan/scraper/tree/data/data/scraper) (**116.6 kB**), from **2023-10-01** to **2023-10-01**, scraped from **[http://mock.com/doc.html](http://mock.com/doc.html)**
+- [**1** documents](https://github.com/nuuuwan/scraper/tree/data/data/scraper) (**129.7 kB**), from **2023-10-01** to **2023-10-01**, scraped from **[http://mock.com/doc.html](http://mock.com/doc.html)**
 
 - In **JSON**, **PDF**, **TXT** & **🤗 Hugging Face**
 

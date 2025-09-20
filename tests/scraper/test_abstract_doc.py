@@ -1,5 +1,6 @@
 import os
 import unittest
+from unittest.mock import patch
 
 from scraper import AbstractDoc
 
@@ -50,3 +51,24 @@ class TestCase(unittest.TestCase):
         self.assertEqual(
             AbstractDoc.get_data_branch_dir_root(), "../scraper_data"
         )
+
+    def test_chart(self):
+        mock_year_to_lang_to_n = {
+            2020: {"en": 5, "si": 3},
+            2021: {"en": 10, "si": 7, "ta": 2},
+            2022: {"en": 15, "si": 5},
+        }
+        mock_chart_image_path = os.path.join(
+            DIR_TEST_ABSTRACT_DOC, "docs_by_year.png"
+        )
+        with patch.object(
+            AbstractDoc,
+            "get_year_to_lang_to_n",
+            return_value=mock_year_to_lang_to_n,
+        ), patch.object(
+            AbstractDoc,
+            "get_chart_image_path",
+            return_value=mock_chart_image_path,
+        ):
+            AbstractDoc.build_chart()
+            self.assertTrue(os.path.exists(mock_chart_image_path))
