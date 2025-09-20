@@ -45,6 +45,7 @@ class TestCase(unittest.TestCase):
                         2020: {"en": 5, "si": 3},
                         2021: {"en": 10, "si": 7, "ta": 2},
                     },
+                    url_chart="https://example.com/mock_doc_class/chart.png",
                 )
             )
 
