@@ -8,7 +8,6 @@ log = Log("AbstractDocChartDocsByYearMixin")
 
 
 class AbstractDocChartDocsByYearMixin:
-    LANGS = ["si", "ta", "en"]
     COLOR_MAP = {
         "si": "#8D153A",
         "ta": "#EB7400",
