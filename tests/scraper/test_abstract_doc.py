@@ -1,4 +1,5 @@
 import os
+import random
 import unittest
 from unittest.mock import patch
 
@@ -53,11 +54,14 @@ class TestCase(unittest.TestCase):
         )
 
     def test_chart(self):
-        year_to_lang_to_n = {
-            2020: {"en": 5, "si": 3},
-            2021: {"en": 10, "si": 7, "ta": 2},
-            2022: {"en": 15, "si": 5},
-        }
+        year_to_lang_to_n = {}
+        for year in range(1930, 2026):
+            year_to_lang_to_n[year] = {
+                "en": random.randint(0, 20),
+                "si": random.randint(0, 20),
+                "ta": random.randint(0, 20),
+            }
+
         mock_chart_image_path = os.path.join(
             DIR_TEST_ABSTRACT_DOC, "docs_by_year_and_lang.png"
         )
