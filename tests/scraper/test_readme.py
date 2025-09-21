@@ -9,14 +9,8 @@ from scraper import AbstractDoc
 
 
 class TestCase(unittest.TestCase):
-    def test_build(self):
-        mock_data_branch_dir_root_data = os.path.join(
-            "tests", "output", "test_readme", "data_branch", "data"
-        )
-        if os.path.exists(mock_data_branch_dir_root_data):
-            shutil.rmtree(mock_data_branch_dir_root_data)
-        os.makedirs(mock_data_branch_dir_root_data, exist_ok=True)
-
+    @staticmethod
+    def __build_mock_data__(mock_data_branch_dir_root_data):
         for i in range(10):
             mock_doc_class_dir = os.path.join(
                 mock_data_branch_dir_root_data, f"mock_doc_class-{i}"
@@ -48,6 +42,16 @@ class TestCase(unittest.TestCase):
                     url_chart="https://example.com/mock_doc_class/chart.png",
                 )
             )
+
+    def test_build(self):
+        mock_data_branch_dir_root_data = os.path.join(
+            "tests", "output", "test_readme", "data_branch", "data"
+        )
+        if os.path.exists(mock_data_branch_dir_root_data):
+            shutil.rmtree(mock_data_branch_dir_root_data)
+        os.makedirs(mock_data_branch_dir_root_data, exist_ok=True)
+
+        self.__class__.__build_mock_data__(mock_data_branch_dir_root_data)
 
         mock_main_branch_dir_root = os.path.join(
             "tests", "output", "test_readme", "main_branch"
