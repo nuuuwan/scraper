@@ -39,7 +39,6 @@ class TestCase(unittest.TestCase):
 
     def test_pipeline(self):
         shutil.rmtree(DIR_TEST_PIPELINE, ignore_errors=True)
-
         mock_pdf_path = os.path.join("tests", "input", "test.pdf")
         self.assertTrue(os.path.exists(mock_pdf_path))
 
@@ -57,14 +56,12 @@ class TestCase(unittest.TestCase):
 
             DummyDoc.run_pipeline(max_dt=0.001)
             DummyDoc.run_pipeline(max_dt=100)
-
             self.assertTrue(
                 os.path.exists(DummyDoc.get_main_branch_dir_root())
             )
             self.assertTrue(
                 os.path.exists(DummyDoc.get_data_branch_dir_root())
             )
-
             doc_list = DummyDoc.list_all()
             self.assertEqual(len(doc_list), 1)
 
