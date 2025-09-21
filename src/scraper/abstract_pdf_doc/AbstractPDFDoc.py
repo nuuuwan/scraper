@@ -74,3 +74,9 @@ class AbstractPDFDoc(AbstractDoc, ABC):
                 self.text_path
             ):
                 self.extract_text()
+        else:
+            # HACK cleanup
+            if os.path.exists(self.blocks_path):
+                os.remove(self.blocks_path)
+            if os.path.exists(self.text_path):
+                os.remove(self.text_path)
