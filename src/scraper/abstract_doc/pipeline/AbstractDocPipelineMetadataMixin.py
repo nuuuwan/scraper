@@ -6,7 +6,7 @@ log = Log("AbstractDocPipelineMetadataMixin")
 
 
 class AbstractDocPipelineMetadataMixin:
-    BATCH_SIZE = 4
+    BATCH_SIZE = 32
     MAX_THREADS = 4
 
     @staticmethod
