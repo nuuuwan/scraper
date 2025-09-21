@@ -8,6 +8,8 @@ log = Log("AbstractDocChartDocsByTimeAndLangMixin")
 
 
 class AbstractDocChartDocsByTimeAndLangMixin:
+    MAX_X_LABELS = 5
+    FIG_SIZE = (12, 6.75)
     LANGS = ["si", "ta", "en"]
     COLOR_MAP = {
         "si": "#8D153A",
@@ -57,17 +59,15 @@ class AbstractDocChartDocsByTimeAndLangMixin:
             values = counts.get(lang, [])
             if values:
                 color = cls.COLOR_MAP.get(lang, "grey")
-                ax.bar(
-                    ts_list, values, bottom=bottom, label=lang, color=color
-                )
+                ax.bar(ts_list, values, bottom=bottom, label=lang, color=color)
                 bottom += np.array(values)
         return bottom
 
     @classmethod
     def __compute_xticks__(cls, ts_list: list[int]) -> list[int]:
-        if len(ts_list) <= 5:
+        if len(ts_list) <= cls.MAX_X_LABELS:
             return ts_list
-        step = max(1, len(ts_list) // 5)
+        step = max(1, len(ts_list) // cls.MAX_X_LABELS)
         xticks = ts_list[::step]
         if xticks[-1] != ts_list[-1]:
             xticks.append(ts_list[-1])
@@ -98,7 +98,7 @@ class AbstractDocChartDocsByTimeAndLangMixin:
     @classmethod
     def build_chart_by_time_and_lang(cls, ts_to_lang_n: dict, time_unit):
         ts_list, _, counts = cls.__prepare_chart_data__(ts_to_lang_n)
-        fig, ax = plt.subplots(figsize=(8, 4.5))
+        fig, ax = plt.subplots(figsize=cls.FIG_SIZE)
         cls.__plot_stacked_bars__(ax, ts_list, counts)
         cls.__configure_axes__(ax, ts_list, time_unit)
         cls.__save_chart__(fig, time_unit)
