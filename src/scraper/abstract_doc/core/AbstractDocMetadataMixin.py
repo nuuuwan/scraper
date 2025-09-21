@@ -66,9 +66,9 @@ class AbstractDocMetadataMixin:
         for time_unit in ["decade", "year", "month", "day"]:
             ts_list = [doc.get_ts(time_unit) for doc in doc_list]
             n = len(set(ts_list))
-            if n > 1:
+            if n > 5:
                 return time_unit
-        return "day"
+        return "year"
 
     def get_ts(self, time_unit: str) -> str:
         ts = {
