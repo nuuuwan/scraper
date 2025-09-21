@@ -32,9 +32,11 @@ class AbstractDocSummaryMixin:
         url_data = cls.get_remote_data_url_for_class()
         latest_doc_d = latest_doc.to_dict()
         langs = set([doc.lang for doc in doc_list])
-        year_to_lang_to_n = cls.get_year_to_lang_to_n()
-        cls.build_chart_by_time_and_lang(year_to_lang_to_n, "year")
-        url_chart = cls.get_raw_remote_chart_image_url("year")
+
+        time_unit = "year"
+        ts_to_lang_to_n = cls.get_ts_to_lang_to_n(time_unit)
+        cls.build_chart_by_time_and_lang(ts_to_lang_to_n, time_unit)
+        url_chart = cls.get_raw_remote_chart_image_url(time_unit)
 
         return dict(
             doc_class_label=doc_class_label,

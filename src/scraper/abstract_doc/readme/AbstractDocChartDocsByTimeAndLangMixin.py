@@ -39,47 +39,49 @@ class AbstractDocChartDocsByTimeAndLangMixin:
         )
 
     @classmethod
-    def __prepare_chart_data__(cls, t_to_lang_n: dict):
-        ts = sorted(t_to_lang_n.keys())
+    def __prepare_chart_data__(cls, ts_to_lang_n: dict):
+        ts = sorted(ts_to_lang_n.keys())
         langs = sorted(
-            {lang for v in t_to_lang_n.values() for lang in v.keys()}
+            {lang for v in ts_to_lang_n.values() for lang in v.keys()}
         )
         counts = {
-            lang: [t_to_lang_n.get(year, {}).get(lang, 0) for year in ts]
+            lang: [ts_to_lang_n.get(year, {}).get(lang, 0) for year in ts]
             for lang in langs
         }
         return ts, langs, counts
 
     @classmethod
-    def __plot_stacked_bars__(cls, ax, ts, counts):
-        bottom = np.zeros(len(ts))
+    def __plot_stacked_bars__(cls, ax, ts_list, counts):
+        bottom = np.zeros(len(ts_list))
         for lang in cls.LANGS:
             values = counts.get(lang, [])
             if values:
                 color = cls.COLOR_MAP.get(lang, "grey")
-                ax.bar(ts, values, bottom=bottom, label=lang, color=color)
+                ax.bar(
+                    ts_list, values, bottom=bottom, label=lang, color=color
+                )
                 bottom += np.array(values)
         return bottom
 
     @staticmethod
-    def __compute_xticks__(ts: list[int]) -> list[int]:
-        if len(ts) <= 5:
-            return ts
-        step = max(1, len(ts) // 5)
-        xticks = ts[::step]
-        if xticks[-1] != ts[-1]:
-            xticks.append(ts[-1])
+    def __compute_xticks__(ts_list: list[int]) -> list[int]:
+        if len(ts_list) <= 5:
+            return ts_list
+        step = max(1, len(ts_list) // 5)
+        xticks = ts_list[::step]
+        if xticks[-1] != ts_list[-1]:
+            xticks.append(ts_list[-1])
         return xticks
 
     @classmethod
-    def __configure_axes__(cls, ax, ts, time_unit):
+    def __configure_axes__(cls, ax, ts_list, time_unit):
         x_label = time_unit.title()
         ax.set_xlabel(x_label)
         ax.set_ylabel("Number of documents")
         ax.set_title(
             f"Number of {cls.get_doc_class_label()} by {x_label} & Language"
         )
-        xticks = cls.__compute_xticks__(ts)
+        xticks = cls.__compute_xticks__(ts_list)
         ax.set_xticks(xticks)
         ax.set_xticklabels([str(y) for y in xticks], rotation=45)
         ax.legend(title="Language")
@@ -94,9 +96,9 @@ class AbstractDocChartDocsByTimeAndLangMixin:
         log.info(f"Wrote {image_path}")
 
     @classmethod
-    def build_chart_by_time_and_lang(cls, t_to_lang_n: dict, time_unit):
-        ts, _, counts = cls.__prepare_chart_data__(t_to_lang_n)
+    def build_chart_by_time_and_lang(cls, ts_to_lang_n: dict, time_unit):
+        ts_list, _, counts = cls.__prepare_chart_data__(ts_to_lang_n)
         fig, ax = plt.subplots(figsize=(8, 4.5))
-        cls.__plot_stacked_bars__(ax, ts, counts)
-        cls.__configure_axes__(ax, ts, time_unit)
+        cls.__plot_stacked_bars__(ax, ts_list, counts)
+        cls.__configure_axes__(ax, ts_list, time_unit)
         cls.__save_chart__(fig, time_unit)
