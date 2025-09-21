@@ -39,15 +39,13 @@ class AbstractDocChartDocsByYearMixin:
         )
 
     @classmethod
-    def __prepare_chart_data__(cls, year_to_lang_to_n: dict):
-        years = sorted(year_to_lang_to_n.keys())
+    def __prepare_chart_data__(cls, t_to_lang_n: dict):
+        years = sorted(t_to_lang_n.keys())
         langs = sorted(
-            {lang for v in year_to_lang_to_n.values() for lang in v.keys()}
+            {lang for v in t_to_lang_n.values() for lang in v.keys()}
         )
         counts = {
-            lang: [
-                year_to_lang_to_n.get(year, {}).get(lang, 0) for year in years
-            ]
+            lang: [t_to_lang_n.get(year, {}).get(lang, 0) for year in years]
             for lang in langs
         }
         return years, langs, counts
@@ -95,8 +93,8 @@ class AbstractDocChartDocsByYearMixin:
         log.info(f"Wrote {image_path}")
 
     @classmethod
-    def build_chart_by_year_and_lang(cls, year_to_lang_to_n: dict):
-        years, _, counts = cls.__prepare_chart_data__(year_to_lang_to_n)
+    def build_chart_by_year_and_lang(cls, t_to_lang_n: dict):
+        years, _, counts = cls.__prepare_chart_data__(t_to_lang_n)
         fig, ax = plt.subplots(figsize=(8, 4.5))
         cls.__plot_stacked_bars__(ax, years, counts)
         cls.__configure_axes__(ax, years)
