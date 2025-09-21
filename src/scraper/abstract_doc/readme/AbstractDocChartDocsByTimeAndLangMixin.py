@@ -8,7 +8,6 @@ log = Log("AbstractDocChartDocsByTimeAndLangMixin")
 
 
 class AbstractDocChartDocsByTimeAndLangMixin:
-    MAX_X_LABELS = 5
     FIG_SIZE = (12, 6.75)
     LANGS = ["si", "ta", "en"]
     COLOR_MAP = {
