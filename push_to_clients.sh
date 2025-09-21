@@ -10,6 +10,7 @@ CLIENT_REPOS=(
     "lk_legal_docs"    
     # "lk_parliament_members"
     "lk_treasury"
+    "lk_pmd"
 )
 
 function push_to_client_repo() {
