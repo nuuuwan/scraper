@@ -70,5 +70,7 @@ class TestCase(unittest.TestCase):
             "get_chart_image_path",
             return_value=mock_chart_image_path,
         ):
-            AbstractDoc.build_chart_by_year_and_lang(year_to_lang_to_n)
+            AbstractDoc.build_chart_by_time_and_lang(
+                year_to_lang_to_n, "year"
+            )
             self.assertTrue(os.path.exists(mock_chart_image_path))

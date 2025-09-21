@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from utils import Log
 
-log = Log("AbstractDocChartDocsByYearMixin")
+log = Log("AbstractDocChartDocsByTimeAndLangMixin")
 
 
-class AbstractDocChartDocsByYearMixin:
+class AbstractDocChartDocsByTimeAndLangMixin:
     LANGS = ["si", "ta", "en"]
     COLOR_MAP = {
         "si": "#8D153A",
@@ -40,62 +40,63 @@ class AbstractDocChartDocsByYearMixin:
 
     @classmethod
     def __prepare_chart_data__(cls, t_to_lang_n: dict):
-        years = sorted(t_to_lang_n.keys())
+        ts = sorted(t_to_lang_n.keys())
         langs = sorted(
             {lang for v in t_to_lang_n.values() for lang in v.keys()}
         )
         counts = {
-            lang: [t_to_lang_n.get(year, {}).get(lang, 0) for year in years]
+            lang: [t_to_lang_n.get(year, {}).get(lang, 0) for year in ts]
             for lang in langs
         }
-        return years, langs, counts
+        return ts, langs, counts
 
     @classmethod
-    def __plot_stacked_bars__(cls, ax, years, counts):
-        bottom = np.zeros(len(years))
+    def __plot_stacked_bars__(cls, ax, ts, counts):
+        bottom = np.zeros(len(ts))
         for lang in cls.LANGS:
             values = counts.get(lang, [])
             if values:
                 color = cls.COLOR_MAP.get(lang, "grey")
-                ax.bar(years, values, bottom=bottom, label=lang, color=color)
+                ax.bar(ts, values, bottom=bottom, label=lang, color=color)
                 bottom += np.array(values)
         return bottom
 
     @staticmethod
-    def __compute_xticks__(years: list[int]) -> list[int]:
-        if len(years) <= 5:
-            return years
-        step = max(1, len(years) // 5)
-        xticks = years[::step]
-        if xticks[-1] != years[-1]:
-            xticks.append(years[-1])
+    def __compute_xticks__(ts: list[int]) -> list[int]:
+        if len(ts) <= 5:
+            return ts
+        step = max(1, len(ts) // 5)
+        xticks = ts[::step]
+        if xticks[-1] != ts[-1]:
+            xticks.append(ts[-1])
         return xticks
 
     @classmethod
-    def __configure_axes__(cls, ax, years):
-        ax.set_xlabel("Year")
+    def __configure_axes__(cls, ax, ts, time_unit):
+        x_label = time_unit.title()
+        ax.set_xlabel(x_label)
         ax.set_ylabel("Number of documents")
         ax.set_title(
-            f"Number of {cls.get_doc_class_label()} by year & language"
+            f"Number of {cls.get_doc_class_label()} by {x_label} & Language"
         )
-        xticks = cls.__compute_xticks__(years)
+        xticks = cls.__compute_xticks__(ts)
         ax.set_xticks(xticks)
         ax.set_xticklabels([str(y) for y in xticks], rotation=45)
         ax.legend(title="Language")
         plt.tight_layout()
 
     @classmethod
-    def __save_chart__(cls, fig):
-        image_path = cls.get_chart_image_path()
+    def __save_chart__(cls, fig, time_unit):
+        image_path = cls.get_chart_image_path(time_unit)
         os.makedirs(os.path.dirname(image_path), exist_ok=True)
         fig.savefig(image_path, dpi=300)
         plt.close(fig)
         log.info(f"Wrote {image_path}")
 
     @classmethod
-    def build_chart_by_year_and_lang(cls, t_to_lang_n: dict):
-        years, _, counts = cls.__prepare_chart_data__(t_to_lang_n)
+    def build_chart_by_time_and_lang(cls, t_to_lang_n: dict, time_unit):
+        ts, _, counts = cls.__prepare_chart_data__(t_to_lang_n)
         fig, ax = plt.subplots(figsize=(8, 4.5))
-        cls.__plot_stacked_bars__(ax, years, counts)
-        cls.__configure_axes__(ax, years)
-        cls.__save_chart__(fig)
+        cls.__plot_stacked_bars__(ax, ts, counts)
+        cls.__configure_axes__(ax, ts, time_unit)
+        cls.__save_chart__(fig, time_unit)
