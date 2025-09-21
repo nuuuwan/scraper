@@ -60,6 +60,16 @@ class AbstractDocMetadataMixin:
             if doc.url_metadata is not None
         }
 
+    @classmethod
+    def get_best_time_unit(cls) -> str:
+        doc_list = cls.list_all()
+        for time_unit in ["decade", "year", "month", "day"]:
+            ts_list = [doc.get_ts(time_unit) for doc in doc_list]
+            n = len(set(ts_list))
+            if n > 1:
+                return time_unit
+        return "day"
+
     def get_ts(self, time_unit: str) -> str:
         ts = {
             "decade": self.date_str[:3] + "0s",

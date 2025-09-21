@@ -33,7 +33,7 @@ class AbstractDocSummaryMixin:
         latest_doc_d = latest_doc.to_dict()
         langs = set([doc.lang for doc in doc_list])
 
-        time_unit = "year"
+        time_unit = cls.get_best_time_unit()
         ts_to_lang_to_n = cls.get_ts_to_lang_to_n(time_unit)
         cls.build_chart_by_time_and_lang(ts_to_lang_to_n, time_unit)
         url_chart = cls.get_raw_remote_chart_image_url(time_unit)
