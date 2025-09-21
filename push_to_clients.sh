@@ -8,7 +8,8 @@ CLIENT_REPOS=(
     "lk_supreme_court_judgements"
     "lk_police_press_releases"
     "lk_legal_docs"    
-    "lk_parliament_members"
+    # "lk_parliament_members"
+    "lk_treasury"
 )
 
 function push_to_client_repo() {
@@ -23,6 +24,8 @@ function push_to_client_repo() {
 
         git reset --hard HEAD
         git clean -fd
+
+        mkdir -p src
 
         git pull origin main --rebase
 
