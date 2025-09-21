@@ -49,10 +49,9 @@ class AbstractDocSummaryMixin:
             dataset_size=dataset_size,
             url_source=url_source,
             url_data=url_data,
+            url_chart=url_chart,
             langs=list(langs),
             latest_doc_d=latest_doc_d,
-            year_to_lang_to_n=year_to_lang_to_n,
-            url_chart=url_chart,
         )
 
     @classmethod
