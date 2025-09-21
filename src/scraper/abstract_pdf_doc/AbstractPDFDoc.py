@@ -57,7 +57,6 @@ class AbstractPDFDoc(AbstractDoc, ABC):
         content = "\n\n".join(text_list)
         File(self.text_path).write(content)
         log.info(f"Wrote {self.text_path}")
-
         File(self.doc_readme_path).write(content)
         log.info(f"Wrote {self.doc_readme_path}")
 
