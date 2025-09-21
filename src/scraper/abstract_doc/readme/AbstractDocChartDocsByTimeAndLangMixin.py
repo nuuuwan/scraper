@@ -63,8 +63,8 @@ class AbstractDocChartDocsByTimeAndLangMixin:
                 bottom += np.array(values)
         return bottom
 
-    @staticmethod
-    def __compute_xticks__(ts_list: list[int]) -> list[int]:
+    @classmethod
+    def __compute_xticks__(cls, ts_list: list[int]) -> list[int]:
         if len(ts_list) <= 5:
             return ts_list
         step = max(1, len(ts_list) // 5)
