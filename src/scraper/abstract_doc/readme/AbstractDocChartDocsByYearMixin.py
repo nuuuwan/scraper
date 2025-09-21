@@ -39,7 +39,7 @@ class AbstractDocChartDocsByYearMixin:
         )
 
     @classmethod
-    def build_chart_by_year_and_lang(cls, year_to_lang_to_n):
+    def __prepare_chart_data__(cls, year_to_lang_to_n: dict):
         years = sorted(year_to_lang_to_n.keys())
         langs = sorted(
             {lang for v in year_to_lang_to_n.values() for lang in v.keys()}
@@ -50,36 +50,54 @@ class AbstractDocChartDocsByYearMixin:
             ]
             for lang in langs
         }
+        return years, langs, counts
 
-        _, ax = plt.subplots(figsize=(10, 6))
+    @classmethod
+    def __plot_stacked_bars__(cls, ax, years, counts):
         bottom = np.zeros(len(years))
         for lang in cls.LANGS:
-            values = counts.get(lang, 0)
+            values = counts.get(lang, [])
             if values:
                 color = cls.COLOR_MAP.get(lang, "grey")
                 ax.bar(years, values, bottom=bottom, label=lang, color=color)
                 bottom += np.array(values)
+        return bottom
 
+    @staticmethod
+    def __compute_xticks__(years: list[int]) -> list[int]:
+        if len(years) <= 5:
+            return years
+        step = max(1, len(years) // 5)
+        xticks = years[::step]
+        if xticks[-1] != years[-1]:
+            xticks.append(years[-1])
+        return xticks
+
+    @classmethod
+    def __configure_axes__(cls, ax, years):
         ax.set_xlabel("Year")
         ax.set_ylabel("Number of documents")
         ax.set_title(
             f"Number of {cls.get_doc_class_label()} by year & language"
         )
-        if len(years) > 5:
-            step = max(1, len(years) // 5)
-            xticks = years[::step]
-            if xticks[-1] != years[-1]:
-                xticks.append(years[-1])
-        else:
-            xticks = years
-
+        xticks = cls.__compute_xticks__(years)
         ax.set_xticks(xticks)
         ax.set_xticklabels([str(y) for y in xticks], rotation=45)
         ax.legend(title="Language")
         plt.tight_layout()
 
+    @classmethod
+    def __save_chart__(cls, fig):
         image_path = cls.get_chart_image_path()
         os.makedirs(os.path.dirname(image_path), exist_ok=True)
-        plt.savefig(image_path, dpi=300)
-        plt.close()
+        fig.savefig(image_path, dpi=300)
+        plt.close(fig)
         log.info(f"Wrote {image_path}")
+
+    @classmethod
+    def build_chart_by_year_and_lang(cls, year_to_lang_to_n: dict):
+        years, _, counts = cls.__prepare_chart_data__(year_to_lang_to_n)
+        fig, ax = plt.subplots(figsize=(8, 4.5))
+        cls.__plot_stacked_bars__(ax, years, counts)
+        cls.__configure_axes__(ax, years)
+        cls.__save_chart__(fig)
