@@ -8,6 +8,7 @@ CLIENT_REPOS=(
     "lk_supreme_court_judgements"
     "lk_police_press_releases"
     "lk_legal_docs"    
+    "lk_parliament_members"
 )
 
 function push_to_client_repo() {
