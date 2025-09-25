@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 from datasets import Dataset
 
-from scraper import AbstractDoc, AbstractPDFDoc
+from scraper import AbstractPDFDoc
 from utils_future import WWW
 
 DIR_TEST_PIPELINE = os.path.join("tests", "output", "test_pipeline")
@@ -45,13 +45,11 @@ class TestCase(unittest.TestCase):
         def mock_download_binary(local_path):
             shutil.copyfile(mock_pdf_path, local_path)
 
-        mock_global_readme_path = os.path.join(DIR_TEST_PIPELINE, "README.md")
+        os.path.join(DIR_TEST_PIPELINE, "README.md")
         with patch.object(
             WWW, "download_binary", side_effect=mock_download_binary
         ), patch.object(
             Dataset, "push_to_hub", return_value="mock_dataset_id"
-        ), patch.object(
-            AbstractDoc, "GLOBAL_README_PATH", new=mock_global_readme_path
         ):
 
             DummyDoc.run_pipeline(max_dt=0.001)

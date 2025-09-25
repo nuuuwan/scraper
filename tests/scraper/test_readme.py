@@ -59,14 +59,8 @@ class TestCase(unittest.TestCase):
         if os.path.exists(mock_main_branch_dir_root):
             shutil.rmtree(mock_main_branch_dir_root)
         os.makedirs(mock_main_branch_dir_root, exist_ok=True)
-        mock_global_readme_path = os.path.join(
-            mock_main_branch_dir_root, "README.md"
-        )
+
         with patch.object(
-            AbstractDoc,
-            "GLOBAL_README_PATH",
-            new=mock_global_readme_path,
-        ), patch.object(
             AbstractDoc,
             "get_data_branch_dir_root_data",
             return_value=mock_data_branch_dir_root_data,
@@ -75,8 +69,3 @@ class TestCase(unittest.TestCase):
                 AbstractDoc.get_data_branch_dir_root_data(),
                 mock_data_branch_dir_root_data,
             )
-            self.assertEqual(
-                AbstractDoc.GLOBAL_README_PATH, mock_global_readme_path
-            )
-            AbstractDoc.build_global_readme()
-            self.assertTrue(os.path.exists(mock_global_readme_path))
