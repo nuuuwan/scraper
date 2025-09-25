@@ -9,7 +9,6 @@ log = Log("PDFFileCompressMixin")
 
 
 class PDFFileCompressMixin:
-
     QUALITY = 70
     SCALE = 0.5
 
