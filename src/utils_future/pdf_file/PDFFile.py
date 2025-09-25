@@ -24,12 +24,10 @@ class PDFFile(FileOrDirFuture, PDFTextMixin):
         pix.save(image_path)
         log.info(f"Wrote image {self} to {image_path}")
 
-    def compress(
-        self,
-        compressed_pdf_path: str,
-        image_quality: int = 70,
-        scale: float = 0.5,
-    ):
+    COMPRESS_IMAGE_QUALITY = 70
+    COMPRESS_IMAGE_SCALE = 0.5
+
+    def compress(self, compressed_pdf_path: str):
         doc = pymupdf.open(self.path)
 
         for page in doc:
@@ -40,14 +38,16 @@ class PDFFile(FileOrDirFuture, PDFTextMixin):
 
                 img_pil = Image.open(io.BytesIO(image_bytes)).convert("RGB")
                 new_size = (
-                    int(img_pil.width * scale),
-                    int(img_pil.height * scale),
+                    int(img_pil.width * self.COMPRESS_IMAGE_SCALE),
+                    int(img_pil.height * self.COMPRESS_IMAGE_SCALE),
                 )
                 img_pil = img_pil.resize(new_size)
 
                 new_img_bytes = io.BytesIO()
                 img_pil.save(
-                    new_img_bytes, format="JPEG", quality=image_quality
+                    new_img_bytes,
+                    format="JPEG",
+                    quality=self.COMPRESS_IMAGE_QUALITY,
                 )
                 doc.update_stream(xref, new_img_bytes.getvalue())
 
