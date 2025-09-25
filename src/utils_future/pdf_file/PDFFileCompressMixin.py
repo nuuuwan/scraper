@@ -10,8 +10,8 @@ log = Log("PDFFileCompressMixin")
 
 class PDFFileCompressMixin:
 
-    COMPRESS_IMAGE_QUALITY = 70
-    COMPRESS_IMAGE_SCALE = 0.5
+    QUALITY = 70
+    SCALE = 0.5
 
     @classmethod
     def __compress_images__(cls, doc):
@@ -23,8 +23,8 @@ class PDFFileCompressMixin:
 
                 img_pil = Image.open(io.BytesIO(image_bytes)).convert("RGB")
                 new_size = (
-                    int(img_pil.width * cls.COMPRESS_IMAGE_SCALE),
-                    int(img_pil.height * cls.COMPRESS_IMAGE_SCALE),
+                    int(img_pil.width * cls.SCALE),
+                    int(img_pil.height * cls.SCALE),
                 )
                 img_pil = img_pil.resize(new_size)
 
@@ -32,7 +32,7 @@ class PDFFileCompressMixin:
                 img_pil.save(
                     new_img_bytes,
                     format="JPEG",
-                    quality=cls.COMPRESS_IMAGE_QUALITY,
+                    quality=cls.QUALITY,
                 )
                 doc.update_stream(xref, new_img_bytes.getvalue())
         return doc
