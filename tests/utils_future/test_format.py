@@ -19,6 +19,10 @@ class TestCase(unittest.TestCase):
             (["apple"], "apple"),
             (["apple", "banana"], "apple & banana"),
             (["apple", "banana", "cherry"], "apple, banana & cherry"),
+            (
+                ["apple", "banana", "cherry", "date", "guava", "mango"],
+                "apple, banana, cherry, date, guava & 1 more",
+            ),
         ]:
 
             self.assertEqual(Format.and_list(x), expected_result)
