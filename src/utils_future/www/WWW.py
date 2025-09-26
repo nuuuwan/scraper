@@ -85,7 +85,6 @@ class WWW(WWWSSLMixin):
                 verify=False,
                 headers=self.HEADERS,
             )
-            print(response.status_code)
             response.raise_for_status()
             with open(local_path, "wb") as f:
                 f.write(response.content)
