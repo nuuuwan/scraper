@@ -2,7 +2,9 @@ from functools import cached_property
 
 from utils import File, Log
 
-from scraper.abstract_doc import AbstractDocReadMeMixin
+from scraper.abstract_doc.readme.AbstractDocReadMeMixin import (
+    AbstractDocReadMeMixin,
+)
 from scraper.global_readme.GlobalReadMeSummaryMixin import (
     GlobalReadMeSummaryMixin,
 )
