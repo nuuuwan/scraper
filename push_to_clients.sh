@@ -1,6 +1,5 @@
 # HACK! Delete this once scraper is in pypi
 
-pyl
 git add . 
 git commit -m "various before push_to_clients"
 git pull origin main --rebase
