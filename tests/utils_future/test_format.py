@@ -21,7 +21,7 @@ class TestCase(unittest.TestCase):
             (["apple", "banana", "cherry"], "apple, banana & cherry"),
             (
                 ["apple", "banana", "cherry", "date", "guava", "mango"],
-                "apple, banana, cherry, date, guava & 1 more",
+                "apple, banana, cherry, date, guava & mango",
             ),
         ]:
 
