@@ -6,3 +6,4 @@ datasets
 huggingface_hub
 pandas
 numpy
+selenium
