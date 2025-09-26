@@ -11,6 +11,7 @@ CLIENT_REPOS=(
     # "lk_parliament_members"
     "lk_treasury"
     "lk_pmd"
+    "lk_news"
 )
 
 function push_to_client_repo() {
