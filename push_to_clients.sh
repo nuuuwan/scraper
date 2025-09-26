@@ -1,5 +1,11 @@
 # HACK! Delete this once scraper is in pypi
 
+pyl
+git add . 
+git commit -m "various before push_to_clients"
+git pull origin main --rebase
+git push origin main
+
 CLIENT_REPOS=(
     "lk_cabinet_decisions"
     "lk_datasets"
