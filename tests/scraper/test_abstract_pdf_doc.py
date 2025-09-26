@@ -59,7 +59,7 @@ class TestCase(unittest.TestCase):
                 "time_updated": "2024-10-01",
                 "date_str_min": "2023-10-01",
                 "date_str_max": "2023-10-01",
-                "url_source": "http://mock.com",
+                "url_source_list": ["http://mock.com"],
                 "url_data": "http://mock.com/data",
                 "langs": ["en"],
                 "url_chart": "http://mock.com/chart.png",

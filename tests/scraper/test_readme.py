@@ -31,7 +31,7 @@ class TestCase(unittest.TestCase):
                     date_str_min="2023-01-01",
                     date_str_max="2023-12-31",
                     dataset_size=123_456_789,
-                    url_source="https://example.com/mock_doc_class",
+                    url_source_list=["https://example.com/mock_doc_class"],
                     url_data="https://example.com/mock_doc_class/data",
                     latest_doc_d=dict(),
                     langs=["si-en", "ta", "en"],
