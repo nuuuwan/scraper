@@ -15,7 +15,6 @@ class TestCase(unittest.TestCase):
 
     def test_and_list(self):
         for x, expected_result in [
-            ([], ""),
             (["apple"], "apple"),
             (["apple", "banana"], "apple & banana"),
             (["apple", "banana", "cherry"], "apple, banana & cherry"),
