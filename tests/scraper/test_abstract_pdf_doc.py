@@ -4,9 +4,9 @@ import unittest
 from unittest.mock import patch
 
 from datasets import Dataset
+from utils import WWW
 
 from scraper import AbstractPDFDoc, GlobalReadMe
-from utils_future import WWW
 
 DIR_TEST_PIPELINE = os.path.join("tests", "output", "test_pipeline")
 
