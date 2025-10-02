@@ -37,14 +37,17 @@ function push_to_client_repo() {
 
         git pull origin main --rebase
 
+        # Delete Scraper
         rm -rf src/scraper
         git add src/scraper
         git commit -m "[push_to_clients] Deleted scraper"
 
+        # Delete utils_future
         rm -rf src/utils_future
         git add src/utils_future
         git commit -m "[push_to_clients] Deleted utils_future"
 
+        # Update requirements
         echo "scraper-nuuuwan" >> requirements.txt
         cat requirements.txt | sort | uniq > requirements.txt.temp
         mv requirements.txt.temp requirements.txt
@@ -52,10 +55,10 @@ function push_to_client_repo() {
         git add requirements.txt
         git commit -m "[push_to_clients] Updated requirements.txt with scraper-nuuuwan"
 
-        # Cleanup
-        rm -rf requiremets.txt
-        git add requiremets.txt
-        git commit -m "[push_to_clients] Deleted requiremets.txt"
+        # Update utils_future to utils
+        find . -type f -name "*.py" -exec sed -i 's/utils_future/utils/g' {} +
+        git add . 
+        git commit -m "[push_to_clients] Updated utils_future to utils"
 
         git push origin main
 
