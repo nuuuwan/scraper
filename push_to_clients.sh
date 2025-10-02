@@ -45,12 +45,13 @@ function push_to_client_repo() {
         git add src/utils_future
         git commit -m "[push_to_clients] Deleted utils_future"
 
-        scraper-nuuuwan >> requiremets.txt
+        rm -rf requiremets.txt
+        scraper-nuuuwan >> requirements.txt
         cat requirements.txt | sort | uniq > requirements.txt.temp
         mv requirements.txt.temp requirements.txt
         
-        git add requiremets.txt
-        git commit -m "[push_to_clients] Updated requiremets.txt with scraper-nuuuwan"
+        git add requirements.txt
+        git commit -m "[push_to_clients] Updated requirements.txt with scraper-nuuuwan"
 
         git push origin main
 
