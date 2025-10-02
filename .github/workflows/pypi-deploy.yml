@@ -9,9 +9,6 @@ jobs:
   pypi-deploy:
     runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: false
-
     steps:
       - uses: actions/checkout@v2
 
