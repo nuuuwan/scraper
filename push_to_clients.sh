@@ -52,6 +52,11 @@ function push_to_client_repo() {
         git add requirements.txt
         git commit -m "[push_to_clients] Updated requirements.txt with scraper-nuuuwan"
 
+        # Cleanup
+        rm -rf requiremets.txt
+        git add requiremets.txt
+        git commit -m "[push_to_clients] Deleted requiremets.txt"
+
         git push origin main
 
         # open https://github.com/nuuuwan/$CLIENT_REPO/actions/workflows/pipeline.yml
