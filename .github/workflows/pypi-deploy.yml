@@ -9,6 +9,9 @@ jobs:
   pypi-deploy:
     runs-on: ubuntu-latest
 
+    env:
+      GITHUB_USERNAME: ${{ secrets.GIT_USER_NAME }}
+
     steps:
       - uses: actions/checkout@v2
 
