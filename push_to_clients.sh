@@ -56,7 +56,7 @@ function push_to_client_repo() {
         git commit -m "[push_to_clients] Updated requirements.txt with scraper-nuuuwan"
 
         # Update utils_future to utils
-        find . -type f -name "*.py" -exec sed -i 's/utils_future/utils/g' {} +
+        find src -type f -name "*.py" -exec sed -i '' 's/utils_future/utils/g' {} +
         git add . 
         git commit -m "[push_to_clients] Updated utils_future to utils"
 
