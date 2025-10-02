@@ -38,12 +38,17 @@ function push_to_client_repo() {
         git pull origin main --rebase
 
         rm -rf src/scraper
-        cp -r ../scraper/src/scraper src/
-        git add src/scraper
-        git commit -m "[push_to_clients] Updated scraper"
+        git commit -m "[push_to_clients] Deleted scraper"
 
         rm -rf src/utils_future
-        git commit -m "[push_to_clients] Updated utils"
+        git commit -m "[push_to_clients] Deleted utils_future"
+
+        scraper-nuuuwan >> requiremets.txt
+        cat requirements.txt | sort | uniq > requirements.txt.temp
+        mv requirements.txt.temp requirements.txt
+        
+        git add requiremets.txt
+        git commit -m "[push_to_clients] Updated requiremets.txt with scraper-nuuuwan"
 
         git push origin main
 
