@@ -45,7 +45,7 @@ function push_to_client_repo() {
         git add src/utils_future
         git commit -m "[push_to_clients] Deleted utils_future"
 
-        scraper-nuuuwan >> requirements.txt
+        echo "scraper-nuuuwan" >> requirements.txt
         cat requirements.txt | sort | uniq > requirements.txt.temp
         mv requirements.txt.temp requirements.txt
         
