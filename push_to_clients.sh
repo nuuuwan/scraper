@@ -17,6 +17,7 @@ CLIENT_REPOS=(
     "lk_treasury"
     "lk_pmd"
     "lk_news"
+    "lk_tourism"
 )
 
 function push_to_client_repo() {
