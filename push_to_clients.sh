@@ -42,9 +42,7 @@ function push_to_client_repo() {
         git add src/scraper
         git commit -m "[push_to_clients] Updated scraper"
 
-        rm -rf src/utils
-        cp -r ../scraper/src/utils src/
-        git add src/utils
+        rm -rf src/utils_future
         git commit -m "[push_to_clients] Updated utils"
 
         git push origin main
