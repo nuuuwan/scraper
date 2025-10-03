@@ -1,9 +1,10 @@
-utils-nuuuwan
 bs4
-pymupdf
-matplotlib
 datasets
 huggingface_hub
-pandas
+matplotlib
 numpy
+pandas
+pymupdf
+scraper-nuuuwan
 selenium
+utils-nuuuwan
