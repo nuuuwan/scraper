@@ -4,6 +4,7 @@ huggingface_hub
 matplotlib
 numpy
 pandas
+pylatex
 pymupdf
 scraper-nuuuwan
 selenium
