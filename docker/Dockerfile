@@ -20,7 +20,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   texlive-publishers \
   && rm -rf /var/lib/apt/lists/*
 
-RUN latexmk -v && kpsewhich lmodern.sty && kpsewhich acl.sty
 
 WORKDIR /app
 COPY requirements.txt /app/requirements.txt
