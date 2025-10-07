@@ -9,7 +9,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   libgl1 libglib2.0-0 \
   poppler-utils poppler-data \
   tesseract-ocr tesseract-ocr-eng \
+  latexmk \
+  texlive-latex-recommended \
+  texlive-latex-extra \
+  texlive-fonts-recommended \
   && rm -rf /var/lib/apt/lists/*
+
 
 ENV OMP_THREAD_LIMIT=4
 ENV TESSDATA_PREFIX=/usr/share/tesseract-ocr/5/tessdata
