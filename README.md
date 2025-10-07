@@ -16,6 +16,8 @@ A mock document class for testing.
 
 - In **English**
 
+- 🎓 Cite as **[arXiv:2510.04124](https://arxiv.org/abs/2510.04124) [cs.CL]**
+
 ![Chart](http://mock.com/chart.png)
 
 ---

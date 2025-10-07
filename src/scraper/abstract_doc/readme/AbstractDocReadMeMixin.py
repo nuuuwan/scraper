@@ -97,7 +97,7 @@ class AbstractDocReadMeMixin:
             "",
             cls.get_line_for_blurb_item_lang(summary),
             "",
-            f"- 🎓 Cite as [arXiv:2510.04124 [cs.CL]({cls.URL_ARXIV})",
+            f"- 🎓 Cite as **[arXiv:2510.04124]({cls.URL_ARXIV}) [cs.CL]**",
             "",
         ]
 
