@@ -8,6 +8,7 @@ log = Log("AbstractDocReadMeMixin")
 
 class AbstractDocReadMeMixin:
     N_LATEST = 20
+    URL_ARXIV = "https://arxiv.org/abs/2510.04124"
 
     @classmethod
     def get_lines_for_header(cls, summary) -> list[str]:
@@ -95,6 +96,8 @@ class AbstractDocReadMeMixin:
             cls.get_line_for_blurb_item_files(summary),
             "",
             cls.get_line_for_blurb_item_lang(summary),
+            "",
+            f"- 🎓 Cite as [arXiv:2510.04124 [cs.CL]({cls.URL_ARXIV})",
             "",
         ]
 
