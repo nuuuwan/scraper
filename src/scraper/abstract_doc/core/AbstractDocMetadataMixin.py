@@ -126,7 +126,8 @@ class AbstractDocMetadataMixin:
         for n, suffix in [
             [None, "all"],
             [100, "last100"],
-            [1000, "last10000"],
+            [1000, "last1000"],
+            [10000, "last10000"],
         ]:
             if n and n > len(d_list):
                 continue
