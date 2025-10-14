@@ -15,5 +15,6 @@ from scraper.abstract_doc import (AbstractDoc, AbstractDocBase,
                                   AbstractDocRemotePathMixin,
                                   AbstractDocSummaryMixin,
                                   AbstractDocTextMixin)
+from scraper.abstract_excel_spreadsheet import AbstractExcelSpreadsheet
 from scraper.abstract_pdf_doc import AbstractPDFDoc
 from scraper.global_readme import GlobalReadMe, GlobalReadMeSummaryMixin
