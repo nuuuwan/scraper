@@ -25,12 +25,14 @@ class AbstractDocReadMeMixin:
         n_docs = summary["n_docs"]
         n_docs_with_pdfs = summary["n_docs_with_pdfs"]
         n_docs_with_text = summary["n_docs_with_text"]
+        n_docs_with_excel = summary["n_docs_with_excel"]
 
         blob_list = []
         for doc_type, n in [
             ("JSON", n_docs),
             ("PDF", n_docs_with_pdfs),
             ("TXT", n_docs_with_text),
+            ("Excel", n_docs_with_excel),
             ("🤗 Hugging Face", n_docs_with_text),
             ("Something New", 0),
         ]:

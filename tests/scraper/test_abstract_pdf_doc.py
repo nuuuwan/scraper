@@ -54,6 +54,7 @@ class TestCase(unittest.TestCase):
                 "n_pages": 1,
                 "n_docs_with_pdfs": 1,
                 "n_docs_with_text": 1,
+                "n_docs_with_excel": 1,
                 "dataset_size": 12345,
                 "doc_class_emoji": "📄",
                 "time_updated": "2024-10-01",

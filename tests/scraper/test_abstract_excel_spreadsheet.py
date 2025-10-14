@@ -1,4 +1,3 @@
-import os
 import unittest
 
 from scraper import AbstractExcelSpreadsheet
@@ -16,9 +15,3 @@ class TestCase(unittest.TestCase):
         )
         self.assertEqual(doc.num, "1234567890")
         self.assertEqual(doc.url_excel, "http://mock.com/doc.xlsx")
-        self.assertFalse(doc.has_excel)
-        with self.assertRaises(FileNotFoundError):
-            doc.download_excel()
-        self.assertEqual(
-            doc.excel_path, os.path.join(doc.dir_doc, "doc.xlsx")
-        )

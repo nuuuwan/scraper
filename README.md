@@ -12,7 +12,7 @@ A mock document class for testing.
 
 - [**1** documents](http://mock.com/data) (**12.3 kB**), from **2023-10-01** to **2023-10-01**, scraped from [http://mock.com](http://mock.com)
 
-- In **JSON**, **PDF**, **TXT** & **🤗 Hugging Face**
+- In **JSON**, **PDF**, **TXT**, **Excel** & **🤗 Hugging Face**
 
 - In **English**
 

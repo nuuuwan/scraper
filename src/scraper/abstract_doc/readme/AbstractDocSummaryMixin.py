@@ -11,6 +11,10 @@ class AbstractDocSummaryMixin:
     def has_pdf(self) -> bool:
         return False
 
+    @property
+    def has_excel(self) -> bool:
+        return False
+
     @staticmethod
     def get_url_source_list(doc_list) -> list:
         url_metadata_list = [doc.url_metadata for doc in doc_list]
@@ -40,6 +44,7 @@ class AbstractDocSummaryMixin:
         n_docs = len(doc_list)
         n_docs_with_pdfs = len([doc for doc in doc_list if doc.has_pdf])
         n_docs_with_text = len([doc for doc in doc_list if doc.has_text])
+        n_docs_with_excel = len([doc for doc in doc_list if doc.has_excel])
         date_strs = [doc.date_str for doc in doc_list]
         date_str_min = min(date_strs)
         date_str_max = max(date_strs)
@@ -63,6 +68,7 @@ class AbstractDocSummaryMixin:
             n_docs=n_docs,
             n_docs_with_pdfs=n_docs_with_pdfs,
             n_docs_with_text=n_docs_with_text,
+            n_docs_with_excel=n_docs_with_excel,
             date_str_min=date_str_min,
             date_str_max=date_str_max,
             dataset_size=dataset_size,
