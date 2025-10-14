@@ -1,4 +1,5 @@
 import os
+from dataclasses import dataclass
 from functools import cached_property
 
 from utils import WWW
@@ -6,6 +7,7 @@ from utils import WWW
 from scraper.abstract_doc.AbstractDoc import AbstractDoc
 
 
+@dataclass
 class AbstractExcelSpreadsheet(AbstractDoc):
     url_excel: str
 
