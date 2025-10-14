@@ -22,6 +22,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 
 WORKDIR /app
-COPY requirements.txt /app/requirements.txt
+COPY requirements_for_docker.txt /app/requirements.txt
 RUN pip install --upgrade pip && pip install -r requirements.txt
 COPY . /app

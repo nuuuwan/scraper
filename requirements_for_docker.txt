@@ -1,0 +1,11 @@
+bs4
+datasets
+huggingface_hub
+matplotlib
+numpy
+pandas
+pylatex
+pymupdf
+scraper-nuuuwan>=1.0.7
+selenium
+utils-nuuuwan
