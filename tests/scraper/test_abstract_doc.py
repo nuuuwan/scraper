@@ -56,6 +56,10 @@ class TestCase(unittest.TestCase):
             DummyDoc.get_doc_class_description(),
             "A collection of scraper documents.",
         )
+        self.assertEqual(
+            DummyDoc.get_doc_class_emoji(),
+            "📄",
+        )
 
     def test_num_short(self):
         doc = DummyDoc(
