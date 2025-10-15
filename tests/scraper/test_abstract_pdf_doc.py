@@ -28,11 +28,11 @@ class DummyDoc(AbstractPDFDoc):
 
     @classmethod
     def get_main_branch_dir_root(cls):
-        return os.path.join(DIR_TEST_PIPELINE, "data_root")
+        return os.path.join(DIR_TEST_PIPELINE, "main_branch")
 
     @classmethod
     def get_data_branch_dir_root(cls):
-        return os.path.join(DIR_TEST_PIPELINE, "extended_data_root")
+        return os.path.join(DIR_TEST_PIPELINE, "data_branch")
 
 
 class TestCase(unittest.TestCase):
@@ -67,7 +67,6 @@ class TestCase(unittest.TestCase):
             }
         ]
 
-        os.path.join(DIR_TEST_PIPELINE, "README.md")
         with patch.object(
             WWW, "download_binary", side_effect=mock_download_binary
         ), patch.object(
@@ -76,6 +75,8 @@ class TestCase(unittest.TestCase):
             GlobalReadMe,
             "get_summary_list",
             return_value=mock_summary_list,
+        ), patch.object(
+            GlobalReadMe, "PATH", os.path.join(DIR_TEST_PIPELINE, "README.md")
         ):
 
             DummyDoc.run_pipeline(max_dt=0.001)
