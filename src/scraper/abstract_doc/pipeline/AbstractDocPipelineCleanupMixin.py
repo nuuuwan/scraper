@@ -1,4 +1,3 @@
-
 from utils import Log
 
 log = Log("AbstractDocPipelineCleanupMixin")
