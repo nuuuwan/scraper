@@ -6,8 +6,9 @@ import pandas as pd
 from utils import WWW, Log
 
 from scraper.abstract_doc.AbstractDoc import AbstractDoc
-from scraper.abstract_doc.data_mixins.AbstractWorksheetsMixin import \
-    AbstractWorksheetsMixin
+from scraper.abstract_doc.data_mixins.AbstractWorksheetsMixin import (
+    AbstractWorksheetsMixin,
+)
 
 log = Log("AbstractExcelSpreadsheet")
 
@@ -25,7 +26,11 @@ class AbstractExcelSpreadsheet(AbstractDoc, AbstractWorksheetsMixin):
         return os.path.exists(self.excel_path)
 
     def download_excel(self):
-        WWW(self.url_excel).download_binary(self.excel_path)
+        try:
+            WWW(self.url_excel).download_binary(self.excel_path)
+        except Exception as e:
+            log.error(f"Failed to download Excel from {self.url_excel}: {e}")
+            return
 
     # ----------------------------------------------------------------
     # Worksheets (extracted from Excel)
@@ -41,9 +46,7 @@ class AbstractExcelSpreadsheet(AbstractDoc, AbstractWorksheetsMixin):
             return
         excel = self.open_excel(self.excel_path)
         for i_sheet, sheet_name in enumerate(excel.sheet_names, 1):
-            sheet_name_cleaned = sheet_name.replace("/", "_").replace(
-                " ", "_"
-            )
+            sheet_name_cleaned = sheet_name.replace("/", "_").replace(" ", "_")
             csv_path = os.path.join(
                 self.dir_worksheets,
                 f"{i_sheet:02d}-{sheet_name_cleaned}.csv",
