@@ -54,7 +54,11 @@ class AbstractPDFDoc(AbstractDoc, ABC):
     def get_blocks(self):
         return JSONFile(self.blocks_path).read()
 
-    def extract_text(self):  # overrides AbstractDocTextMixin
+    # ----------------------------------------------------------------
+    # Text (From Blocks)
+    # ----------------------------------------------------------------
+
+    def extract_text(self):
         blocks = self.get_blocks()
         text_list = [block["text"] for block in blocks if block["text"]]
         content = "\n\n".join(text_list)
