@@ -1,8 +1,6 @@
 import os
-import random
 import shutil
 import unittest
-from unittest.mock import patch
 
 from scraper import AbstractDoc
 
