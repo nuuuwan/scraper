@@ -57,6 +57,13 @@ class TestCase(unittest.TestCase):
         doc2 = DummyDoc.from_dict(doc_dict)
         self.assertEqual(doc, doc2)
 
+    def from_file(self):
+        doc = next(DummyDoc.gen_docs())
+        doc.write(force=True)
+        json_path = doc.json_path
+        doc2 = DummyDoc.from_file(json_path)
+        self.assertEqual(doc, doc2)
+
     def test_chart(self):
         year_to_lang_to_n = {}
         for year in range(1930, 2026):
