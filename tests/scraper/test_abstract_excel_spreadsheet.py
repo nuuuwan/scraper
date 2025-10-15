@@ -1,9 +1,13 @@
+import os
 import unittest
 
 from scraper import AbstractExcelSpreadsheet
 
 
 class TestExcelSpreadsheet(AbstractExcelSpreadsheet):
+    DIR_TEST = os.path.join(
+        "tests", "output", "test_abstract_excel_spreadsheet"
+    )
 
     @classmethod
     def gen_docs(cls):
@@ -15,6 +19,14 @@ class TestExcelSpreadsheet(AbstractExcelSpreadsheet):
             lang="en",
             url_excel="http://mock.com/doc.xlsx",
         )
+
+    @classmethod
+    def get_main_branch_dir_root(cls):
+        return os.path.join(cls.DIR_TEST, "data_root")
+
+    @classmethod
+    def get_data_branch_dir_root(cls):
+        return os.path.join(cls.DIR_TEST, "extended_data_root")
 
 
 class TestCase(unittest.TestCase):
