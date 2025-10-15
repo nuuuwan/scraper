@@ -24,7 +24,7 @@ class AbstractWorksheetsMixin:
     # Text (extracted from Worksheet CSVs)
     # ----------------------------------------------------------------
 
-    def extract_text(self):
+    def extract_text_for_worksheets_mixin(self):
         if os.path.exists(self.text_path):
             return
         if not os.path.exists(self.dir_worksheets):
@@ -51,4 +51,4 @@ class AbstractWorksheetsMixin:
             self.extract_worksheets()
 
         if not self.has_text:
-            self.extract_text()
+            self.extract_text_for_worksheets_mixin()
