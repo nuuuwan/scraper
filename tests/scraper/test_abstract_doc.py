@@ -81,3 +81,15 @@ class TestCase(unittest.TestCase):
         self.assertEqual(doc.get_ts("day"), "2023-10-01")
         with self.assertRaises(ValueError):
             doc.get_ts("invalid_time_unit")
+
+    def test_get_best_time_unit(self):
+        doc_list = []
+        for year in range(2000, 2024):
+            for _ in range(random.randint(1, 5)):
+                doc = DummyDoc()
+                doc.date_str = f"{year}-01-01"
+                doc_list.append(doc)
+
+        with patch.object(DummyDoc, "list_all", return_value=doc_list):
+            best_time_unit = DummyDoc.get_best_time_unit()
+            self.assertEqual(best_time_unit, "year")
