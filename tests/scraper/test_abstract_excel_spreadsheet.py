@@ -82,3 +82,13 @@ class TestCase(unittest.TestCase):
         self.assertTrue(doc.has_worksheets)
         self.assertTrue(doc.has_text)
         doc.scrape_extended_data_for_doc()
+
+    def test_open_excel(self):
+        for excel_file_name in [
+            "test.xlsx",
+            "test-old.xls",
+            "test-old-fisheries.xls",
+        ]:
+            excel_path = os.path.join("tests", "input", excel_file_name)
+            excel = TestExcelSpreadsheet.open_excel(excel_path)
+            self.assertIsNotNone(excel)

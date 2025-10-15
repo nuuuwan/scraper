@@ -38,14 +38,17 @@ class AbstractExcelSpreadsheet(AbstractDoc):
             os.listdir(self.dir_worksheets)
         )
 
+    @staticmethod
+    def open_excel(excel_path: str) -> pd.ExcelFile:
+        engine = "openpyxl" if excel_path.endswith(".xlsx") else "xlrd"
+        return pd.ExcelFile(excel_path, engine=engine)
+
     def extract_worksheets(self):
         if not os.path.exists(self.excel_path):
             return
-        excel = pd.ExcelFile(self.excel_path)
+        excel = self.open_excel(self.excel_path)
         for i_sheet, sheet_name in enumerate(excel.sheet_names, 1):
-            sheet_name_cleaned = sheet_name.replace("/", "_").replace(
-                " ", "_"
-            )
+            sheet_name_cleaned = sheet_name.replace("/", "_").replace(" ", "_")
             csv_path = os.path.join(
                 self.dir_worksheets,
                 f"{i_sheet:02d}-{sheet_name_cleaned}.csv",
