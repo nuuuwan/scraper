@@ -30,6 +30,11 @@ class DummyDoc(AbstractDoc):
         return os.path.join(DIR_TEST_ABSTRACT_DOC, "extended_data_root")
 
 
+class DummyDocMultiDoc(DummyDoc):
+    @classmethod
+    def get_doc_class_label(cls) -> str:
+        return "dummy_multi_doc"
+
 class TestCase(unittest.TestCase):
     def test_basic(self):
         self.assertEqual(AbstractDoc.gen_docs(), None)
@@ -125,3 +130,8 @@ class TestCase(unittest.TestCase):
         )
         with patch.object(DummyDoc, "list_all", return_value=doc_list):
             DummyDoc.write_all()
+    def test_multi_doc(self):
+        self.assertEqual(DummyDoc.get_data_branch_name(), "data")
+        self.assertEqual(
+            DummyDocMultiDoc.get_data_branch_name(), "data_dummy_multi_doc"
+        )
