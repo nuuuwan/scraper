@@ -1,4 +1,5 @@
 import os
+import shutil
 import unittest
 
 from scraper import AbstractExcelSpreadsheet
@@ -35,6 +36,7 @@ class TestCase(unittest.TestCase):
         self.assertEqual(doc.num, "1234567890")
         self.assertEqual(doc.url_excel, "http://mock.com/doc.xlsx")
 
+        shutil.rmtree(doc.get_data_branch_dir_root(), ignore_errors=True)
         self.assertEqual(
             doc.excel_path,
             os.path.join(
@@ -47,3 +49,4 @@ class TestCase(unittest.TestCase):
                 "doc.xlsx",
             ),
         )
+        self.assertFalse(doc.has_excel)
