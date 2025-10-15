@@ -18,7 +18,8 @@ class TestExcelSpreadsheet(AbstractExcelSpreadsheet):
             description="Test Document",
             url_metadata="http://mock.com/doc.html",
             lang="en",
-            url_excel="http://mock.com/doc.xlsx",
+            url_excel="https://github.com/nuuuwan"
+            + "/scraper/raw/refs/heads/main/tests/input/test.xlsx",
         )
 
     @classmethod
@@ -34,7 +35,6 @@ class TestCase(unittest.TestCase):
     def test_init(self):
         doc = TestExcelSpreadsheet.gen_docs().__next__()
         self.assertEqual(doc.num, "1234567890")
-        self.assertEqual(doc.url_excel, "http://mock.com/doc.xlsx")
 
         shutil.rmtree(doc.get_data_branch_dir_root(), ignore_errors=True)
         self.assertEqual(
@@ -50,3 +50,10 @@ class TestCase(unittest.TestCase):
             ),
         )
         self.assertFalse(doc.has_excel)
+
+    def test_write(self):
+        doc = TestExcelSpreadsheet.gen_docs().__next__()
+        shutil.rmtree(doc.get_data_branch_dir_root(), ignore_errors=True)
+        doc.write()
+        doc.download_excel()
+        self.assertTrue(doc.has_excel)
