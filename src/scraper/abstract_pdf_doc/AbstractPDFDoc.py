@@ -36,7 +36,11 @@ class AbstractPDFDoc(AbstractDoc, ABC, AbstractWorksheetsMixin):
         ) as temp_pdf_f:
             temp_pdf_path = temp_pdf_f.name
             WWW(self.url_pdf).download_binary(temp_pdf_path)
-            PDFFile(temp_pdf_path).compress(self.pdf_path)
+            try:
+                PDFFile(temp_pdf_path).compress(self.pdf_path)
+            except Exception as e:
+                log.warning(f"Failed to compress PDF from {self.url_pdf}: {e}")
+                os.rename(temp_pdf_path, self.pdf_path)
 
     # ----------------------------------------------------------------
     # Blocks (Extracted from PDF)
