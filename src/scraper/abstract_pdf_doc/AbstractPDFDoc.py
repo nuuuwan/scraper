@@ -47,10 +47,6 @@ class AbstractPDFDoc(AbstractDoc, ABC):
         JSONFile(self.blocks_path).write(blocks)
         log.info(f"Wrote {self.blocks_path} ({len(blocks):,} blocks)")
 
-        text_lines = [block["text"] for block in blocks if block["text"]]
-        File(self.doc_readme_path).write("\n\n".join(text_lines))
-        log.info(f"Wrote {self.doc_readme_path}")
-
     def get_blocks(self):
         if not os.path.exists(self.blocks_path):
             return []
@@ -62,8 +58,6 @@ class AbstractPDFDoc(AbstractDoc, ABC):
         content = "\n\n".join(text_list)
         File(self.text_path).write(content)
         log.info(f"Wrote {self.text_path}")
-        File(self.doc_readme_path).write(content)
-        log.info(f"Wrote {self.doc_readme_path}")
 
     # All
     # ----------------------------------------------------------------
