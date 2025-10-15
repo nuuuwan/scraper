@@ -57,3 +57,5 @@ class TestCase(unittest.TestCase):
         doc.write()
         doc.download_excel()
         self.assertTrue(doc.has_excel)
+        doc.extract_worksheets()
+        self.assertTrue(doc.has_worksheets)

@@ -32,14 +32,18 @@ class AbstractExcelSpreadsheet(AbstractDoc):
     def dir_worksheets(self) -> str:
         return os.path.join(self.dir_doc, "worksheets")
 
+    @property
+    def has_worksheets(self) -> bool:
+        return os.path.exists(self.dir_worksheets) and bool(
+            os.listdir(self.dir_worksheets)
+        )
+
     def extract_worksheets(self):
         if not os.path.exists(self.excel_path):
             return
         excel = pd.ExcelFile(self.excel_path)
         for i_sheet, sheet_name in enumerate(excel.sheet_names, 1):
-            sheet_name_cleaned = sheet_name.replace("/", "_").replace(
-                " ", "_"
-            )
+            sheet_name_cleaned = sheet_name.replace("/", "_").replace(" ", "_")
             csv_path = os.path.join(
                 self.dir_worksheets,
                 f"{i_sheet:02d}-{sheet_name_cleaned}.csv",
