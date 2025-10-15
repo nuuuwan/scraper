@@ -1,8 +1,9 @@
 import os
 import shutil
 import unittest
+from unittest.mock import patch
 
-from scraper import AbstractDoc
+from scraper import AbstractDoc, GlobalReadMe
 
 DIR_TEST_ABSTRACT_DOC = os.path.join(
     "tests", "output", "test_abstract_doc_pipeline"
@@ -37,6 +38,11 @@ class DummyDoc(AbstractDoc):
 class TestCase(unittest.TestCase):
     def test_run_pipeline(self):
         shutil.rmtree(DummyDoc.get_data_branch_dir_root(), ignore_errors=True)
-        DummyDoc.run_pipeline(max_dt=0.00001)
-        DummyDoc.run_pipeline(max_dt=600)
-        self.assertEqual(len(DummyDoc.list_all()), 101)
+        with patch.object(
+            GlobalReadMe,
+            "PATH",
+            os.path.join(DIR_TEST_ABSTRACT_DOC, "README.md"),
+        ):
+            DummyDoc.run_pipeline(max_dt=0.00001)
+            DummyDoc.run_pipeline(max_dt=600)
+            self.assertEqual(len(DummyDoc.list_all()), 101)
