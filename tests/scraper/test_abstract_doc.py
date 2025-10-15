@@ -32,10 +32,8 @@ class DummyDoc(AbstractDoc):
 
 
 class TestCase(unittest.TestCase):
-    def test_gen_docs(self):
+    def test_basic(self):
         self.assertEqual(AbstractDoc.gen_docs(), None)
-
-    def test_num_short(self):
         doc = AbstractDoc(
             num="1234567890" * 10,
             date_str="2023-10-01",
@@ -44,11 +42,7 @@ class TestCase(unittest.TestCase):
             lang="en",
         )
         self.assertEqual(doc.num_short, "12345678901234567890123-49cb3608")
-
-    def test_get_dir_root(self):
         self.assertEqual(AbstractDoc.get_main_branch_dir_root(), ".")
-
-    def test_get_data_branch_dir_root(self):
         self.assertEqual(
             AbstractDoc.get_data_branch_dir_root(), "../scraper_data"
         )
@@ -70,9 +64,7 @@ class TestCase(unittest.TestCase):
             "get_chart_image_path",
             return_value=mock_chart_image_path,
         ):
-            AbstractDoc.build_chart_by_time_and_lang(
-                year_to_lang_to_n, "year"
-            )
+            AbstractDoc.build_chart_by_time_and_lang(year_to_lang_to_n, "year")
             self.assertTrue(os.path.exists(mock_chart_image_path))
 
     def test_get_ts(self):
