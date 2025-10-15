@@ -93,3 +93,19 @@ class TestCase(unittest.TestCase):
         with patch.object(DummyDoc, "list_all", return_value=doc_list):
             best_time_unit = DummyDoc.get_best_time_unit()
             self.assertEqual(best_time_unit, "year")
+
+    def test_write_all(self):
+        doc_list = []
+        for year in range(0, 10_000):
+            for _ in range(random.randint(1, 5)):
+                doc = DummyDoc()
+                doc.date_str = f"{year:04d}-01-01"
+                doc_list.append(doc)
+        os.makedirs(
+            os.path.join(
+                DummyDoc.get_data_branch_dir_root(), "data", "scraper"
+            ),
+            exist_ok=True,
+        )
+        with patch.object(DummyDoc, "list_all", return_value=doc_list):
+            DummyDoc.write_all()
