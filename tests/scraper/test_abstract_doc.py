@@ -35,6 +35,7 @@ class DummyDocMultiDoc(DummyDoc):
     def get_doc_class_label(cls) -> str:
         return "dummy_multi_doc"
 
+
 class TestCase(unittest.TestCase):
     def test_basic(self):
         self.assertEqual(AbstractDoc.gen_docs(), None)
@@ -45,6 +46,12 @@ class TestCase(unittest.TestCase):
             AbstractDoc.get_data_branch_dir_root(), "../scraper_data"
         )
         self.assertEqual(doc.cmp, ("2023-10-01", "2023-10-01-1234567890"))
+        self.assertEqual(
+            doc.remote_data_url,
+            "https://github.com/nuuuwan"
+            + "/scraper/tree/data"
+            + "/data/scraper/2020s/2023/2023-10-01-1234567890",
+        )
 
     def test_write(self):
         doc = next(DummyDoc.gen_docs())
@@ -89,9 +96,7 @@ class TestCase(unittest.TestCase):
             "get_chart_image_path",
             return_value=mock_chart_image_path,
         ):
-            AbstractDoc.build_chart_by_time_and_lang(
-                year_to_lang_to_n, "year"
-            )
+            AbstractDoc.build_chart_by_time_and_lang(year_to_lang_to_n, "year")
             self.assertTrue(os.path.exists(mock_chart_image_path))
 
     def test_get_ts(self):
@@ -130,6 +135,7 @@ class TestCase(unittest.TestCase):
         )
         with patch.object(DummyDoc, "list_all", return_value=doc_list):
             DummyDoc.write_all()
+
     def test_multi_doc(self):
         self.assertEqual(DummyDoc.get_data_branch_name(), "data")
         self.assertEqual(
