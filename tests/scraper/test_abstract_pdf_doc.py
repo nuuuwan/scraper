@@ -21,7 +21,7 @@ class TestPDFDoc(AbstractPDFDoc):
                 url_metadata="http://mock.com/mock.html",
                 url_pdf="https://github.com/nuuuwan"
                 + "/scraper/raw/refs/heads/main"
-                + "/tests/input/test-with-tabel.pdf",
+                + "/tests/input/test-with-table.pdf",
                 lang="en",
             )
 
