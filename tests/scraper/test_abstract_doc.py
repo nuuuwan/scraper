@@ -70,7 +70,14 @@ class TestCase(unittest.TestCase):
             "get_chart_image_path",
             return_value=mock_chart_image_path,
         ):
-            AbstractDoc.build_chart_by_time_and_lang(
-                year_to_lang_to_n, "year"
-            )
+            AbstractDoc.build_chart_by_time_and_lang(year_to_lang_to_n, "year")
             self.assertTrue(os.path.exists(mock_chart_image_path))
+
+    def test_get_ts(self):
+        doc = DummyDoc()
+        self.assertEqual(doc.get_ts("decade"), "2020s")
+        self.assertEqual(doc.get_ts("year"), "2023")
+        self.assertEqual(doc.get_ts("month"), "2023-10")
+        self.assertEqual(doc.get_ts("day"), "2023-10-01")
+        with self.assertRaises(ValueError):
+            doc.get_ts("invalid_time_unit")
