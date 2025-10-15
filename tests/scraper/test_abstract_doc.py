@@ -42,10 +42,14 @@ class TestCase(unittest.TestCase):
 
     def test_write(self):
         doc = next(DummyDoc.gen_docs())
-        shutil.rmtree(doc.get_data_branch_dir_root(), ignore_errors=True)
+        shutil.rmtree(DummyDoc.get_data_branch_dir_root(), ignore_errors=True)
+        self.assertEqual(len(DummyDoc.get_all_json_paths()), 0)
         doc.write()
+        self.assertEqual(len(DummyDoc.get_all_json_paths()), 1)
         doc.write(force=True)
+        self.assertEqual(len(DummyDoc.get_all_json_paths()), 1)
         doc.write()
+        self.assertEqual(len(DummyDoc.get_all_json_paths()), 1)
 
     def test_chart(self):
         year_to_lang_to_n = {}
