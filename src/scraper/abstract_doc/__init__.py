@@ -2,17 +2,24 @@
 # flake8: noqa: F408
 
 from scraper.abstract_doc.AbstractDoc import AbstractDoc
-from scraper.abstract_doc.core import (AbstractDocBase,
-                                       AbstractDocBasePathsMixin,
-                                       AbstractDocGeneratorMixin,
-                                       AbstractDocMetadataMixin,
-                                       AbstractDocRemotePathMixin,
-                                       AbstractDocTextMixin)
-from scraper.abstract_doc.data_mixins import AbstractWorksheetsMixin
+from scraper.abstract_doc.core import (
+    AbstractDocBase,
+    AbstractDocBasePathsMixin,
+    AbstractDocGeneratorMixin,
+    AbstractDocMetadataMixin,
+    AbstractDocRemotePathMixin,
+    AbstractDocTextMixin,
+)
+from scraper.abstract_doc.data_mixins import AbstractTabularMixin
 from scraper.abstract_doc.hugging_face import AbstractDocHuggingFaceMixin
 from scraper.abstract_doc.pipeline import (
-    AbstractDocPipelineCleanupMixin, AbstractDocPipelineExtendedDataMixin,
-    AbstractDocPipelineMetadataMixin, AbstractDocPipelineMixin)
+    AbstractDocPipelineCleanupMixin,
+    AbstractDocPipelineExtendedDataMixin,
+    AbstractDocPipelineMetadataMixin,
+    AbstractDocPipelineMixin,
+)
 from scraper.abstract_doc.readme import (
-    AbstractDocChartDocsByTimeAndLangMixin, AbstractDocReadMeMixin,
-    AbstractDocSummaryMixin)
+    AbstractDocChartDocsByTimeAndLangMixin,
+    AbstractDocReadMeMixin,
+    AbstractDocSummaryMixin,
+)

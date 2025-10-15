@@ -2,10 +2,10 @@ import os
 
 from utils import File, Log
 
-log = Log("AbstractWorksheetsMixin")
+log = Log("AbstractTabularMixin")
 
 
-class AbstractWorksheetsMixin:
+class AbstractTabularMixin:
 
     @property
     def dir_tabular(self) -> str:

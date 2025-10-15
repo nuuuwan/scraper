@@ -6,15 +6,15 @@ import pandas as pd
 from utils import WWW, Log
 
 from scraper.abstract_doc.AbstractDoc import AbstractDoc
-from scraper.abstract_doc.data_mixins.AbstractWorksheetsMixin import (
-    AbstractWorksheetsMixin,
+from scraper.abstract_doc.data_mixins.AbstractTabularMixin import (
+    AbstractTabularMixin,
 )
 
 log = Log("AbstractExcelSpreadsheet")
 
 
 @dataclass
-class AbstractExcelSpreadsheet(AbstractWorksheetsMixin, AbstractDoc):
+class AbstractExcelSpreadsheet(AbstractTabularMixin, AbstractDoc):
     url_excel: str
 
     @cached_property
