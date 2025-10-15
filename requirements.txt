@@ -1,4 +1,5 @@
 bs4
+camelot-py
 datasets
 huggingface_hub
 matplotlib
