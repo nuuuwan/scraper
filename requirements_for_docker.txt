@@ -6,6 +6,6 @@ numpy
 pandas
 pylatex
 pymupdf
-scraper-nuuuwan>=1.0.8
+scraper-nuuuwan>=1.0.9
 selenium
 utils-nuuuwan
