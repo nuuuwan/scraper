@@ -34,3 +34,16 @@ class TestCase(unittest.TestCase):
         doc = TestExcelSpreadsheet.gen_docs().__next__()
         self.assertEqual(doc.num, "1234567890")
         self.assertEqual(doc.url_excel, "http://mock.com/doc.xlsx")
+
+        self.assertEqual(
+            doc.excel_path,
+            os.path.join(
+                doc.get_data_branch_dir_root(),
+                "data",
+                "scraper",
+                "2020s",
+                "2023",
+                "2023-10-01-1234567890",
+                "doc.xlsx",
+            ),
+        )
