@@ -77,7 +77,14 @@ class AbstractPDFDoc(AbstractDoc, ABC, AbstractWorksheetsMixin):
     def extract_worksheets(self):
         if not self.has_pdf:
             return
-        tables = camelot.read_pdf(self.pdf_path, flavor="stream", pages="all")
+        try:
+            tables = camelot.read_pdf(
+                self.pdf_path, flavor="stream", pages="all"
+            )
+        except Exception as e:
+            log.error(f"Failed to extract tables from {self.pdf_path}: {e}")
+            return
+
         n_tables = len(tables)
         log.debug(f"Found {n_tables} tables in {self.pdf_path}")
         os.makedirs(self.dir_worksheets, exist_ok=True)
