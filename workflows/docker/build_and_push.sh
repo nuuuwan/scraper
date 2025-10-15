@@ -30,9 +30,23 @@ docker buildx build \
 echo '--------------------------------------'
 
 echo 'Validating Python Version...'
-docker run --rm "$URL" python --version
+if ! docker run --rm "$URL" python --version; then
+  echo "❌ ERROR: Python version check failed for image: $URL" >&2
+  exit 1
+fi
+echo '✅ Python version check passed.'
+
+echo '--------------------------------------'
+
+docker system df
+docker system prune -f
+docker system prune -a --volumes -f
+docker builder prune -a -f 
+docker system df
 
 echo '--------------------------------------'
 
 say "docker build and push complete!"
-open https://github.com/$GITHUB_USERNAME?tab=packages
+open "https://github.com/users/$GITHUB_USERNAME/packages/container/pdf-scraper-image/versions"
+
+echo '--------------------------------------'
