@@ -61,17 +61,10 @@ class AbstractPDFDoc(AbstractDoc, ABC):
         if not self.has_pdf:
             self.download_pdf()
 
-        if self.has_pdf:
-            if not os.path.exists(self.blocks_path):
-                self.extract_blocks()
+        if self.has_pdf and not os.path.exists(self.blocks_path):
+            self.extract_blocks()
 
-            if os.path.exists(self.blocks_path) and not os.path.exists(
-                self.text_path
-            ):
-                self.extract_text()
-        else:
-            # HACK cleanup
-            if os.path.exists(self.blocks_path):
-                os.remove(self.blocks_path)
-            if os.path.exists(self.text_path):
-                os.remove(self.text_path)
+        if os.path.exists(self.blocks_path) and not os.path.exists(
+            self.text_path
+        ):
+            self.extract_text()
