@@ -15,6 +15,7 @@ log = Log("AbstractPDFDoc")
 class AbstractPDFDoc(AbstractDoc, ABC):
     url_pdf: str
 
+    # ----------------------------------------------------------------
     # PDF
     # ----------------------------------------------------------------
     @cached_property
@@ -33,11 +34,16 @@ class AbstractPDFDoc(AbstractDoc, ABC):
             WWW(self.url_pdf).download_binary(temp_pdf_path)
             PDFFile(temp_pdf_path).compress(self.pdf_path)
 
+    # ----------------------------------------------------------------
     # Blocks (Extracted from PDF)
     # ----------------------------------------------------------------
     @cached_property
     def blocks_path(self) -> str:
         return os.path.join(self.dir_doc, "blocks.json")
+
+    @property
+    def has_blocks(self) -> bool:
+        return os.path.exists(self.blocks_path)
 
     def extract_blocks(self):
         pdf_file = PDFFile(self.pdf_path)
@@ -55,16 +61,15 @@ class AbstractPDFDoc(AbstractDoc, ABC):
         File(self.text_path).write(content)
         log.info(f"Wrote {self.text_path}")
 
+    # ----------------------------------------------------------------
     # All
     # ----------------------------------------------------------------
     def scrape_extended_data_for_doc(self):
         if not self.has_pdf:
             self.download_pdf()
 
-        if self.has_pdf and not os.path.exists(self.blocks_path):
+        if self.has_pdf and not self.has_blocks:
             self.extract_blocks()
 
-        if os.path.exists(self.blocks_path) and not os.path.exists(
-            self.text_path
-        ):
+        if self.has_blocks and not self.has_text:
             self.extract_text()
