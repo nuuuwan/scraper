@@ -48,9 +48,9 @@ class TestCase(unittest.TestCase):
         doc = next(TestPDFDoc.gen_docs())
         self.assertFalse(doc.has_pdf)
         self.assertFalse(doc.has_blocks)
-        self.assertFalse(doc.has_worksheets)
+        self.assertFalse(doc.has_tabular)
         doc.extract_blocks()
-        doc.extract_worksheets()
+        doc.extract_tabular()
         doc.extract_text()
         doc.get_text_from_block()
 
@@ -64,4 +64,4 @@ class TestCase(unittest.TestCase):
         doc = TestPDFDoc.list_all()[0]
         self.assertTrue(doc.has_pdf)
         self.assertTrue(doc.has_blocks)
-        self.assertTrue(doc.has_worksheets)
+        self.assertTrue(doc.has_tabular)

@@ -29,7 +29,7 @@ class TestCase(unittest.TestCase):
                     n_docs_with_pdfs=5,
                     n_docs_with_text=3,
                     n_docs_with_excel=1,
-                    n_docs_with_worksheets=0,
+                    n_docs_with_tabular=0,
                     date_str_min="2023-01-01",
                     date_str_max="2023-12-31",
                     dataset_size=123_456_789,

@@ -41,21 +41,21 @@ class AbstractExcelSpreadsheet(AbstractWorksheetsMixin, AbstractDoc):
         engine = "openpyxl" if excel_path.endswith(".xlsx") else "xlrd"
         return pd.ExcelFile(excel_path, engine=engine)
 
-    def extract_worksheets(self):
+    def extract_tabular(self):
         if not os.path.exists(self.excel_path):
             return
         excel = self.open_excel(self.excel_path)
         for i_sheet, sheet_name in enumerate(excel.sheet_names, 1):
             sheet_name_cleaned = sheet_name.replace("/", "_").replace(" ", "_")
             csv_path = os.path.join(
-                self.dir_worksheets,
+                self.dir_tabular,
                 f"{i_sheet:02d}-{sheet_name_cleaned}.csv",
             )
             if os.path.exists(csv_path):
                 continue
 
             df = excel.parse(sheet_name)
-            os.makedirs(self.dir_worksheets, exist_ok=True)
+            os.makedirs(self.dir_tabular, exist_ok=True)
             df.to_csv(csv_path, index=False)
             log.info(f"Wrote {csv_path}")
 
@@ -66,4 +66,4 @@ class AbstractExcelSpreadsheet(AbstractWorksheetsMixin, AbstractDoc):
         if not self.has_excel:
             self.download_excel()
 
-        self.scrape_extended_data_for_worksheets_mixin()
+        self.scrape_extended_data_for_tabular_mixin()

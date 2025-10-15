@@ -73,7 +73,7 @@ class AbstractPDFDoc(AbstractWorksheetsMixin, AbstractDoc):
     # Worksheets (extracted from PDF)
     # ----------------------------------------------------------------
 
-    def extract_worksheets(self):
+    def extract_tabular(self):
         if not self.has_pdf:
             return
         try:
@@ -86,8 +86,8 @@ class AbstractPDFDoc(AbstractWorksheetsMixin, AbstractDoc):
 
         n_tables = len(tables)
         log.debug(f"Found {n_tables} tables in {self.pdf_path}")
-        os.makedirs(self.dir_worksheets, exist_ok=True)
-        tables.export(os.path.join(self.dir_worksheets, "table.csv"), f="csv")
+        os.makedirs(self.dir_tabular, exist_ok=True)
+        tables.export(os.path.join(self.dir_tabular, "table.csv"), f="csv")
 
     # ----------------------------------------------------------------
     # Text (From Blocks)
@@ -110,7 +110,7 @@ class AbstractPDFDoc(AbstractWorksheetsMixin, AbstractDoc):
                 "",
                 "==== WORKSHEETS ==== ",
                 "",
-                self.get_text_from_worksheets(),
+                self.get_text_from_tabular(),
                 "",
             ]
         )
@@ -131,8 +131,8 @@ class AbstractPDFDoc(AbstractWorksheetsMixin, AbstractDoc):
         if self.has_pdf and not self.has_blocks:
             self.extract_blocks()
 
-        if self.has_pdf and not self.has_worksheets:
-            self.extract_worksheets()
+        if self.has_pdf and not self.has_tabular:
+            self.extract_tabular()
 
         if self.has_blocks and not self.has_text:
             self.extract_text()

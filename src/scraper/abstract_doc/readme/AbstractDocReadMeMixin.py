@@ -26,7 +26,7 @@ class AbstractDocReadMeMixin:
         n_docs_with_pdfs = summary["n_docs_with_pdfs"]
         n_docs_with_text = summary["n_docs_with_text"]
         n_docs_with_excel = summary.get("n_docs_with_excel", 0)
-        n_docs_with_worksheets = summary.get("n_docs_with_worksheets", 0)
+        n_docs_with_tabular = summary.get("n_docs_with_tabular", 0)
 
         blob_list = []
         for doc_type, n in [
@@ -34,7 +34,7 @@ class AbstractDocReadMeMixin:
             ("PDF", n_docs_with_pdfs),
             ("TXT", n_docs_with_text),
             ("Excel", n_docs_with_excel),
-            ("Tables", n_docs_with_worksheets),
+            ("Tables", n_docs_with_tabular),
             ("🤗 Hugging Face", n_docs_with_text),
             ("Something New", 0),
         ]:

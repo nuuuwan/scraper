@@ -16,7 +16,7 @@ class AbstractDocSummaryMixin:
         return False
 
     @property
-    def has_worksheets(self) -> bool:
+    def has_tabular(self) -> bool:
         return False
 
     @staticmethod
@@ -49,9 +49,7 @@ class AbstractDocSummaryMixin:
         n_docs_with_pdfs = len([doc for doc in doc_list if doc.has_pdf])
         n_docs_with_text = len([doc for doc in doc_list if doc.has_text])
         n_docs_with_excel = len([doc for doc in doc_list if doc.has_excel])
-        n_docs_with_worksheets = len(
-            [doc for doc in doc_list if doc.has_worksheets]
-        )
+        n_docs_with_tabular = len([doc for doc in doc_list if doc.has_tabular])
         date_strs = [doc.date_str for doc in doc_list]
         date_str_min = min(date_strs)
         date_str_max = max(date_strs)
@@ -76,7 +74,7 @@ class AbstractDocSummaryMixin:
             n_docs_with_pdfs=n_docs_with_pdfs,
             n_docs_with_text=n_docs_with_text,
             n_docs_with_excel=n_docs_with_excel,
-            n_docs_with_worksheets=n_docs_with_worksheets,
+            n_docs_with_tabular=n_docs_with_tabular,
             date_str_min=date_str_min,
             date_str_max=date_str_max,
             dataset_size=dataset_size,
