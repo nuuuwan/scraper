@@ -1,12 +1,8 @@
 import os
 import shutil
 import unittest
-from unittest.mock import patch
 
-from datasets import Dataset
-from utils import WWW
-
-from scraper import AbstractPDFDoc, GlobalReadMe
+from scraper import AbstractPDFDoc
 
 DIR_TEST_PIPELINE = os.path.join("tests", "output", "test_abstract_pdf_doc")
 

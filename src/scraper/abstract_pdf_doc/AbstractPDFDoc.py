@@ -8,9 +8,8 @@ import camelot
 from utils import WWW, File, JSONFile, Log, PDFFile
 
 from scraper.abstract_doc import AbstractDoc
-from scraper.abstract_doc.data_mixins.AbstractWorksheetsMixin import (
-    AbstractWorksheetsMixin,
-)
+from scraper.abstract_doc.data_mixins.AbstractWorksheetsMixin import \
+    AbstractWorksheetsMixin
 
 log = Log("AbstractPDFDoc")
 
