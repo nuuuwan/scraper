@@ -45,12 +45,14 @@ class TestCase(unittest.TestCase):
         doc = next(DummyDoc.gen_docs())
         shutil.rmtree(DummyDoc.get_data_branch_dir_root(), ignore_errors=True)
         self.assertEqual(len(DummyDoc.get_all_json_paths()), 0)
+        self.assertEqual(len(DummyDoc.list_all()), 0)
         doc.write()
-        self.assertEqual(len(DummyDoc.get_all_json_paths()), 1)
+        self.assertEqual(len(DummyDoc.list_all()), 1)
         doc.write(force=True)
-        self.assertEqual(len(DummyDoc.get_all_json_paths()), 1)
+        self.assertEqual(len(DummyDoc.list_all()), 1)
         doc.write()
-        self.assertEqual(len(DummyDoc.get_all_json_paths()), 1)
+        self.assertEqual(len(DummyDoc.list_all()), 1)
+        self.assertEqual(len(DummyDoc.list_all_ascending()), 1)
 
     def test_from_dict(self):
         doc = next(DummyDoc.gen_docs())
