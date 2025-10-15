@@ -27,6 +27,7 @@ class AbstractDocPipelineExtendedDataMixin:
                 return doc
             except Exception as e:
                 log.error(f"Error scraping extended data for {doc}: {e}")
+                raise e
 
         processed_doc_list = Parallel.map(
             process,
@@ -51,5 +52,4 @@ class AbstractDocPipelineExtendedDataMixin:
         log.info("🛑 All extended data scraped.")
 
     def scrape_extended_data_for_doc(self):
-        if not os.path.exists(self.text_path):
-            self.extract_text()
+        pass
