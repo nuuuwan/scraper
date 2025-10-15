@@ -49,6 +49,10 @@ class TestCase(unittest.TestCase):
         self.assertFalse(doc.has_pdf)
         self.assertFalse(doc.has_blocks)
         self.assertFalse(doc.has_worksheets)
+        doc.extract_blocks()
+        doc.extract_worksheets()
+        doc.extract_text()
+        doc.get_text_from_block()
 
         with patch.object(
             GlobalReadMe,

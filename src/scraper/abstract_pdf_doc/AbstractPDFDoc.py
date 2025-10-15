@@ -50,6 +50,8 @@ class AbstractPDFDoc(AbstractDoc, ABC, AbstractWorksheetsMixin):
         return os.path.exists(self.blocks_path)
 
     def extract_blocks(self):
+        if not self.has_pdf:
+            return
         pdf_file = PDFFile(self.pdf_path)
         blocks = pdf_file.get_blocks()
         JSONFile(self.blocks_path).write(blocks)
