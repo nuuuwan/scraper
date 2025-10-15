@@ -133,32 +133,42 @@ class TestCase(unittest.TestCase):
         with self.assertRaises(ValueError):
             doc.get_ts("invalid_time_unit")
 
-    def test_get_best_time_unit(self):
-        doc_list = []
-        for year in range(2000, 2024):
-            for _ in range(random.randint(1, 5)):
-                doc = next(DummyDoc.gen_docs())
-                doc.date_str = f"{year}-01-01"
-                doc_list.append(doc)
-
-        with patch.object(DummyDoc, "list_all", return_value=doc_list):
-            best_time_unit = DummyDoc.get_best_time_unit()
-            self.assertEqual(best_time_unit, "year")
-
-    def test_write_all(self):
-        doc_list = []
-        for year in range(0, 10_000):
-            for _ in range(random.randint(1, 5)):
-                doc = next(DummyDoc.gen_docs())
-                doc.date_str = f"{year:04d}-01-01"
-                doc_list.append(doc)
+    @staticmethod
+    def fake_doc_list():
         os.makedirs(
             os.path.join(
                 DummyDoc.get_data_branch_dir_root(), "data", "scraper"
             ),
             exist_ok=True,
         )
-        with patch.object(DummyDoc, "list_all", return_value=doc_list):
+
+        doc_list = []
+        for year in range(2000, 2024):
+            for _ in range(random.randint(1, 5)):
+                doc = next(DummyDoc.gen_docs())
+                doc.date_str = f"{year}-01-01"
+                doc_list.append(doc)
+        return doc_list
+
+    def test_get_best_time_unit(self):
+
+        with patch.object(
+            DummyDoc, "list_all", return_value=self.fake_doc_list()
+        ):
+            best_time_unit = DummyDoc.get_best_time_unit()
+            self.assertEqual(best_time_unit, "year")
+
+    def test_get_ts_to_lang_to_n(self):
+        with patch.object(
+            DummyDoc, "list_all", return_value=self.fake_doc_list()
+        ):
+            ts_to_lang_to_n = DummyDoc.get_ts_to_lang_to_n("year")
+            self.assertTrue(isinstance(ts_to_lang_to_n, dict))
+
+    def test_write_all(self):
+        with patch.object(
+            DummyDoc, "list_all", return_value=self.fake_doc_list()
+        ):
             DummyDoc.write_all()
 
     def test_multi_doc(self):
