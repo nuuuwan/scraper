@@ -24,11 +24,11 @@ class AbstractWorksheetsMixin:
     # Text (extracted from Worksheet CSVs)
     # ----------------------------------------------------------------
 
-    def extract_text_for_worksheets_mixin(self):
+    def get_text_from_worksheets(self):
         if os.path.exists(self.text_path):
-            return
+            return None
         if not os.path.exists(self.dir_worksheets):
-            return
+            return None
 
         content_groups = []
         for file_name in sorted(os.listdir(self.dir_worksheets)):
@@ -38,10 +38,15 @@ class AbstractWorksheetsMixin:
             content = File(csv_path).read()
             content_groups.append(f"--- {file_name} ---\n")
             content_groups.append(content)
+        return "\n".join(content_groups)
 
-        text = "\n".join(content_groups)
-        File(self.text_path).write(text)
-        log.info(f"Wrote {self.text_path}")
+    def extract_text_for_worksheets_mixin(self) -> None:
+        content = self.get_text_from_worksheets()
+        if not content:
+            return
+        text_file = File(self.text_path)
+        text_file.write(content)
+        log.info(f"Wrote {text_file}")
 
     def extract_text(self) -> None:
         return self.extract_text_for_worksheets_mixin()

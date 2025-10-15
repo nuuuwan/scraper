@@ -95,8 +95,8 @@ class TestCase(unittest.TestCase):
             self.assertTrue(first_doc.has_pdf)
 
             text = first_doc.get_text()
-            self.assertEqual(len(text), 96)
-            self.assertEqual(text[:9], "Heading 1")
+            self.assertEqual(len(text), 141)
+            self.assertEqual(text[:16], "==== BLOCKS ====")
 
             blocks = first_doc.get_blocks()
             self.assertEqual(len(blocks), 6)

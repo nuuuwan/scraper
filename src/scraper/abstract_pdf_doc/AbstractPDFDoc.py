@@ -4,15 +4,19 @@ from abc import ABC
 from dataclasses import dataclass
 from functools import cached_property
 
+import camelot
 from utils import WWW, File, JSONFile, Log, PDFFile
 
 from scraper.abstract_doc import AbstractDoc
+from scraper.abstract_doc.data_mixins.AbstractWorksheetsMixin import (
+    AbstractWorksheetsMixin,
+)
 
 log = Log("AbstractPDFDoc")
 
 
 @dataclass
-class AbstractPDFDoc(AbstractDoc, ABC):
+class AbstractPDFDoc(AbstractDoc, ABC, AbstractWorksheetsMixin):
     url_pdf: str
 
     # ----------------------------------------------------------------
@@ -55,14 +59,50 @@ class AbstractPDFDoc(AbstractDoc, ABC):
         return JSONFile(self.blocks_path).read()
 
     # ----------------------------------------------------------------
+    # Worksheets (extracted from PDF)
+    # ----------------------------------------------------------------
+
+    def extract_worksheets(self):
+        if not self.has_pdf:
+            return
+        tables = camelot.read_pdf(
+            self.pdf_path, pages="1-end", flavor="lattice"
+        )
+        n_tables = len(tables)
+        log.debug(f"Found {n_tables} tables in {self.pdf_path}")
+        os.makedirs(self.dir_worksheets, exist_ok=True)
+        tables.export(os.path.join(self.dir_worksheets, "table.csv"), f="csv")
+
+    # ----------------------------------------------------------------
     # Text (From Blocks)
     # ----------------------------------------------------------------
 
-    def extract_text(self):
+    def get_text_from_block(self):
+        if not self.has_pdf:
+            return None
         blocks = self.get_blocks()
         text_list = [block["text"] for block in blocks if block["text"]]
         content = "\n\n".join(text_list)
-        File(self.text_path).write(content)
+        return content
+
+    def get_text_all(self):
+        return "\n".join(
+            [
+                "==== BLOCKS ==== ",
+                "",
+                self.get_text_from_block(),
+                "",
+                "==== WORKSHEETS ==== ",
+                "",
+                self.get_text_from_worksheets(),
+                "",
+            ]
+        )
+
+    def extract_text(self):
+        if not self.has_pdf:
+            return None
+        File(self.text_path).write(self.get_text_all())
         log.info(f"Wrote {self.text_path}")
 
     # ----------------------------------------------------------------
@@ -74,6 +114,9 @@ class AbstractPDFDoc(AbstractDoc, ABC):
 
         if self.has_pdf and not self.has_blocks:
             self.extract_blocks()
+
+        if self.has_pdf and not self.has_worksheets:
+            self.extract_worksheets()
 
         if self.has_blocks and not self.has_text:
             self.extract_text()
