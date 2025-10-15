@@ -1,8 +1,9 @@
 import os
 import shutil
 import unittest
+from unittest.mock import patch
 
-from scraper import AbstractPDFDoc
+from scraper import AbstractPDFDoc, GlobalReadMe
 
 DIR_TEST_PIPELINE = os.path.join("tests", "output", "test_abstract_pdf_doc")
 
@@ -10,7 +11,7 @@ DIR_TEST_PIPELINE = os.path.join("tests", "output", "test_abstract_pdf_doc")
 class TestPDFDoc(AbstractPDFDoc):
     @classmethod
     def gen_docs(cls):
-        for i in range(0, 5):
+        for i in range(0, 1):
             year = 2000 + i
             month = (i % 12) + 1
             day = (i % 28) + 1
@@ -38,10 +39,25 @@ class TestCase(unittest.TestCase):
 
     def test_init(self):
         shutil.rmtree(DIR_TEST_PIPELINE, ignore_errors=True)
-        doc = TestPDFDoc.gen_docs().__next__()
+        doc = next(TestPDFDoc.gen_docs())
         self.assertEqual(doc.num, "0000")
         self.assertFalse(doc.has_pdf)
 
     def test_pipeline(self):
         shutil.rmtree(DIR_TEST_PIPELINE, ignore_errors=True)
-        TestPDFDoc.run_pipeline(max_dt=1)
+        doc = next(TestPDFDoc.gen_docs())
+        self.assertFalse(doc.has_pdf)
+        self.assertFalse(doc.has_blocks)
+        self.assertFalse(doc.has_worksheets)
+
+        with patch.object(
+            GlobalReadMe,
+            "PATH",
+            os.path.join(DIR_TEST_PIPELINE, "README.md"),
+        ):
+            TestPDFDoc.run_pipeline(max_dt=1)
+
+        doc = TestPDFDoc.list_all()[0]
+        self.assertTrue(doc.has_pdf)
+        self.assertTrue(doc.has_blocks)
+        self.assertTrue(doc.has_worksheets)

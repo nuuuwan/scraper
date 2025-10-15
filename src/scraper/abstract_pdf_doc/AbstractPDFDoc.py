@@ -8,8 +8,9 @@ import camelot
 from utils import WWW, File, JSONFile, Log, PDFFile
 
 from scraper.abstract_doc import AbstractDoc
-from scraper.abstract_doc.data_mixins.AbstractWorksheetsMixin import \
-    AbstractWorksheetsMixin
+from scraper.abstract_doc.data_mixins.AbstractWorksheetsMixin import (
+    AbstractWorksheetsMixin,
+)
 
 log = Log("AbstractPDFDoc")
 
@@ -64,9 +65,7 @@ class AbstractPDFDoc(AbstractDoc, ABC, AbstractWorksheetsMixin):
     def extract_worksheets(self):
         if not self.has_pdf:
             return
-        tables = camelot.read_pdf(
-            self.pdf_path, pages="1-end", flavor="lattice"
-        )
+        tables = camelot.read_pdf(self.pdf_path, flavor="stream", pages="all")
         n_tables = len(tables)
         log.debug(f"Found {n_tables} tables in {self.pdf_path}")
         os.makedirs(self.dir_worksheets, exist_ok=True)
