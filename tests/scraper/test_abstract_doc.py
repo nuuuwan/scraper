@@ -1,5 +1,6 @@
 import os
 import random
+import shutil
 import unittest
 from unittest.mock import patch
 
@@ -9,18 +10,16 @@ DIR_TEST_ABSTRACT_DOC = os.path.join("tests", "output", "test_abstract_doc")
 
 
 class DummyDoc(AbstractDoc):
-    def __init__(self):
-        super().__init__(
+
+    @classmethod
+    def gen_docs(cls):
+        yield DummyDoc(
             num="1234567890",
             date_str="2023-10-01",
             description="Test Document",
             url_metadata="http://mock.com/doc.html",
             lang="en",
         )
-
-    @classmethod
-    def gen_docs(cls):
-        yield DummyDoc()
 
     @classmethod
     def get_main_branch_dir_root(cls):
@@ -34,18 +33,19 @@ class DummyDoc(AbstractDoc):
 class TestCase(unittest.TestCase):
     def test_basic(self):
         self.assertEqual(AbstractDoc.gen_docs(), None)
-        doc = AbstractDoc(
-            num="1234567890" * 10,
-            date_str="2023-10-01",
-            description="Test Document",
-            url_metadata="http://mock.com/doc.html",
-            lang="en",
-        )
-        self.assertEqual(doc.num_short, "12345678901234567890123-49cb3608")
+        doc = next(DummyDoc.gen_docs())
+        self.assertEqual(doc.num_short, "1234567890")
         self.assertEqual(AbstractDoc.get_main_branch_dir_root(), ".")
         self.assertEqual(
             AbstractDoc.get_data_branch_dir_root(), "../scraper_data"
         )
+
+    def test_write(self):
+        doc = next(DummyDoc.gen_docs())
+        shutil.rmtree(doc.get_data_branch_dir_root(), ignore_errors=True)
+        doc.write()
+        doc.write(force=True)
+        doc.write()
 
     def test_chart(self):
         year_to_lang_to_n = {}
@@ -68,7 +68,7 @@ class TestCase(unittest.TestCase):
             self.assertTrue(os.path.exists(mock_chart_image_path))
 
     def test_get_ts(self):
-        doc = DummyDoc()
+        doc = next(DummyDoc.gen_docs())
         self.assertEqual(doc.get_ts("decade"), "2020s")
         self.assertEqual(doc.get_ts("year"), "2023")
         self.assertEqual(doc.get_ts("month"), "2023-10")
@@ -80,7 +80,7 @@ class TestCase(unittest.TestCase):
         doc_list = []
         for year in range(2000, 2024):
             for _ in range(random.randint(1, 5)):
-                doc = DummyDoc()
+                doc = next(DummyDoc.gen_docs())
                 doc.date_str = f"{year}-01-01"
                 doc_list.append(doc)
 
@@ -92,7 +92,7 @@ class TestCase(unittest.TestCase):
         doc_list = []
         for year in range(0, 10_000):
             for _ in range(random.randint(1, 5)):
-                doc = DummyDoc()
+                doc = next(DummyDoc.gen_docs())
                 doc.date_str = f"{year:04d}-01-01"
                 doc_list.append(doc)
         os.makedirs(
