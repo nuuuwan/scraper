@@ -53,6 +53,23 @@ class TestCase(unittest.TestCase):
             + "/data/scraper/2020s/2023/2023-10-01-1234567890",
         )
 
+    def test_num_short(self):
+        doc = DummyDoc(
+            num="1234567890" * 100,
+            date_str="2023-10-01",
+            description="Test Document",
+            url_metadata="http://mock.com/doc.html",
+            lang="en",
+        )
+        self.assertEqual(
+            doc.num_short,
+            "12345678901234567890123-f1257a86",
+        )
+        self.assertEqual(
+            doc.doc_id,
+            "2023-10-01-12345678901234567890123-f1257a86",
+        )
+
     def test_write(self):
         doc = next(DummyDoc.gen_docs())
         shutil.rmtree(DummyDoc.get_data_branch_dir_root(), ignore_errors=True)
