@@ -17,7 +17,7 @@ docker buildx inspect multiarch-builder >/dev/null 2>&1 || \
 docker buildx use multiarch-builder
 
 docker buildx build \
-  -f docker/Dockerfile \
+  -f workflows/docker/Dockerfile \
   --platform linux/amd64,linux/arm64 \
   -t "$URL" \
   --push \
