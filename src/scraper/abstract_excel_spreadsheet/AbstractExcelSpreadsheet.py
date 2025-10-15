@@ -43,7 +43,9 @@ class AbstractExcelSpreadsheet(AbstractDoc):
             return
         excel = pd.ExcelFile(self.excel_path)
         for i_sheet, sheet_name in enumerate(excel.sheet_names, 1):
-            sheet_name_cleaned = sheet_name.replace("/", "_").replace(" ", "_")
+            sheet_name_cleaned = sheet_name.replace("/", "_").replace(
+                " ", "_"
+            )
             csv_path = os.path.join(
                 self.dir_worksheets,
                 f"{i_sheet:02d}-{sheet_name_cleaned}.csv",
