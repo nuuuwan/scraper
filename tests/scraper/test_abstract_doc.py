@@ -52,6 +52,10 @@ class TestCase(unittest.TestCase):
             + "/scraper/tree/data"
             + "/data/scraper/2020s/2023/2023-10-01-1234567890",
         )
+        self.assertEqual(
+            DummyDoc.get_doc_class_description(),
+            "A collection of scraper documents.",
+        )
 
     def test_num_short(self):
         doc = DummyDoc(
