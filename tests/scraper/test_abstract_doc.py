@@ -39,6 +39,7 @@ class TestCase(unittest.TestCase):
         self.assertEqual(
             AbstractDoc.get_data_branch_dir_root(), "../scraper_data"
         )
+        self.assertEqual(doc.cmp, ("2023-10-01", "2023-10-01-1234567890"))
 
     def test_write(self):
         doc = next(DummyDoc.gen_docs())
