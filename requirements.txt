@@ -3,9 +3,11 @@ datasets
 huggingface_hub
 matplotlib
 numpy
+openpyxl
 pandas
 pylatex
 pymupdf
 scraper-nuuuwan
 selenium
 utils-nuuuwan
+xlrd
