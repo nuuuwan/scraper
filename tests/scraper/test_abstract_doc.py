@@ -60,7 +60,7 @@ class TestCase(unittest.TestCase):
         doc2 = DummyDoc.from_dict(doc_dict)
         self.assertEqual(doc, doc2)
 
-    def from_file(self):
+    def test_from_file(self):
         doc = next(DummyDoc.gen_docs())
         doc.write(force=True)
         json_path = doc.json_path
