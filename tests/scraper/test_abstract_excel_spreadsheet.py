@@ -81,3 +81,4 @@ class TestCase(unittest.TestCase):
         self.assertTrue(doc.has_excel)
         self.assertTrue(doc.has_worksheets)
         self.assertTrue(doc.has_text)
+        doc.scrape_extended_data_for_doc()
