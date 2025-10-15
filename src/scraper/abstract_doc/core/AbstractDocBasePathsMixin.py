@@ -62,3 +62,7 @@ class AbstractDocBasePathsMixin:
     def json_path(self) -> str:
         # e.g. ../lk_acts_data/data/lk_acts/1990s/1995/ACT_1995_01/doc.json
         return os.path.join(self.dir_doc, "doc.json")
+
+    @property
+    def has_metadata(self) -> bool:
+        return os.path.exists(self.json_path)
