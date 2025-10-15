@@ -2,6 +2,8 @@ import os
 import shutil
 import unittest
 
+from utils import File
+
 from scraper import AbstractExcelSpreadsheet
 
 
@@ -67,4 +69,15 @@ class TestCase(unittest.TestCase):
         doc.extract_text()
         doc.extract_text()
         self.assertTrue(doc.has_text)
+
+    def test_scrape_extended_data_for_doc(self):
+        doc = TestExcelSpreadsheet.gen_docs().__next__()
+        shutil.rmtree(doc.get_data_branch_dir_root(), ignore_errors=True)
+        doc.write()
+        self.assertFalse(doc.has_excel)
+        self.assertFalse(doc.has_worksheets)
+        self.assertFalse(doc.has_text)
+        doc.scrape_extended_data_for_doc()
+        self.assertTrue(doc.has_excel)
         self.assertTrue(doc.has_worksheets)
+        self.assertTrue(doc.has_text)
