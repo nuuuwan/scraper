@@ -1,6 +1,5 @@
 import os
 import tempfile
-from abc import ABC
 from dataclasses import dataclass
 from functools import cached_property
 
@@ -16,7 +15,7 @@ log = Log("AbstractPDFDoc")
 
 
 @dataclass
-class AbstractPDFDoc(AbstractDoc, ABC, AbstractWorksheetsMixin):
+class AbstractPDFDoc(AbstractWorksheetsMixin, AbstractDoc):
     url_pdf: str
 
     # ----------------------------------------------------------------

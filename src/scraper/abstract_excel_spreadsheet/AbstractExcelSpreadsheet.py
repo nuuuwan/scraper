@@ -14,7 +14,7 @@ log = Log("AbstractExcelSpreadsheet")
 
 
 @dataclass
-class AbstractExcelSpreadsheet(AbstractDoc, AbstractWorksheetsMixin):
+class AbstractExcelSpreadsheet(AbstractWorksheetsMixin, AbstractDoc):
     url_excel: str
 
     @cached_property
