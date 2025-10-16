@@ -40,6 +40,20 @@ class AbstractExcelSpreadsheet(AbstractTabularMixin, AbstractDoc):
         engine = "openpyxl" if excel_path.endswith(".xlsx") else "xlrd"
         return pd.ExcelFile(excel_path, engine=engine)
 
+    def __process_worksheet__(self, excel, i_sheet, sheet_name: str) -> str:
+        sheet_name_cleaned = sheet_name.replace("/", "_").replace(" ", "_")
+        csv_path = os.path.join(
+            self.dir_tabular,
+            f"{i_sheet:02d}-{sheet_name_cleaned}.csv",
+        )
+        if os.path.exists(csv_path):
+            return
+
+        df = excel.parse(sheet_name)
+        os.makedirs(self.dir_tabular, exist_ok=True)
+        df.to_csv(csv_path, index=False)
+        log.info(f"Wrote {csv_path}")
+
     def extract_tabular(self):
         if not os.path.exists(self.excel_path):
             return
@@ -50,20 +64,7 @@ class AbstractExcelSpreadsheet(AbstractTabularMixin, AbstractDoc):
             return
 
         for i_sheet, sheet_name in enumerate(excel.sheet_names, 1):
-            sheet_name_cleaned = sheet_name.replace("/", "_").replace(
-                " ", "_"
-            )
-            csv_path = os.path.join(
-                self.dir_tabular,
-                f"{i_sheet:02d}-{sheet_name_cleaned}.csv",
-            )
-            if os.path.exists(csv_path):
-                continue
-
-            df = excel.parse(sheet_name)
-            os.makedirs(self.dir_tabular, exist_ok=True)
-            df.to_csv(csv_path, index=False)
-            log.info(f"Wrote {csv_path}")
+            self.__process_worksheet__(excel, i_sheet, sheet_name)
 
     # ----------------------------------------------------------------
     # Scrape (ALL)
