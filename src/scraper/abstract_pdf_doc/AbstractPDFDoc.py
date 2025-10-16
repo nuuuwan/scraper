@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from functools import cached_property
 
 import camelot
+import cv2
 from utils import WWW, File, JSONFile, Log, PDFFile
 
 from scraper.abstract_doc import AbstractDoc
@@ -76,7 +77,13 @@ class AbstractPDFDoc(AbstractTabularMixin, AbstractDoc):
 
     @staticmethod
     def get_tables(pdf_path: str) -> camelot.core.TableList | None:
+
         try:
+            os.environ["OMP_NUM_THREADS"] = "1"
+            os.environ["OPENBLAS_NUM_THREADS"] = "1"
+            os.environ["MKL_NUM_THREADS"] = "1"
+            os.environ["NUMEXPR_NUM_THREADS"] = "1"
+
             tables = camelot.read_pdf(
                 pdf_path,
                 flavor="lattice",
