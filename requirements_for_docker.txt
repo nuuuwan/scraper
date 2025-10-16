@@ -9,7 +9,7 @@ openpyxl
 pandas
 pylatex
 pymupdf
-scraper-nuuuwan>=1.1.4
+scraper-nuuuwan>=1.1.5
 selenium
 utils-nuuuwan
 xlrd
