@@ -152,8 +152,8 @@ class AbstractPDFDoc(AbstractTabularMixin, AbstractDoc):
         if self.has_pdf and not self.has_blocks:
             self.extract_blocks()
 
-        # if self.has_pdf and not self.has_tabular:
-        #     self.extract_tabular()
+        if self.has_pdf and not self.has_tabular:
+            self.extract_tabular()
 
         if self.has_blocks and not self.has_text:
             self.extract_text()
