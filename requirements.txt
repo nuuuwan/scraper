@@ -1,9 +1,10 @@
 bs4
-camelot-py
+camelot-py[cv]
 datasets
 huggingface_hub
 matplotlib
 numpy
+opencv-python
 openpyxl
 pandas
 pylatex
