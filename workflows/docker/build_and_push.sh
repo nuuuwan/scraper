@@ -39,10 +39,10 @@ echo '✅ Python version check passed.'
 echo '--------------------------------------'
 
 docker system df
-docker system prune -f
-docker system prune -a --volumes -f
-docker builder prune -a -f 
-docker system df
+# docker system prune -f
+# docker system prune -a --volumes -f
+# docker builder prune -a -f 
+# docker system df
 
 echo '--------------------------------------'
 
