@@ -1,6 +1,5 @@
 # scraper.abstract_doc.data_mixins (auto generate by build_inits.py)
 # flake8: noqa: F408
 
-from scraper.abstract_doc.data_mixins.AbstractTabularMixin import (
-    AbstractTabularMixin,
-)
+from scraper.abstract_doc.data_mixins.AbstractTabularMixin import \
+    AbstractTabularMixin

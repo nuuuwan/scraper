@@ -49,7 +49,9 @@ class AbstractDocSummaryMixin:
         n_docs_with_pdfs = len([doc for doc in doc_list if doc.has_pdf])
         n_docs_with_text = len([doc for doc in doc_list if doc.has_text])
         n_docs_with_excel = len([doc for doc in doc_list if doc.has_excel])
-        n_docs_with_tabular = len([doc for doc in doc_list if doc.has_tabular])
+        n_docs_with_tabular = len(
+            [doc for doc in doc_list if doc.has_tabular]
+        )
         date_strs = [doc.date_str for doc in doc_list]
         date_str_min = min(date_strs)
         date_str_max = max(date_strs)
