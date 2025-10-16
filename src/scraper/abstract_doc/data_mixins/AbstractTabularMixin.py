@@ -9,7 +9,7 @@ class AbstractTabularMixin:
 
     @property
     def dir_tabular(self) -> str:
-        return os.path.join(self.dir_doc, "tabular")
+        return os.path.join(self.dir_doc, "tabular_data")
 
     @property
     def has_tabular(self) -> bool:

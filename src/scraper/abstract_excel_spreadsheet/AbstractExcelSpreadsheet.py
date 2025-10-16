@@ -6,9 +6,8 @@ import pandas as pd
 from utils import WWW, Log
 
 from scraper.abstract_doc.AbstractDoc import AbstractDoc
-from scraper.abstract_doc.data_mixins.AbstractTabularMixin import (
-    AbstractTabularMixin,
-)
+from scraper.abstract_doc.data_mixins.AbstractTabularMixin import \
+    AbstractTabularMixin
 
 log = Log("AbstractExcelSpreadsheet")
 
@@ -51,7 +50,9 @@ class AbstractExcelSpreadsheet(AbstractTabularMixin, AbstractDoc):
             return
 
         for i_sheet, sheet_name in enumerate(excel.sheet_names, 1):
-            sheet_name_cleaned = sheet_name.replace("/", "_").replace(" ", "_")
+            sheet_name_cleaned = sheet_name.replace("/", "_").replace(
+                " ", "_"
+            )
             csv_path = os.path.join(
                 self.dir_tabular,
                 f"{i_sheet:02d}-{sheet_name_cleaned}.csv",
