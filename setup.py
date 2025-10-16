@@ -3,7 +3,7 @@
 import setuptools
 
 DIST_NAME = "scraper"
-VERSION = "1.1.5"
+VERSION = "1.1.6"
 DESCRIPTION = "Utilities for Scraping Documents from Websites."
 INSTALL_REQUIRES = [
     "utils-nuuuwan",
