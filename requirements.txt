@@ -4,7 +4,7 @@ datasets
 huggingface_hub
 matplotlib
 numpy
-opencv-python
+opencv-python-headless
 openpyxl
 pandas
 pylatex
