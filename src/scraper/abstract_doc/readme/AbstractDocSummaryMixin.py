@@ -40,51 +40,33 @@ class AbstractDocSummaryMixin:
 
     @classmethod
     def get_summary(cls) -> dict:
-        doc_list = cls.list_all()
-        doc_class_label = cls.get_doc_class_label()
-        doc_class_emoji = cls.get_doc_class_emoji()
-        doc_class_description = cls.get_doc_class_description()
-        time_updated = TimeFormat.TIME.format(Time.now())
-        n_docs = len(doc_list)
-        n_docs_with_pdfs = len([doc for doc in doc_list if doc.has_pdf])
-        n_docs_with_text = len([doc for doc in doc_list if doc.has_text])
-        n_docs_with_excel = len([doc for doc in doc_list if doc.has_excel])
-        n_docs_with_tabular = len(
-            [doc for doc in doc_list if doc.has_tabular]
-        )
-        date_strs = [doc.date_str for doc in doc_list]
-        date_str_min = min(date_strs)
-        date_str_max = max(date_strs)
-        dataset_size = FileOrDirectory(cls.get_data_branch_dir_root()).size
-        latest_doc = doc_list[0]
-        url_source_list = cls.get_url_source_list(doc_list)
-        url_data = cls.get_remote_data_url_for_class()
-        latest_doc_d = latest_doc.to_dict()
-        langs = set([doc.lang for doc in doc_list])
+        doc_list = cls.list_all()  # used multiple times
+        time_unit = cls.get_best_time_unit()  # reused below
 
-        time_unit = cls.get_best_time_unit()
-        ts_to_lang_to_n = cls.get_ts_to_lang_to_n(time_unit)
-        cls.build_chart_by_time_and_lang(ts_to_lang_to_n, time_unit)
-        url_chart = cls.get_raw_remote_chart_image_url(time_unit)
+        cls.build_chart_by_time_and_lang(
+            cls.get_ts_to_lang_to_n(time_unit), time_unit
+        )
 
         return dict(
-            doc_class_label=doc_class_label,
-            doc_class_emoji=doc_class_emoji,
-            doc_class_description=doc_class_description,
-            time_updated=time_updated,
-            n_docs=n_docs,
-            n_docs_with_pdfs=n_docs_with_pdfs,
-            n_docs_with_text=n_docs_with_text,
-            n_docs_with_excel=n_docs_with_excel,
-            n_docs_with_tabular=n_docs_with_tabular,
-            date_str_min=date_str_min,
-            date_str_max=date_str_max,
-            dataset_size=dataset_size,
-            url_source_list=url_source_list,
-            url_data=url_data,
-            url_chart=url_chart,
-            langs=list(langs),
-            latest_doc_d=latest_doc_d,
+            doc_class_label=cls.get_doc_class_label(),
+            doc_class_emoji=cls.get_doc_class_emoji(),
+            doc_class_description=cls.get_doc_class_description(),
+            time_updated=TimeFormat.TIME.format(Time.now()),
+            n_docs=len(doc_list),
+            n_docs_with_pdfs=len([doc for doc in doc_list if doc.has_pdf]),
+            n_docs_with_text=len([doc for doc in doc_list if doc.has_text]),
+            n_docs_with_excel=len([doc for doc in doc_list if doc.has_excel]),
+            n_docs_with_tabular=len(
+                [doc for doc in doc_list if doc.has_tabular]
+            ),
+            date_str_min=min(doc.date_str for doc in doc_list),
+            date_str_max=max(doc.date_str for doc in doc_list),
+            dataset_size=FileOrDirectory(cls.get_data_branch_dir_root()).size,
+            url_source_list=cls.get_url_source_list(doc_list),
+            url_data=cls.get_remote_data_url_for_class(),
+            url_chart=cls.get_raw_remote_chart_image_url(time_unit),
+            langs=list({doc.lang for doc in doc_list}),
+            latest_doc_d=doc_list[0].to_dict(),
         )
 
     @classmethod
