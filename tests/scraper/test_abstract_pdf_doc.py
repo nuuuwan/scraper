@@ -43,6 +43,11 @@ class TestCase(unittest.TestCase):
         self.assertEqual(doc.num, "0000")
         self.assertFalse(doc.has_pdf)
 
+    def test_get_tables(self):
+        pdf_path = os.path.join("tests", "input", "test-with-table.pdf")
+        tables = TestPDFDoc.get_tables(pdf_path)
+        self.assertEqual(len(tables), 1)
+
     def test_pipeline(self):
         shutil.rmtree(DIR_TEST_PIPELINE, ignore_errors=True)
         doc = next(TestPDFDoc.gen_docs())

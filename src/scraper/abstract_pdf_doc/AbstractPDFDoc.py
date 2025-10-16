@@ -74,23 +74,32 @@ class AbstractPDFDoc(AbstractTabularMixin, AbstractDoc):
     # Worksheets (extracted from PDF)
     # ----------------------------------------------------------------
 
-    def extract_tabular(self):
-        if not self.has_pdf:
-            return
+    @staticmethod
+    def get_tables(pdf_path: str) -> camelot.core.TableList | None:
         try:
             tables = camelot.read_pdf(
-                self.pdf_path,
+                pdf_path,
                 flavor="lattice",
                 pages="all",
                 process_background=True,
-                line_scale=40,
+                line_scale=60,
             )
+            n_tables = len(tables)
+            log.debug(f"Found {n_tables} tables in {pdf_path}")
+            return tables
         except Exception as e:
-            log.error(f"Failed to extract tables from {self.pdf_path}: {e}")
+            log.error(f"Failed to extract tables from {pdf_path}: {e}")
+            return None
+
+    def extract_tabular(self):
+        if not self.has_pdf:
             return
 
-        n_tables = len(tables)
-        log.debug(f"Found {n_tables} tables in {self.pdf_path}")
+        tables = self.get_tables(self.pdf_path)
+        if not tables or len(tables) == 0:
+            log.info(f"No tables found in {self.pdf_path}")
+            return
+
         os.makedirs(self.dir_tabular, exist_ok=True)
         tables.export(os.path.join(self.dir_tabular, "table.csv"), f="csv")
 
