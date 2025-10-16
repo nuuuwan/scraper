@@ -5,13 +5,11 @@ from dataclasses import dataclass
 from functools import cached_property
 
 import camelot
-import cv2
 from utils import WWW, File, JSONFile, Log, PDFFile
 
 from scraper.abstract_doc import AbstractDoc
-from scraper.abstract_doc.data_mixins.AbstractTabularMixin import (
-    AbstractTabularMixin,
-)
+from scraper.abstract_doc.data_mixins.AbstractTabularMixin import \
+    AbstractTabularMixin
 
 log = Log("AbstractPDFDoc")
 
@@ -46,7 +44,9 @@ class AbstractPDFDoc(AbstractTabularMixin, AbstractDoc):
             try:
                 PDFFile(temp_pdf_path).compress(self.pdf_path)
             except Exception as e:
-                log.warning(f"Failed to compress PDF from {self.url_pdf}: {e}")
+                log.warning(
+                    f"Failed to compress PDF from {self.url_pdf}: {e}"
+                )
                 shutil.move(temp_pdf_path, self.pdf_path)
 
     # ----------------------------------------------------------------
