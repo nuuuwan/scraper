@@ -1,4 +1,5 @@
 import os
+import shutil
 import tempfile
 from dataclasses import dataclass
 from functools import cached_property
@@ -45,7 +46,7 @@ class AbstractPDFDoc(AbstractTabularMixin, AbstractDoc):
                 PDFFile(temp_pdf_path).compress(self.pdf_path)
             except Exception as e:
                 log.warning(f"Failed to compress PDF from {self.url_pdf}: {e}")
-                os.rename(temp_pdf_path, self.pdf_path)
+                shutil.move(temp_pdf_path, self.pdf_path)
 
     # ----------------------------------------------------------------
     # Blocks (Extracted from PDF)
