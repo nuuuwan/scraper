@@ -6,8 +6,9 @@ import pandas as pd
 from utils import WWW, Log
 
 from scraper.abstract_doc.AbstractDoc import AbstractDoc
-from scraper.abstract_doc.data_mixins.AbstractTabularMixin import \
-    AbstractTabularMixin
+from scraper.abstract_doc.data_mixins.AbstractTabularMixin import (
+    AbstractTabularMixin,
+)
 
 log = Log("AbstractExcelSpreadsheet")
 
@@ -43,11 +44,14 @@ class AbstractExcelSpreadsheet(AbstractTabularMixin, AbstractDoc):
     def extract_tabular(self):
         if not os.path.exists(self.excel_path):
             return
-        excel = self.open_excel(self.excel_path)
+        try:
+            excel = self.open_excel(self.excel_path)
+        except Exception as e:
+            log.error(f"Failed to open Excel file {self.excel_path}: {e}")
+            return
+
         for i_sheet, sheet_name in enumerate(excel.sheet_names, 1):
-            sheet_name_cleaned = sheet_name.replace("/", "_").replace(
-                " ", "_"
-            )
+            sheet_name_cleaned = sheet_name.replace("/", "_").replace(" ", "_")
             csv_path = os.path.join(
                 self.dir_tabular,
                 f"{i_sheet:02d}-{sheet_name_cleaned}.csv",
