@@ -102,18 +102,18 @@ class AbstractPDFDoc(AbstractTabularMixin, AbstractDoc):
         return content
 
     def get_text_all(self):
-        return "\n".join(
-            [
-                "==== BLOCKS ==== ",
-                "",
-                self.get_text_from_block(),
-                "",
-                "==== WORKSHEETS ==== ",
-                "",
-                self.get_text_from_tabular(),
-                "",
-            ]
-        )
+        lines = []
+        for text, label in [
+            (self.get_text_from_block(), "BLOCKS"),
+            (self.get_text_from_tabular(), "WORKSHEETS"),
+        ]:
+            if text:
+                lines.append(f"==== {label} ==== ")
+                lines.append("")
+                lines.append(text)
+                lines.append("")
+
+        return "\n".join(lines).strip()
 
     def extract_text(self):
         if not self.has_pdf:
