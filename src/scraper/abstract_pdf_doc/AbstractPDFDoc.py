@@ -81,7 +81,7 @@ class AbstractPDFDoc(AbstractTabularMixin, AbstractDoc):
                 pdf_path,
                 flavor="lattice",
                 pages="all",
-                process_background=True,
+                process_background=False,
                 line_scale=60,
             )
             n_tables = len(tables)
