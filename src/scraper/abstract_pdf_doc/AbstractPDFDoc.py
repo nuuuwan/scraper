@@ -79,7 +79,11 @@ class AbstractPDFDoc(AbstractTabularMixin, AbstractDoc):
             return
         try:
             tables = camelot.read_pdf(
-                self.pdf_path, flavor="stream", pages="all"
+                self.pdf_path,
+                flavor="lattice",
+                pages="all",
+                process_background=True,
+                line_scale=40,
             )
         except Exception as e:
             log.error(f"Failed to extract tables from {self.pdf_path}: {e}")
