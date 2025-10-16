@@ -5,11 +5,6 @@ echo '--------------------------------------'
 
 docker --version
 
-docker system df
-docker system prune -f
-docker system prune -a --volumes -f
-docker builder prune -a -f 
-
 echo '--------------------------------------'
 
 URL=ghcr.io/$GITHUB_USERNAME/pdf-scraper-image:latest
