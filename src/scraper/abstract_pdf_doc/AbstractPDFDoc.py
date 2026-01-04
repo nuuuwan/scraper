@@ -8,8 +8,9 @@ import camelot
 from utils import WWW, File, JSONFile, Log, PDFFile
 
 from scraper.abstract_doc import AbstractDoc
-from scraper.abstract_doc.data_mixins.AbstractTabularMixin import \
-    AbstractTabularMixin
+from scraper.abstract_doc.data_mixins.AbstractTabularMixin import (
+    AbstractTabularMixin,
+)
 
 log = Log("AbstractPDFDoc")
 
@@ -44,9 +45,7 @@ class AbstractPDFDoc(AbstractTabularMixin, AbstractDoc):
             try:
                 PDFFile(temp_pdf_path).compress(self.pdf_path)
             except Exception as e:
-                log.warning(
-                    f"Failed to compress PDF from {self.url_pdf}: {e}"
-                )
+                log.warning(f"Failed to compress PDF from {self.url_pdf}: {e}")
                 shutil.move(temp_pdf_path, self.pdf_path)
 
     # ----------------------------------------------------------------
@@ -64,9 +63,13 @@ class AbstractPDFDoc(AbstractTabularMixin, AbstractDoc):
         if not self.has_pdf:
             return
         pdf_file = PDFFile(self.pdf_path)
-        blocks = pdf_file.get_blocks()
-        JSONFile(self.blocks_path).write(blocks)
-        log.info(f"Wrote {self.blocks_path} ({len(blocks):,} blocks)")
+        try:
+            blocks = pdf_file.get_blocks()
+            JSONFile(self.blocks_path).write(blocks)
+            log.info(f"Wrote {self.blocks_path} ({len(blocks):,} blocks)")
+        except Exception as e:
+            log.error(f"Failed to extract blocks from {self.pdf_path}: {e}")
+            return
 
     def get_blocks(self):
         return JSONFile(self.blocks_path).read()
